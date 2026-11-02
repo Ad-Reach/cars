@@ -24,6 +24,9 @@ export function isPhoneComplete(phone: string) {
   return phone.replace(/\D/g, "").length === 11;
 }
 
+// Варианты для поля «Как с вами связаться?» во всех формах
+export const CONTACT_METHODS = ["Позвонить", "Telegram", "MAX", "WhatsApp"];
+
 type Status = "idle" | "sending" | "done" | "error";
 
 

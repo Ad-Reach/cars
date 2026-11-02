@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
+import { CONTACT_METHODS, formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
 import type { Site } from "@/lib/cms";
 import styles from "./LeadSection.module.css";
 
@@ -78,10 +78,9 @@ export function LeadSection({ site }: { site: Site }) {
                   <option value="" disabled>
                     Как с вами связаться?
                   </option>
-                  <option>Позвонить</option>
-                  <option>Telegram</option>
-                  <option>MAX</option>
-                  <option>WhatsApp</option>
+                  {CONTACT_METHODS.map((m) => (
+                    <option key={m}>{m}</option>
+                  ))}
                 </select>
                 <input
                   className={styles.wide}

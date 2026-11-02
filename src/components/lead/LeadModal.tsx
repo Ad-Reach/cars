@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
+import { CONTACT_METHODS, formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
 import { reachGoal } from "@/lib/metrika";
 import styles from "./LeadModal.module.css";
 
@@ -68,6 +68,7 @@ function LeadDialog({ opts, onClose }: { opts: LeadOptions; onClose: () => void 
     submit({
       name: String(fd.get("name") ?? ""),
       phone,
+      contact: String(fd.get("contact") ?? ""),
       comment: String(fd.get("comment") ?? ""),
       topic: opts.title ?? DEFAULTS.title,
       website: String(fd.get("website") ?? ""),
@@ -124,6 +125,17 @@ function LeadDialog({ opts, onClose }: { opts: LeadOptions; onClose: () => void 
               />
             </label>
             {phoneError && <p className={styles.error}>Введите номер телефона полностью</p>}
+            <label className={styles.field}>
+              <span className="visually-hidden">Как с вами связаться?</span>
+              <select name="contact" defaultValue="">
+                <option value="" disabled>
+                  Как с вами связаться?
+                </option>
+                {CONTACT_METHODS.map((m) => (
+                  <option key={m}>{m}</option>
+                ))}
+              </select>
+            </label>
             <label className={styles.field}>
               <span className="visually-hidden">Комментарий</span>
               <textarea name="comment" placeholder="Марка, модель, бюджет — по желанию" rows={3} />
