@@ -1,5 +1,6 @@
 // Яндекс.Метрика. Файл выполняется в браузере до гидрации (конвенция Next instrumentation-client).
-const YM_ID = 114003002;
+import { YM_ID, reachGoal } from "@/lib/metrika";
+
 const YM_SRC = `https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}`;
 
 type Ym = ((id: number, method: string, ...args: unknown[]) => void) & { a?: unknown[]; l?: number };
@@ -38,6 +39,24 @@ try {
 } catch {
   // Метрика не должна ломать сайт.
 }
+
+// Клики по контактам — одним делегированным обработчиком, чтобы не трогать каждую ссылку.
+document.addEventListener(
+  "click",
+  (e) => {
+    const a = (e.target as Element | null)?.closest?.("a[href]");
+    if (!a) return;
+    const href = a.getAttribute("href") ?? "";
+    if (href.startsWith("tel:")) reachGoal("phone_click");
+    else if (href.startsWith("mailto:")) reachGoal("email_click");
+    else {
+      const m = href.match(/^https?:\/\/(t\.me|max\.ru|vk\.(?:ru|com))\//);
+      if (m) reachGoal("messenger_click", { messenger: m[1] });
+      else if (href.startsWith("https://catalog.rangauto.ru")) reachGoal("catalog_click", { url: href });
+    }
+  },
+  { capture: true },
+);
 
 // Клиентские переходы App Router не перезагружают страницу — отправляем хит вручную.
 export function onRouterTransitionStart(url: string) {

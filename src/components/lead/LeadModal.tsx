@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import Link from "next/link";
 import { X } from "lucide-react";
 import { formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
+import { reachGoal } from "@/lib/metrika";
 import styles from "./LeadModal.module.css";
 
 type LeadOptions = {
@@ -29,7 +30,10 @@ export function useLeadModal() {
 
 export function LeadModalProvider({ children }: { children: ReactNode }) {
   const [opts, setOpts] = useState<LeadOptions | null>(null);
-  const open = useCallback((o: LeadOptions) => setOpts(o), []);
+  const open = useCallback((o: LeadOptions) => {
+    reachGoal("lead_form_open", { source: o.source });
+    setOpts(o);
+  }, []);
 
   return (
     <LeadContext.Provider value={open}>
