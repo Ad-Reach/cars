@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { reachGoal } from "@/lib/metrika";
 
 // Маска +7 (999) 999-99-99
 export function formatPhone(input: string) {
@@ -38,8 +39,10 @@ export function useLeadSubmit(source: string) {
         body: JSON.stringify({ source, ...fields }),
       });
       setStatus(res.ok ? "done" : "error");
+      reachGoal(res.ok ? "lead_submit" : "lead_error", { source });
     } catch {
       setStatus("error");
+      reachGoal("lead_error", { source });
     }
   }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { countries, type CountryId } from "@/data/content";
 import { catalogUrls } from "@/data/site";
 import type { CatalogBrands, CatalogOption } from "@/lib/catalog";
+import { reachGoal } from "@/lib/metrika";
 import styles from "./HeroSearch.module.css";
 
 const fallbackBrands: Record<CountryId, string[]> = {
@@ -64,7 +65,15 @@ export function HeroSearch({ brands }: { brands: CatalogBrands }) {
       const value = form.get(key);
       if (typeof value === "string" && value) url.searchParams.set(key, value);
     }
-    window.location.href = url.toString();
+    // Переход ждёт отправки цели, но не дольше 300 мс
+    let gone = false;
+    const go = () => {
+      if (gone) return;
+      gone = true;
+      window.location.href = url.toString();
+    };
+    reachGoal("catalog_search", { country, brand: url.searchParams.get("brand") ?? "" }, go);
+    setTimeout(go, 300);
   }
 
   return (
