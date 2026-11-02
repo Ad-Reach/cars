@@ -33,6 +33,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ru" data-scroll-behavior="smooth" className={`${advent.variable} ${onest.variable}`}>
       <body>
         <LeadModalProvider>{children}</LeadModalProvider>
+        {/* Яндекс.Метрика без JS; сам счётчик — в src/instrumentation-client.ts */}
+        <noscript>
+          <div>
+            <img src="https://mc.yandex.ru/watch/114003002" style={{ position: "absolute", left: "-9999px" }} alt="" />
+          </div>
+        </noscript>
       </body>
     </html>
   );
