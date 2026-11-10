@@ -1,6 +1,7 @@
+import { sendLeadEmail } from "@/lib/mail";
 import { sendToAll } from "@/lib/telegram";
 
-// Приём заявок со всех форм сайта: лог + уведомление в Telegram.
+// Приём заявок со всех форм сайта: лог + уведомление в Telegram и на почту (см. src/lib/mail.ts).
 // Настройки — переменные окружения сервера (/etc/rangauto.env):
 //   TELEGRAM_BOT_TOKEN — токен бота от @BotFather
 //   TELEGRAM_CHAT_IDS  — ID чатов через запятую (личка менеджера, группа)
@@ -88,8 +89,11 @@ export async function POST(request: Request) {
   }
 
   console.log("[lead]", new Date().toISOString(), ip, JSON.stringify(data));
-  const sent = await sendToAll(formatMessage(data, digits));
+  const message = formatMessage(data, digits);
+  const subject = `Заявка с сайта: ${sourceLabel(clean(data.source))}`;
+  const [sent, mailed] = await Promise.all([sendToAll(message), sendLeadEmail(subject, message)]);
   if (!sent) console.warn("[lead] telegram: не отправлено (нет настроек или ошибка)");
+  if (!mailed) console.warn("[lead] email: не отправлено (нет настроек SMTP или ошибка)");
 
   // Заявка в любом случае сохранена в логе — пользователю отвечаем успехом
   return Response.json({ ok: true });

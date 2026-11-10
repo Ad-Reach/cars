@@ -61,7 +61,7 @@ export function Header({ site }: { site: Site }) {
               <img src={"/icons/soc-tg.svg"} alt="Telegram" width={18} height={18} className={styles.blink} />
               Telegram
             </a>
-            <a href={site.socials.max} target="_blank" rel="noopener" className={styles.topLink}>
+            <a href={site.socials.maxChannel} target="_blank" rel="noopener" className={styles.topLink}>
               <img src={"/icons/soc-max.svg"} alt="MAX" width={16} height={16} className={styles.blink} />
               MAX
             </a>
@@ -194,7 +194,7 @@ export function Header({ site }: { site: Site }) {
             <a href={site.socials.telegram} target="_blank" rel="noopener" aria-label="Telegram">
               <img src={"/icons/soc-tg.svg"} alt="Telegram" width={40} height={40} />
             </a>
-            <a href={site.socials.max} target="_blank" rel="noopener" aria-label="MAX">
+            <a href={site.socials.maxChannel} target="_blank" rel="noopener" aria-label="Канал в MAX">
               <img src={"/icons/soc-max.svg"} alt="MAX" width={40} height={40} />
             </a>
             <a href={site.socials.vk} target="_blank" rel="noopener" aria-label="ВКонтакте">
