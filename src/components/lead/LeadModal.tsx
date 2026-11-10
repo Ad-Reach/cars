@@ -13,6 +13,9 @@ type LeadOptions = {
   submitLabel?: string;
   // Откуда пришла заявка — попадёт в CRM/админку
   source: string;
+  // Автомобиль, по которому заявка (уйдёт в amoCRM)
+  vehicle?: string;
+  vehicleUrl?: string;
 };
 
 const DEFAULTS = {
@@ -71,6 +74,8 @@ function LeadDialog({ opts, onClose }: { opts: LeadOptions; onClose: () => void 
       contact: String(fd.get("contact") ?? ""),
       comment: String(fd.get("comment") ?? ""),
       topic: opts.title ?? DEFAULTS.title,
+      vehicle: opts.vehicle ?? "",
+      vehicleUrl: opts.vehicleUrl ?? "",
       website: String(fd.get("website") ?? ""),
     });
   }

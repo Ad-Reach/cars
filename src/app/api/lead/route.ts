@@ -1,7 +1,9 @@
+import { randomUUID } from "node:crypto";
+import { enqueueLead, isValidSubmissionId } from "@/lib/amocrm";
 import { sendLeadEmail } from "@/lib/mail";
 import { sendToAll } from "@/lib/telegram";
 
-// Приём заявок со всех форм сайта: лог + уведомление в Telegram и на почту (см. src/lib/mail.ts).
+// Приём заявок со всех форм сайта: лог + amoCRM (src/lib/amocrm.ts) + Telegram + почта (src/lib/mail.ts).
 // Настройки — переменные окружения сервера (/etc/rangauto.env):
 //   TELEGRAM_BOT_TOKEN — токен бота от @BotFather
 //   TELEGRAM_CHAT_IDS  — ID чатов через запятую (личка менеджера, группа)
@@ -20,7 +22,11 @@ const FIELDS: [key: string, label: string][] = [
   ["budget", "Бюджет"],
   ["wishes", "Пожелания"],
   ["comment", "Комментарий"],
+  ["vehicle", "Автомобиль"],
 ];
+
+// Служебные поля — не ответы формы
+const SERVICE = new Set(["source", "website", "submissionId", "pageUrl", "referrer", "utm"]);
 
 // Откуда пришла заявка (source из форм) — человеческие названия
 const SOURCES: Record<string, string> = {
@@ -89,6 +95,36 @@ export async function POST(request: Request) {
   }
 
   console.log("[lead]", new Date().toISOString(), ip, JSON.stringify(data));
+
+  const submissionId = isValidSubmissionId(clean(data.submissionId)) ? clean(data.submissionId) : randomUUID();
+  const fields: Record<string, string> = {};
+  for (const [k, v] of Object.entries(data)) if (!SERVICE.has(k) && clean(v)) fields[k] = clean(v);
+  const utm: Record<string, string> = {};
+  if (data.utm && typeof data.utm === "object") {
+    for (const [k, v] of Object.entries(data.utm as Record<string, unknown>)) if (clean(v)) utm[k.slice(0, 50)] = clean(v);
+  }
+
+  const isNew = await enqueueLead({
+    submissionId,
+    source: "rangauto.ru",
+    form: sourceLabel(clean(data.source)),
+    pageUrl: clean(data.pageUrl),
+    name: clean(data.name),
+    phone: `+${digits.startsWith("8") ? "7" + digits.slice(1) : digits}`,
+    contactMethod: clean(data.contact),
+    city: clean(data.city),
+    budget: clean(data.budget),
+    wishes: [clean(data.wishes), clean(data.comment)].filter(Boolean).join("\n"),
+    brand: clean(data.brand),
+    model: clean(data.model),
+    vehicleName: clean(data.vehicle),
+    vehicleUrl: clean(data.vehicleUrl),
+    utm,
+    fields,
+  });
+  // повтор той же отправки (двойной клик, переотправка после ошибки сети) — уведомления уже ушли
+  if (!isNew) return Response.json({ ok: true });
+
   const message = formatMessage(data, digits);
   const subject = `Заявка с сайта: ${sourceLabel(clean(data.source))}`;
   const [sent, mailed] = await Promise.all([sendToAll(message), sendLeadEmail(subject, message)]);

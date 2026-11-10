@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { reachGoal } from "@/lib/metrika";
 
 // Маска +7 (999) 999-99-99
@@ -30,18 +30,58 @@ export const CONTACT_METHODS = ["Позвонить", "Telegram", "MAX", "WhatsA
 type Status = "idle" | "sending" | "done" | "error";
 
 
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "yclid", "gclid"];
+
+// UTM с первой страницы визита — запоминаем на сессию, чтобы не потерять при переходах
+function utm(): Record<string, string> {
+  const out: Record<string, string> = {};
+  try {
+    const saved = sessionStorage.getItem("utm");
+    if (saved) Object.assign(out, JSON.parse(saved));
+    const params = new URLSearchParams(location.search);
+    const fresh = UTM_KEYS.filter((k) => params.get(k));
+    if (fresh.length) {
+      for (const k of UTM_KEYS) delete out[k];
+      for (const k of fresh) out[k] = params.get(k)!;
+      sessionStorage.setItem("utm", JSON.stringify(out));
+    }
+  } catch {}
+  return out;
+}
+
+if (typeof window !== "undefined") utm();
+
+function newId() {
+  try {
+    return crypto.randomUUID();
+  } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+}
+
 export function useLeadSubmit(source: string) {
   const [status, setStatus] = useState<Status>("idle");
+  // один ID на заявку: повторная отправка той же формы не создаёт дубль в amoCRM
+  const submissionId = useRef<string>("");
 
   async function submit(fields: Record<string, string>) {
     setStatus("sending");
+    submissionId.current ||= newId();
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source, ...fields }),
+        body: JSON.stringify({
+          source,
+          ...fields,
+          submissionId: submissionId.current,
+          pageUrl: location.href,
+          referrer: document.referrer,
+          utm: utm(),
+        }),
       });
       setStatus(res.ok ? "done" : "error");
+      if (res.ok) submissionId.current = "";
       reachGoal(res.ok ? "lead_submit" : "lead_error", { source });
     } catch {
       setStatus("error");
