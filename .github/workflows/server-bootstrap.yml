@@ -1,0 +1,72 @@
+name: Server bootstrap
+
+# Разовая настройка нового сервера от root (deploy/bootstrap-server.sh).
+# Нужен секрет VDS_ROOT_PASSWORD. Повторный запуск безопасен.
+on:
+  push:
+    branches: [ccr-d0ccb5ba-g8vfps]
+    paths: [deploy/**, .github/workflows/server-bootstrap.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: server-bootstrap
+  cancel-in-progress: false
+
+env:
+  HOST: 31.77.10.198
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets
+        env:
+          PW: ${{ secrets.VDS_ROOT_PASSWORD }}
+        run: |
+          [ -n "$PW" ] || { echo "::error::Нет секрета VDS_ROOT_PASSWORD"; exit 1; }
+
+      - name: Collect deploy keys
+        env:
+          OLD_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          cat deploy/deploy_ed25519.pub > keys.txt
+          if [ -n "$OLD_KEY" ]; then
+            printf '%s\n' "$OLD_KEY" > old_key && chmod 600 old_key
+            ssh-keygen -y -f old_key >> keys.txt 2>/dev/null && echo "добавлен ключ из DEPLOY_SSH_KEY" || echo "DEPLOY_SSH_KEY не читается — пропускаю"
+            rm -f old_key
+          fi
+          awk '{print $1, $2}' keys.txt
+
+      - name: Host keys (для known_hosts)
+        run: ssh-keyscan -T 20 $HOST 2>/dev/null | sort | tee known_hosts
+
+      - name: Run bootstrap as root
+        env:
+          SSHPASS: ${{ secrets.VDS_ROOT_PASSWORD }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+          TELEGRAM_ADMIN_IDS: ${{ secrets.TELEGRAM_ADMIN_IDS }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+        run: |
+          sudo apt-get install -y -qq sshpass >/dev/null
+          {
+            printf 'export DEPLOY_PUBKEYS=%q\n' "$(cat keys.txt)"
+            for v in TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_IDS TELEGRAM_ADMIN_IDS SMTP_HOST SMTP_PORT SMTP_USER SMTP_PASS SMTP_FROM; do
+              printf 'export %s=%q\n' "$v" "${!v}"
+            done
+            cat deploy/bootstrap-server.sh
+          } | sshpass -e ssh -o UserKnownHostsFile=known_hosts -o StrictHostKeyChecking=yes \
+                -o PubkeyAuthentication=no -o ConnectTimeout=20 root@$HOST 'bash -s'
+
+      - name: Check deploy user login
+        run: |
+          echo "ключ deploy_ed25519 проверить отсюда нельзя (приватная часть только у владельца)"
+          ssh-keygen -lf known_hosts

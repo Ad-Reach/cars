@@ -42,15 +42,15 @@ jobs:
           install -m 700 -d ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          cp deploy/known_hosts ~/.ssh/known_hosts
 
       - name: Upload and switch release
         env:
-          HOST: ${{ secrets.DEPLOY_HOST }}
+          HOST: 31.77.10.198
           REL: ${{ github.sha }}
         run: |
-          rsync -az --delete release/ rangauto@$HOST:/srv/rangauto/releases/$REL/
-          ssh rangauto@$HOST "set -e
+          rsync -az --delete release/ deploy@$HOST:/srv/rangauto/releases/$REL/
+          ssh deploy@$HOST "set -e
             cd /srv/rangauto
             ln -sfn releases/$REL current.tmp && mv -Tf current.tmp current
             date -u +%FT%TZ > deployed   # systemd (rangauto-restart.path) перезапускает сайт
@@ -59,10 +59,10 @@ jobs:
 
       - name: Health check
         env:
-          HOST: ${{ secrets.DEPLOY_HOST }}
+          HOST: 31.77.10.198
         run: |
           for i in $(seq 1 20); do
-            code=$(ssh rangauto@$HOST "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/" || true)
+            code=$(ssh deploy@$HOST "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/" || true)
             [ "$code" = "200" ] && echo "OK" && exit 0
             sleep 3
           done

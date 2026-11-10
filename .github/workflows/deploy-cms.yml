@@ -1,7 +1,7 @@
 name: Deploy CMS
 
 # Админка https://rangauto.ru/cms/admin — собирается из ветки production.
-# Разовая настройка сервера: cms/deploy/server-setup.sh (root).
+# Разовая настройка сервера: deploy/bootstrap-server.sh (root, workflow «Server bootstrap»).
 on:
   push:
     branches: [production]
@@ -48,20 +48,20 @@ jobs:
           install -m 700 -d ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          cp ../deploy/known_hosts ~/.ssh/known_hosts
 
       - name: Upload and switch release
         env:
-          HOST: ${{ secrets.DEPLOY_HOST }}
+          HOST: 31.77.10.198
           REL: ${{ github.sha }}
         run: |
-          if ! ssh rangauto@$HOST "test -d /srv/rangauto/cms/releases"; then
-            echo "::warning::Сервер ещё не настроен для CMS: выполните cms/deploy/server-setup.sh от root и перезапустите этот workflow"
+          if ! ssh deploy@$HOST "test -d /srv/rangauto/cms/releases"; then
+            echo "::warning::Сервер ещё не настроен для CMS: запустите workflow «Server bootstrap» и перезапустите этот workflow"
             echo "CMS_SKIPPED=1" >> "$GITHUB_ENV"
             exit 0
           fi
-          rsync -az --delete --link-dest=/srv/rangauto/cms/current/ ../cms-release/ rangauto@$HOST:/srv/rangauto/cms/releases/$REL/
-          ssh rangauto@$HOST "set -e
+          rsync -az --delete --link-dest=/srv/rangauto/cms/current/ ../cms-release/ deploy@$HOST:/srv/rangauto/cms/releases/$REL/
+          ssh deploy@$HOST "set -e
             cd /srv/rangauto/cms
             ln -sfn /srv/rangauto/cms/uploads releases/$REL/public/uploads
             ln -sfn releases/$REL current.tmp && mv -Tf current.tmp current
@@ -72,10 +72,10 @@ jobs:
       - name: Health check
         if: env.CMS_SKIPPED != '1'
         env:
-          HOST: ${{ secrets.DEPLOY_HOST }}
+          HOST: 31.77.10.198
         run: |
           for i in $(seq 1 40); do
-            code=$(ssh rangauto@$HOST "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:1337/_health" || true)
+            code=$(ssh deploy@$HOST "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:1337/_health" || true)
             [ "$code" = "204" ] && echo "OK" && exit 0
             sleep 5
           done
