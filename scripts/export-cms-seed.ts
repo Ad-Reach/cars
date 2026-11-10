@@ -34,6 +34,7 @@ const data = {
     offices: site.offices.map((o) => ({ city: o.city, address: o.address, lat: o.coords[0], lng: o.coords[1] })),
     telegram: site.socials.telegram,
     max: site.socials.max,
+    maxChannel: site.socials.maxChannel,
     vk: site.socials.vk,
     heroStats: c.heroStats.map((s) => ({ icon: s.icon, value: s.value, label: s.label, accent: Boolean(s.accent) })),
   },

@@ -51,7 +51,7 @@ export function Footer({ site }: { site: Site }) {
             <a href={site.socials.telegram} target="_blank" rel="noopener" aria-label="Telegram">
               <img src={"/icons/soc-tg.svg"} alt="Telegram" width={30} height={30} />
             </a>
-            <a href={site.socials.max} target="_blank" rel="noopener" aria-label="MAX">
+            <a href={site.socials.maxChannel} target="_blank" rel="noopener" aria-label="Канал в MAX">
               <img src={"/icons/soc-max.svg"} alt="MAX" width={30} height={30} />
             </a>
           </div>

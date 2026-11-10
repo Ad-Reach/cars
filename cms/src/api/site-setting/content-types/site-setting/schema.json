@@ -42,6 +42,9 @@
     "max": {
       "type": "string"
     },
+    "maxChannel": {
+      "type": "string"
+    },
     "vk": {
       "type": "string"
     },
