@@ -2,7 +2,9 @@
 # Разовая настройка чистого сервера (Ubuntu/Debian) от root:
 # Caddy, Node 22, пользователь deploy без sudo, службы сайта rangauto.ru и CMS,
 # каталог для centro-plus.ru. Повторный запуск безопасен.
-# Необязательные переменные окружения: DEPLOY_PUBKEYS (ключи для deploy, по одному в строке),
+# Запуск на сервере от root:
+#   curl -fsSLo /root/bootstrap.sh https://raw.githubusercontent.com/Ad-Reach/cars/production/deploy/bootstrap-server.sh && bash /root/bootstrap.sh
+# Необязательные переменные окружения: DEPLOY_PUBKEYS (доп. ключи для deploy, по одному в строке),
 # TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS, TELEGRAM_ADMIN_IDS, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM.
 set -euo pipefail
 [ "$(id -u)" = 0 ] || { echo "Запустите от root"; exit 1; }
@@ -50,9 +52,12 @@ passwd -l "$U" >/dev/null   # вход только по ключу, sudo нет
 install -d -m 700 -o "$U" -g "$U" "/home/$U/.ssh"
 AK="/home/$U/.ssh/authorized_keys"
 touch "$AK"
-printf '%s\n' "${DEPLOY_PUBKEYS:-}" | while read -r key; do
-  [ -n "$key" ] && ! grep -qF "$key" "$AK" && echo "$key" >> "$AK"
-done
+# ключ деплоя (секрет DEPLOY_SSH_KEY в cars и potolki) + дополнительные
+KEYS="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZTq64wiIh3DYf4sv2sFlGN4AFLnIFrPs3F9thX4ftM deploy@31.77.10.198
+${DEPLOY_PUBKEYS:-}"
+while read -r key; do
+  if [ -n "$key" ] && ! grep -qF "$key" "$AK"; then echo "$key" >> "$AK"; fi
+done <<< "$KEYS"
 chown "$U:$U" "$AK"; chmod 600 "$AK"
 echo "ключей в authorized_keys: $(grep -c . "$AK" || true)"
 
@@ -226,4 +231,6 @@ fi
 echo "== итог"
 systemctl is-active caddy
 ss -ltn | grep -E ':(22|80|443|3000|1337) ' || true
+echo "== отпечатки сервера (для deploy/known_hosts)"
+for f in /etc/ssh/ssh_host_*_key.pub; do echo "31.77.10.198 $(cut -d' ' -f1,2 "$f")"; done
 echo "Готово."

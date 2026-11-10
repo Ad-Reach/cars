@@ -17,7 +17,7 @@ npm run dev   # http://localhost:3000
 Сервер 31.77.10.198: Ubuntu, Caddy (HTTPS, автосертификаты Let's Encrypt, www → без www) → Node на 127.0.0.1:3000,
 сервис `rangauto`, релизы в `/srv/rangauto/releases`, логи заявок: `journalctl -u rangauto`.
 Деплой идёт под пользователем `deploy` без sudo (секрет `DEPLOY_SSH_KEY`, отпечатки сервера — `deploy/known_hosts`).
-Настройка нового сервера с нуля: workflow «Server bootstrap» (`deploy/bootstrap-server.sh`, секрет `VDS_ROOT_PASSWORD`);
+Настройка нового сервера с нуля: `deploy/bootstrap-server.sh` от root (команда — в начале файла), проверка — workflow «Server check»;
 он же настраивает Caddy для centro-plus.ru (репозиторий potolki).
 
 Заявки с форм уходят в Telegram и дублируются на почту из Strapi («Настройки сайта» → email).

@@ -1,7 +1,7 @@
 name: Deploy CMS
 
 # Админка https://rangauto.ru/cms/admin — собирается из ветки production.
-# Разовая настройка сервера: deploy/bootstrap-server.sh (root, workflow «Server bootstrap»).
+# Разовая настройка сервера: deploy/bootstrap-server.sh (от root).
 on:
   push:
     branches: [production]
@@ -56,7 +56,7 @@ jobs:
           REL: ${{ github.sha }}
         run: |
           if ! ssh deploy@$HOST "test -d /srv/rangauto/cms/releases"; then
-            echo "::warning::Сервер ещё не настроен для CMS: запустите workflow «Server bootstrap» и перезапустите этот workflow"
+            echo "::warning::Сервер ещё не настроен для CMS: выполните deploy/bootstrap-server.sh от root и перезапустите этот workflow"
             echo "CMS_SKIPPED=1" >> "$GITHUB_ENV"
             exit 0
           fi

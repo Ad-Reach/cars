@@ -18,6 +18,6 @@ npm run develop
 
 ## Сервер
 
-Сервер настраивает `deploy/bootstrap-server.sh` (workflow «Server bootstrap»): служба `rangauto-cms`, маршрут `/cms` в Caddy, секреты в `/etc/rangauto-cms.env`, логин и пароль администратора в `/root/rangauto-cms-admin.txt`.
+Сервер настраивает `deploy/bootstrap-server.sh` (от root): служба `rangauto-cms`, маршрут `/cms` в Caddy, секреты в `/etc/rangauto-cms.env`, логин и пароль администратора в `/root/rangauto-cms-admin.txt`.
 
 Деплой — workflow «Deploy CMS» при пуше в `production` (папка `cms/`). База и загрузки лежат вне релизов: `/srv/rangauto/cms/data` и `/srv/rangauto/cms/uploads`.
