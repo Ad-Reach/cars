@@ -49,6 +49,15 @@ async function single(type: string, query = ""): Promise<Entry | null> {
 
 const lines = (v: unknown) => ((v as Line[] | undefined) ?? []).map((l) => l.text);
 
+// Ссылка из админки, если она ведёт на конкретную страницу; пустое поле или голый домен («https://max.ru/») — берём из кода.
+const link = (v: unknown, fallback: string) => {
+  try {
+    return typeof v === "string" && new URL(v).pathname.length > 1 ? v : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
 export async function getContent(): Promise<SiteContent> {
   const [settings, steps, promos, directions, reasons, reviews, partners, cars, faqCats, faqItems, articles] = await Promise.all([
     single("site-setting", "populate=*"),
@@ -78,10 +87,10 @@ export async function getContent(): Promise<SiteContent> {
           coords: [Number(o.lat), Number(o.lng)],
         })),
         socials: {
-          telegram: (settings.telegram as string) || localSite.socials.telegram,
-          max: (settings.max as string) || localSite.socials.max,
-          maxChannel: (settings.maxChannel as string) || localSite.socials.maxChannel,
-          vk: (settings.vk as string) || localSite.socials.vk,
+          telegram: link(settings.telegram, localSite.socials.telegram),
+          max: link(settings.max, localSite.socials.max),
+          maxChannel: link(settings.maxChannel, localSite.socials.maxChannel),
+          vk: link(settings.vk, localSite.socials.vk),
           chat: localSite.socials.chat,
         },
       }

@@ -18,7 +18,7 @@ export const site = {
   socials: {
     telegram: "https://t.me/rangauto",
     chat: "https://t.me/RangAuto_Global",
-    max: "https://max.ru/+79375055588",
+    max: "https://max.ru/u/f9LHodD0cOLGTrDNtO6uf7VFbpUcrukmiYhSAJu5GnXGJg_WQGEF3UdQMI4",
     maxChannel: "https://max.ru/join/nvq-cNE2TSXd9-uUWehTleUlcdbpMcZ4pPuWyeBvlCQ",
     vk: "https://vk.ru/rangauto",
   },
