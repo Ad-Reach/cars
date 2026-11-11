@@ -29,7 +29,11 @@ jobs:
         run: |
           KEY="${{ secrets.ROOT_SSH_KEY }}" python3 deploy/fix-key.py > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
           ssh-keygen -l -f ~/.ssh/root_key || { echo "::error::Ключ ROOT_SSH_KEY не читается"; exit 1; }
-          ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes root@$HOST 'set +e
+          for u in root eblo ubuntu admin user debian; do
+            if ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=15 $u@$HOST true 2>/dev/null; then echo "ключ пускает как $u"; U=$u; break; else echo "$u — нет"; fi
+          done
+          [ -n "${U:-}" ] || { ssh -v -i ~/.ssh/root_key -o IdentitiesOnly=yes -o BatchMode=yes root@$HOST true 2>&1 | grep -iE "offering|accepts|denied|authentications that"; exit 1; }
+          ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes $U@$HOST 'set +e
             echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
             echo "== диск"; df -h -x tmpfs -x devtmpfs
             echo "== крупные каталоги"; du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -25
