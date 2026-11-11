@@ -6,13 +6,16 @@
 set -uo pipefail
 echo "== свободно до"; df -h / | tail -1
 
-echo "== удаляю VPN pasarguard"
-for c in pasarguard-pasarguard-1 node; do
+echo "== удаляю VPN pasarguard и проект polymarket-abuse"
+for c in pasarguard-pasarguard-1 node app-telegram-bot-1 app-detector-1 app-clickhouse-1; do
   docker rm -f "$c" 2>/dev/null && echo "удалён контейнер $c" || echo "контейнера $c нет"
 done
-# образы и неиспользуемые тома VPN
-docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' | grep -i pasarguard | awk '{print $2}' | xargs -r docker rmi -f 2>/dev/null || true
-docker volume ls -q | grep -i pasarguard | xargs -r docker volume rm 2>/dev/null || true
+# образы этих проектов
+docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' \
+  | grep -iE 'pasarguard|polymarket-abuse|clickhouse' | awk '{print $2}' \
+  | xargs -r docker rmi -f 2>/dev/null || true
+# их тома (в т.ч. данные ClickHouse ~28 ГБ)
+docker volume ls -q | grep -iE '^app|pasarguard|clickhouse' | xargs -r docker volume rm -f 2>/dev/null || true
 
 echo "== чистка Docker (только мусор, данные не трогаю)"
 docker image prune -f >/dev/null 2>&1 || true
@@ -72,4 +75,4 @@ fi
 
 echo "== порт 443 сейчас"; ss -ltnp | grep ':443 ' || echo "443 свободен"
 echo "== свободно после"; df -h / | tail -1
-echo "== контейнеры"; docker ps --format '{{.Names}} {{.Image}}'
+echo "== осталось контейнеров"; docker ps -a --format '{{.Names}} {{.Image}} {{.Status}}'
