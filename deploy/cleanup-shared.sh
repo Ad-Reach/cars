@@ -6,26 +6,31 @@
 set -uo pipefail
 echo "== свободно до"; df -h / | tail -1
 
-echo "== удаляю VPN pasarguard и проект polymarket-abuse"
-for c in pasarguard-pasarguard-1 node app-telegram-bot-1 app-detector-1 app-clickhouse-1; do
+# Удаляю ТОЛЬКО перечисленные по имени контейнеры (pasarguard VPN и polymarket-abuse).
+# Никаких массовых prune — объём удаления строго ограничен этими списками.
+CONTAINERS="pasarguard-pasarguard-1 node app-telegram-bot-1 app-detector-1 app-clickhouse-1"
+echo "== удаляю контейнеры: $CONTAINERS"
+for c in $CONTAINERS; do
   docker rm -f "$c" 2>/dev/null && echo "удалён контейнер $c" || echo "контейнера $c нет"
 done
-# образы этих проектов
-docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' \
-  | grep -iE 'pasarguard|polymarket-abuse|clickhouse' | awk '{print $2}' \
-  | xargs -r docker rmi -f 2>/dev/null || true
-# их тома (в т.ч. данные ClickHouse ~28 ГБ)
-docker volume ls -q | grep -iE '^app|pasarguard|clickhouse' | xargs -r docker volume rm -f 2>/dev/null || true
 
-echo "== чистка Docker (только мусор, данные не трогаю)"
-docker image prune -f >/dev/null 2>&1 || true
-docker builder prune -f >/dev/null 2>&1 || true
-docker volume prune -f >/dev/null 2>&1 || true   # удаляет только тома, не привязанные к контейнерам
+# Тома этих двух compose-проектов: имена начинаются строго с 'app_' или 'pasarguard_'.
+echo "== тома проектов app_/pasarguard_ (будут удалены поimenно):"
+VOLS=$(docker volume ls -q | grep -E '^(app|pasarguard)_' || true)
+echo "${VOLS:-нет}"
+for v in $VOLS; do docker volume rm -f "$v" 2>/dev/null && echo "удалён том $v"; done
 
-echo "== чистка системы"
+# Образы строго этих репозиториев (по точному имени, не по подстроке 'clickhouse' вообще).
+echo "== образы проектов (поimenно):"
+IMGS=$(docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' \
+  | grep -E 'ghcr\.io/dmitryhudrich/polymarket-abuse/|^pasarguard/|^clickhouse/clickhouse-server' \
+  | awk '{print $2}' | sort -u || true)
+echo "${IMGS:-нет}"
+for i in $IMGS; do docker rmi -f "$i" 2>/dev/null && echo "удалён образ $i"; done
+
+echo "== чистка кэша apt и журналов (ограниченно)"
 apt-get clean 2>/dev/null || true
 journalctl --vacuum-size=200M 2>/dev/null | tail -1 || true
-find /var/log -type f \( -name '*.gz' -o -name '*.[0-9]' -o -name '*.old' \) -delete 2>/dev/null || true
 
 echo "== убираю сайты dashaanddima и rsy из Caddy"
 CF=/etc/caddy/Caddyfile
