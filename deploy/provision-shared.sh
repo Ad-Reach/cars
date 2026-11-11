@@ -20,11 +20,21 @@ if ! swapon --show | grep -q .; then
 fi
 
 echo "== Node 22"
+wait_apt() {
+  for i in $(seq 1 60); do
+    if fuser /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock >/dev/null 2>&1; then
+      echo "apt занят, жду ($i)…"; sleep 5
+    else return 0; fi
+  done
+}
 if ! command -v node >/dev/null || ! node -v | grep -q '^v22\.'; then
+  wait_apt
   curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null
-  apt-get install -y -qq nodejs >/dev/null
+  wait_apt
+  DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs >/dev/null
 fi
 node -v
+node -v | grep -q '^v22\.' || { echo "::warning::Node не 22, а $(node -v)"; }
 
 echo "== каталоги (владелец $U)"
 install -d -o "$U" -g "$U" "$SITE" "$SITE/releases" "$CMS" "$CMS/releases" "$CMS/uploads" "$POTOLKI" "$POTOLKI/releases"
