@@ -5,7 +5,7 @@ name: Server bootstrap
 on:
   push:
     branches: [ccr-d0ccb5ba-g8vfps]
-    paths: [deploy/**, .github/workflows/server-bootstrap.yml]
+    paths: [.github/workflows/server-bootstrap.yml]
   workflow_dispatch:
 
 concurrency:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  HOST: 31.77.10.198
+  HOST: 185.196.117.71
 
 jobs:
   bootstrap:
@@ -25,9 +25,10 @@ jobs:
 
       - name: Reachability
         run: |
-          for p in 22 80 443; do timeout 8 bash -c "echo > /dev/tcp/$HOST/$p" 2>/dev/null && echo "port $p: open" || echo "port $p: CLOSED"; done
+          for p in 1488 80 443; do timeout 8 bash -c "echo > /dev/tcp/$HOST/$p" 2>/dev/null && echo "port $p: open" || echo "port $p: CLOSED"; done
           install -m 700 -d ~/.ssh
-          ssh-keyscan -T 30 $HOST 2>/dev/null | sort | tee ~/.ssh/known_hosts
+          printf 'Host %s\n  Port 1488\n' $HOST > ~/.ssh/config
+          ssh-keyscan -T 30 -p 1488 $HOST 2>/dev/null | sort | tee ~/.ssh/known_hosts
           grep -q ssh- ~/.ssh/known_hosts || { echo "::error::SSH на сервере не отвечает"; exit 1; }
 
       - name: Run bootstrap as root

@@ -1,0 +1,43 @@
+name: Server inspect
+
+# Только чтение: что сейчас крутится на сервере (сайты Caddy, службы, Docker, место на диске).
+on:
+  push:
+    branches: [ccr-d0ccb5ba-g8vfps]
+    paths: [.github/workflows/server-inspect.yml]
+  workflow_dispatch:
+
+env:
+  HOST: 185.196.117.71
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Reachability
+        run: |
+          for p in 22 1488 80 443; do timeout 8 bash -c "echo > /dev/tcp/$HOST/$p" 2>/dev/null && echo "port $p: open" || echo "port $p: CLOSED"; done
+          install -m 700 -d ~/.ssh
+          printf 'Host %s\n  Port 1488\n' $HOST > ~/.ssh/config
+          ssh-keyscan -T 30 -p 1488 $HOST 2>/dev/null | sort | tee ~/.ssh/known_hosts
+          grep -q ssh- ~/.ssh/known_hosts || { echo "::error::SSH на порту 1488 не отвечает"; exit 1; }
+
+      - name: Inspect (read-only)
+        env:
+          SSHPASS: ${{ secrets.VDS_ROOT_PASSWORD }}
+        run: |
+          [ -n "$SSHPASS" ] || { echo "::error::Нет секрета VDS_ROOT_PASSWORD"; exit 1; }
+          sudo apt-get install -y -qq sshpass >/dev/null
+          sshpass -e ssh -o PubkeyAuthentication=no root@$HOST 'set +e
+            echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
+            echo "== диск"; df -h -x tmpfs -x devtmpfs
+            echo "== крупные каталоги"; du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -25
+            echo "== порты"; ss -ltnp
+            echo "== службы"; systemctl list-units --type=service --state=running --no-pager --no-legend | cut -c1-90
+            echo "== docker"; command -v docker && { docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"; docker system df; }
+            echo "== caddy"; cat /etc/caddy/Caddyfile; ls /etc/caddy
+            echo "== nginx"; ls /etc/nginx/sites-enabled 2>/dev/null && grep -h server_name /etc/nginx/sites-enabled/* 2>/dev/null
+            echo "== /srv /var/www /opt /home"; ls -la /srv /var/www /opt /home 2>/dev/null
+            echo "== cron"; crontab -l 2>/dev/null; ls /etc/cron.d
+            echo "== node"; command -v node && node -v'

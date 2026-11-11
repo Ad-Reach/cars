@@ -43,10 +43,11 @@ jobs:
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           cp deploy/known_hosts ~/.ssh/known_hosts
+          printf 'Host 185.196.117.71\n  Port 1488\n' > ~/.ssh/config
 
       - name: Upload and switch release
         env:
-          HOST: 31.77.10.198
+          HOST: 185.196.117.71
           REL: ${{ github.sha }}
         run: |
           rsync -az --delete release/ deploy@$HOST:/srv/rangauto/releases/$REL/
@@ -59,7 +60,7 @@ jobs:
 
       - name: Health check
         env:
-          HOST: 31.77.10.198
+          HOST: 185.196.117.71
         run: |
           for i in $(seq 1 20); do
             code=$(ssh deploy@$HOST "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/" || true)

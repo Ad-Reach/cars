@@ -19,6 +19,20 @@ CMS_ENV=/etc/rangauto-cms.env
 
 echo "== система"; head -2 /etc/os-release; uname -m
 
+echo "== место до чистки"; df -h / | tail -1
+echo "== чистка (только кэши, старые пакеты и логи)"
+apt-get autoremove -y -qq >/dev/null 2>&1 || true
+apt-get clean
+journalctl --vacuum-size=200M >/dev/null 2>&1 || true
+find /var/log -type f \( -name '*.gz' -o -name '*.[0-9]' -o -name '*.old' \) -delete 2>/dev/null || true
+find /tmp /var/tmp -mindepth 1 -mtime +7 -delete 2>/dev/null || true
+if command -v docker >/dev/null; then docker image prune -f >/dev/null 2>&1; docker builder prune -f >/dev/null 2>&1; fi
+command -v npm >/dev/null && npm cache clean --force >/dev/null 2>&1 || true
+rm -rf /root/.cache/* 2>/dev/null || true
+echo "== место после чистки"; df -h / | tail -1
+echo "== самые большие каталоги (для ручного разбора)"
+du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -15
+
 echo "== пакеты"
 apt-get update -qq
 apt-get install -y -qq curl ca-certificates gnupg rsync openssl python3 debian-keyring debian-archive-keyring apt-transport-https >/dev/null
@@ -53,7 +67,7 @@ install -d -m 700 -o "$U" -g "$U" "/home/$U/.ssh"
 AK="/home/$U/.ssh/authorized_keys"
 touch "$AK"
 # ключи деплоя: новый (DEPLOY_SSH_KEY в potolki) и старый из cars (DEPLOY_SSH_KEY там) + дополнительные
-KEYS="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZTq64wiIh3DYf4sv2sFlGN4AFLnIFrPs3F9thX4ftM deploy@31.77.10.198
+KEYS="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZTq64wiIh3DYf4sv2sFlGN4AFLnIFrPs3F9thX4ftM deploy@185.196.117.71
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILwzvtWji3ndqb5MeiWkZmJI6wnOpmlAC8REiUf/kRUJ github-actions-rangauto
 ${DEPLOY_PUBKEYS:-}"
 while read -r key; do
@@ -111,6 +125,14 @@ for v in TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_IDS TELEGRAM_ADMIN_IDS SMTP_HOST SMTP_
   set_env "$v" "${!v:-}"
 done
 echo "заданы: $(cut -d= -f1 "$SITE_ENV" | tr '\n' ' ')"
+
+echo "== порты 3000/1337"
+for p in 3000 1337; do
+  owner=$(ss -ltnpH "sport = :$p" | grep -oE 'users:\(\("[^"]+"' | head -1 || true)
+  if [ -n "$owner" ] && ! systemctl is-active -q rangauto rangauto-cms 2>/dev/null; then
+    echo "Порт $p уже занят ($owner) — сайт rangauto там не запустится. Остановлено."; exit 1
+  fi
+done
 
 echo "== systemd"
 cat > /etc/systemd/system/rangauto.service <<EOF
@@ -182,13 +204,8 @@ systemctl enable -q rangauto.service rangauto-cms.service
 [ -e "$CMS/current" ] && systemctl restart rangauto-cms.service
 
 echo "== Caddy"
-cat > /etc/caddy/Caddyfile <<EOF
-{
-	email admin@rangauto.ru
-	# только Let's Encrypt: ZeroSSL не выдаёт сертификаты на домены .ru
-	cert_issuer acme
-}
-
+SITES=/etc/caddy/rangauto-sites.caddy
+cat > "$SITES" <<EOF
 rangauto.ru {
 	encode zstd gzip
 	redir /cms /cms/admin
@@ -221,7 +238,30 @@ www.centro-plus.ru {
 	redir https://centro-plus.ru{uri} permanent
 }
 EOF
-caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile 2>&1 | tail -1
+CF=/etc/caddy/Caddyfile
+if grep -q 'import /etc/caddy/rangauto-sites.caddy' "$CF" 2>/dev/null; then
+  echo "Caddyfile уже подключает наши сайты"
+elif [ ! -s "$CF" ] || grep -q '/usr/share/caddy' "$CF"; then
+  # стандартный Caddyfile после установки — заменяем своим
+  [ -f "$CF" ] && cp -a "$CF" "$CF.bak.$(date +%s)"
+  cat > "$CF" <<'EOF2'
+{
+	email admin@rangauto.ru
+	# только Let's Encrypt: ZeroSSL не выдаёт сертификаты на домены .ru
+	cert_issuer acme
+}
+
+import /etc/caddy/rangauto-sites.caddy
+EOF2
+else
+  # на сервере уже есть другие сайты — их не трогаем, только подключаем наш файл
+  cp -a "$CF" "$CF.bak.$(date +%s)"
+  printf '\nimport /etc/caddy/rangauto-sites.caddy\n' >> "$CF"
+fi
+if ! caddy validate --config "$CF" --adapter caddyfile >/tmp/caddy-validate.log 2>&1; then
+  tail -5 /tmp/caddy-validate.log; echo "Конфиг Caddy не прошёл проверку — старый не трогаю"
+  B=$(ls -1t "$CF".bak.* 2>/dev/null | head -1); [ -n "$B" ] && cp -a "$B" "$CF"; exit 1
+fi
 systemctl enable -q caddy
 systemctl reload caddy 2>/dev/null || systemctl restart caddy
 
@@ -233,5 +273,5 @@ echo "== итог"
 systemctl is-active caddy
 ss -ltn | grep -E ':(22|80|443|3000|1337) ' || true
 echo "== отпечатки сервера (для deploy/known_hosts)"
-for f in /etc/ssh/ssh_host_*_key.pub; do echo "31.77.10.198 $(cut -d' ' -f1,2 "$f")"; done
+for f in /etc/ssh/ssh_host_*_key.pub; do echo "$(curl -4 -s ifconfig.me || hostname -I | cut -d" " -f1) $(cut -d' ' -f1,2 "$f")"; done
 echo "Готово."
