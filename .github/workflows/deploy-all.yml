@@ -1,0 +1,103 @@
+name: Deploy all (shared server)
+
+# Сборка и выкладка на 185.196.117.71 под пользователем w1thluv (ключ ROOT_SSH_KEY).
+# Запуск: правка файла deploy/RUN2 (push) или вручную.
+on:
+  push:
+    branches: [ccr-d0ccb5ba-g8vfps]
+    paths: [deploy/RUN2]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-all
+  cancel-in-progress: false
+
+env:
+  HOST: 185.196.117.71
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: SSH ready
+        run: |
+          install -m 700 -d ~/.ssh
+          printf 'Host %s\n  Port 1488\n  IdentitiesOnly yes\n  IdentityFile ~/.ssh/id\n' "$HOST" > ~/.ssh/config
+          ssh-keyscan -T 30 -p 1488 $HOST 2>/dev/null | sort > ~/.ssh/known_hosts
+          KEY="${{ secrets.ROOT_SSH_KEY }}" python3 deploy/fix-key.py > ~/.ssh/id; chmod 600 ~/.ssh/id
+          ssh-keygen -l -f ~/.ssh/id
+
+      # ---------- сайт rangauto.ru (Next.js) ----------
+      - name: Build site
+        run: |
+          npm ci
+          npx next build
+        env:
+          CMS_URL: https://rangauto.ru/cms
+          CMS_PUBLIC_URL: https://rangauto.ru/cms
+      - name: Ship site
+        run: |
+          rm -rf release && mkdir -p release/.next
+          cp -r .next/standalone/. release/
+          cp -r .next/static release/.next/static
+          cp -r public release/public
+          rsync -az --delete -e ssh release/ w1thluv@$HOST:/srv/rangauto/releases/$GITHUB_SHA/
+          ssh w1thluv@$HOST "set -e
+            cd /srv/rangauto
+            ln -sfn releases/$GITHUB_SHA current.tmp && mv -Tf current.tmp current
+            date -u +%FT%TZ > deployed
+            ls -1dt releases/* | tail -n +6 | xargs -r rm -rf"
+
+      # ---------- CMS (Strapi) ----------
+      - name: Build CMS
+        working-directory: cms
+        run: |
+          npm ci
+          npm run build
+          npm prune --omit=dev
+        env:
+          NODE_ENV: production
+          PUBLIC_URL: https://rangauto.ru/cms
+          ADMIN_COOKIE_PATH: /cms/admin
+      - name: Ship CMS
+        run: |
+          rm -rf cms-release && mkdir -p cms-release/public
+          cp -r cms/dist cms/node_modules cms/package.json cms/tsconfig.json cms/favicon.png cms/seed cms-release/
+          cp cms/public/robots.txt cms-release/public/ 2>/dev/null || true
+          rsync -az --delete --link-dest=/srv/rangauto/cms/current/ -e ssh cms-release/ w1thluv@$HOST:/srv/rangauto/cms/releases/$GITHUB_SHA/
+          ssh w1thluv@$HOST "set -e
+            cd /srv/rangauto/cms
+            ln -sfn /srv/rangauto/cms/uploads releases/$GITHUB_SHA/public/uploads
+            ln -sfn releases/$GITHUB_SHA current.tmp && mv -Tf current.tmp current
+            date -u +%FT%TZ > deployed
+            ls -1dt releases/* | tail -n +4 | xargs -r rm -rf"
+
+      # ---------- centro-plus.ru (статика из DmitryHudrich/potolki) ----------
+      - name: Build & ship potolki
+        run: |
+          git clone -q --depth 1 -b ccr-d0ccb5ba-g8vfps https://github.com/DmitryHudrich/potolki.git /tmp/potolki
+          cd /tmp/potolki && python3 build.py >/dev/null
+          REL=$(git rev-parse HEAD)
+          rsync -az --delete -e ssh dist/ w1thluv@$HOST:/srv/centro-plus/releases/$REL/
+          ssh w1thluv@$HOST "set -e
+            cd /srv/centro-plus
+            chmod -R a+rX releases/$REL
+            ln -sfn releases/$REL current.tmp && mv -Tf current.tmp current
+            ls -1dt releases/* | tail -n +4 | xargs -r rm -rf"
+
+      - name: Health
+        run: |
+          sleep 8
+          for u in "127.0.0.1:3000 site" "127.0.0.1:1339/_health cms"; do
+            set -- $u
+            code=$(ssh w1thluv@$HOST "curl -s -o /dev/null -w '%{http_code}' --max-time 5 http://$1" || echo ERR)
+            echo "$2: $code"
+          done
+          ssh w1thluv@$HOST 'systemctl is-active rangauto rangauto-cms; ls -la /srv/centro-plus/current/ | head -3'

@@ -19,22 +19,20 @@ if ! swapon --show | grep -q .; then
   echo "swap 2G включён"
 fi
 
-echo "== Node 22"
-wait_apt() {
-  for i in $(seq 1 60); do
-    if fuser /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock >/dev/null 2>&1; then
-      echo "apt занят, жду ($i)…"; sleep 5
-    else return 0; fi
-  done
-}
-if ! command -v node >/dev/null || ! node -v | grep -q '^v22\.'; then
-  wait_apt
-  curl -fsSL https://deb.nodesource.com/setup_22.x | bash - >/dev/null
-  wait_apt
-  DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nodejs >/dev/null
+echo "== Node 22 (официальный tarball в /usr/local, без apt — на сервере постоянно занят apt)"
+NODE_V=v22.11.0
+if ! /usr/local/bin/node -v 2>/dev/null | grep -q '^v22\.'; then
+  cd /tmp
+  curl -fsSLo node.tar.xz "https://nodejs.org/dist/${NODE_V}/node-${NODE_V}-linux-x64.tar.xz"
+  rm -rf /usr/local/lib/node22 && mkdir -p /usr/local/lib/node22
+  tar -xJf node.tar.xz -C /usr/local/lib/node22 --strip-components=1
+  ln -sfn /usr/local/lib/node22/bin/node /usr/local/bin/node
+  ln -sfn /usr/local/lib/node22/bin/npm /usr/local/bin/npm
+  ln -sfn /usr/local/lib/node22/bin/npx /usr/local/bin/npx
+  rm -f node.tar.xz
 fi
-node -v
-node -v | grep -q '^v22\.' || { echo "::warning::Node не 22, а $(node -v)"; }
+NODE=/usr/local/bin/node
+$NODE -v
 
 echo "== каталоги (владелец $U)"
 install -d -o "$U" -g "$U" "$SITE" "$SITE/releases" "$CMS" "$CMS/releases" "$CMS/uploads" "$POTOLKI" "$POTOLKI/releases"
@@ -94,7 +92,7 @@ EnvironmentFile=$SITE_ENV
 Environment=NODE_ENV=production
 Environment=PORT=3000
 Environment=HOSTNAME=127.0.0.1
-ExecStart=/usr/bin/node server.js
+ExecStart=/usr/local/bin/node server.js
 Restart=always
 RestartSec=3
 
@@ -113,7 +111,7 @@ User=$U
 WorkingDirectory=$CMS/current
 EnvironmentFile=$CMS_ENV
 Environment=NODE_OPTIONS=--max-old-space-size=640
-ExecStart=/usr/bin/node node_modules/@strapi/strapi/bin/strapi.js start
+ExecStart=/usr/local/bin/node node_modules/@strapi/strapi/bin/strapi.js start
 Restart=always
 RestartSec=5
 
@@ -196,7 +194,7 @@ else
 fi
 
 echo "== итог"
-node -v; swapon --show | tail -1
+/usr/local/bin/node -v; swapon --show | tail -1
 systemctl is-enabled rangauto rangauto-cms
 echo "порты:"; ss -ltn | grep -E ':(80|443|1337|3000|1339) ' || true
 echo "Готово. Теперь нужен деплой кода (отдельный шаг)."
