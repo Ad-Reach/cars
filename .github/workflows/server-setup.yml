@@ -4,11 +4,10 @@ name: Server setup
 # stage=cleanup — чистка места, снос VPN pasarguard, удаление сайтов dashaanddima/rsy.
 # Вход: ключ ROOT_SSH_KEY (пускает как w1thluv, он в группе sudo), пароль sudo — секрет ROOT_PW.
 on:
+  push:
+    branches: [ccr-d0ccb5ba-g8vfps]
+    paths: [deploy/RUN]
   workflow_dispatch:
-    inputs:
-      stage:
-        description: "cleanup"
-        default: cleanup
 
 env:
   HOST: 185.196.117.71
