@@ -52,8 +52,9 @@ passwd -l "$U" >/dev/null   # вход только по ключу, sudo нет
 install -d -m 700 -o "$U" -g "$U" "/home/$U/.ssh"
 AK="/home/$U/.ssh/authorized_keys"
 touch "$AK"
-# ключ деплоя (секрет DEPLOY_SSH_KEY в cars и potolki) + дополнительные
+# ключи деплоя: новый (DEPLOY_SSH_KEY в potolki) и старый из cars (DEPLOY_SSH_KEY там) + дополнительные
 KEYS="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZTq64wiIh3DYf4sv2sFlGN4AFLnIFrPs3F9thX4ftM deploy@31.77.10.198
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILwzvtWji3ndqb5MeiWkZmJI6wnOpmlAC8REiUf/kRUJ github-actions-rangauto
 ${DEPLOY_PUBKEYS:-}"
 while read -r key; do
   if [ -n "$key" ] && ! grep -qF "$key" "$AK"; then echo "$key" >> "$AK"; fi
