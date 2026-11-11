@@ -1,0 +1,54 @@
+name: Server bootstrap
+
+# Разовая настройка нового сервера от root (deploy/bootstrap-server.sh) + первая выкладка centro-plus.ru.
+# Нужен секрет VDS_ROOT_PASSWORD (пароль root). Повторный запуск безопасен.
+on:
+  push:
+    branches: [ccr-d0ccb5ba-g8vfps]
+    paths: [deploy/**, .github/workflows/server-bootstrap.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: server-bootstrap
+  cancel-in-progress: false
+
+env:
+  HOST: 31.77.10.198
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reachability
+        run: |
+          for p in 22 80 443; do timeout 8 bash -c "echo > /dev/tcp/$HOST/$p" 2>/dev/null && echo "port $p: open" || echo "port $p: CLOSED"; done
+          install -m 700 -d ~/.ssh
+          ssh-keyscan -T 30 $HOST 2>/dev/null | sort | tee ~/.ssh/known_hosts
+          grep -q ssh- ~/.ssh/known_hosts || { echo "::error::SSH на сервере не отвечает"; exit 1; }
+
+      - name: Run bootstrap as root
+        env:
+          SSHPASS: ${{ secrets.VDS_ROOT_PASSWORD }}
+        run: |
+          [ -n "$SSHPASS" ] || { echo "::error::Нет секрета VDS_ROOT_PASSWORD"; exit 1; }
+          sudo apt-get install -y -qq sshpass >/dev/null
+          sshpass -e scp -o PubkeyAuthentication=no deploy/bootstrap-server.sh root@$HOST:/root/bootstrap.sh
+          sshpass -e ssh -o PubkeyAuthentication=no root@$HOST 'bash /root/bootstrap.sh'
+
+      - name: Check login as deploy
+        run: |
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh -o BatchMode=yes deploy@$HOST 'echo "whoami: $(whoami)"; sudo -n true 2>/dev/null && echo "sudo: ЕСТЬ" || echo "sudo: нет"'
+
+      - name: Publish centro-plus.ru
+        run: |
+          git clone -q --depth 1 -b ccr-d0ccb5ba-g8vfps https://github.com/DmitryHudrich/potolki.git /tmp/potolki
+          cd /tmp/potolki && python3 build.py >/dev/null
+          REL=$(git rev-parse HEAD)
+          tar -C dist -czf - . | ssh deploy@$HOST "set -e; rm -rf /srv/centro-plus/releases/$REL; mkdir -p /srv/centro-plus/releases/$REL; tar -xzf - -C /srv/centro-plus/releases/$REL"
+          ssh deploy@$HOST 'bash -s' "$REL" < deploy/server-setup.sh
