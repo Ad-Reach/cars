@@ -1,7 +1,7 @@
 name: CI
 
-# Проверка сборки. Деплой делает Timeweb App Platform сам:
-# пуш в production → пересборка Dockerfile → выкладка (настройки — репозиторий Ad-Reach/infra).
+# Проверка сборки на PR и main. Зелёный main сам уходит в production,
+# App Platform пересобирает Dockerfile и выкладывает (настройки — Ad-Reach/infra).
 on:
   pull_request:
   push:
@@ -20,3 +20,33 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: docker build -t rangauto .
+
+  # Зелёный main автоматически уходит в production → App Platform выкладывает сайт.
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://rangauto.ru
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fast-forward production
+        run: git push origin HEAD:refs/heads/production
+      - name: Wait for live site
+        continue-on-error: true
+        run: |
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://rangauto.ru/ || true)
+            echo "attempt $i: $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 15
+          done
+          exit 1
