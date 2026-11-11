@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, ChevronRight, Heart, MapPin, Menu, Search, X } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
 import { nav, telHref } from "@/data/site";
-import type { Site } from "@/lib/cms";
+import type { Site } from "@/lib/content";
 import styles from "./Header.module.css";
 
 function Typewriter({ text, className }: { text: string; className: string }) {

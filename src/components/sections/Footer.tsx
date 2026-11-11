@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { catalogUrls, telHref } from "@/data/site";
-import type { Site } from "@/lib/cms";
+import type { Site } from "@/lib/content";
 import styles from "./Footer.module.css";
 
 const catalogLinks = [

@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 
 type Chat = { id: number; type: string; title?: string; username?: string; first_name?: string };
@@ -15,8 +16,9 @@ const ids = (value: string | undefined) =>
     .map((s) => s.trim())
     .filter(Boolean);
 
-const storeFile = () =>
-  process.env.TELEGRAM_CHATS_FILE ?? path.resolve(process.cwd(), "..", "..", "telegram-chats.json");
+// В App Platform диск приложения сбрасывается при каждом деплое: группы, подключённые
+// через бота, живут до следующего деплоя. Постоянный список — TELEGRAM_CHAT_IDS.
+const storeFile = () => process.env.TELEGRAM_CHATS_FILE ?? path.join(os.tmpdir(), "telegram-chats.json");
 
 export const webhookSecret = () => createHash("sha256").update(`webhook:${token()}`).digest("hex").slice(0, 48);
 
@@ -96,7 +98,9 @@ export async function sendToAll(text: string) {
   return results.some((r) => r.status === "fulfilled");
 }
 
-const CONNECTED = "✅ Группа подключена: сюда будут приходить заявки с сайта rangauto.ru.";
+const CONNECTED = (chatId: number) =>
+  `✅ Группа подключена: сюда будут приходить заявки с сайта rangauto.ru.\n\n` +
+  `Чтобы подключение сохранилось после обновлений сайта, добавьте ID группы <code>${chatId}</code> в TELEGRAM_CHAT_IDS (репозиторий Ad-Reach/infra).`;
 const NOT_ADMIN = (userId: number) =>
   `Подключать группы к заявкам может только администратор. Ваш Telegram ID: <code>${userId}</code> — попросите добавить его в список администраторов бота.`;
 
@@ -115,7 +119,7 @@ export async function handleUpdate(update: Update) {
     } else if (status === "member" || status === "administrator") {
       if (admins().has(from.id)) {
         await addChat(chat, from.id);
-        await say(chat.id, CONNECTED);
+        await say(chat.id, CONNECTED(chat.id));
       } else {
         await say(chat.id, `${NOT_ADMIN(from.id)}\nПосле этого администратор может отправить здесь /connect.`);
       }
@@ -144,7 +148,7 @@ export async function handleUpdate(update: Update) {
   if (command === "/connect") {
     if (!admins().has(userId)) return say(chat.id, NOT_ADMIN(userId));
     await addChat(chat, userId);
-    await say(chat.id, CONNECTED);
+    await say(chat.id, CONNECTED(chat.id));
   } else if (command === "/disconnect") {
     if (!admins().has(userId)) return say(chat.id, NOT_ADMIN(userId));
     await removeChat(chat.id);

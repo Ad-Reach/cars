@@ -10,13 +10,12 @@ npm run dev   # http://localhost:3000
 Контент и заглушки — `src/data/content.ts`, контакты — `src/data/site.ts`.
 Ветки и деплой:
 - `main` — разработка.
-- `production` — боевой сайт https://rangauto.ru (`.github/workflows/deploy.yml`):
-  сборка standalone-сервера → rsync на сервер → переключение симлинка `current` → перезапуск systemd.
+- `production` — боевой сайт https://rangauto.ru в Timeweb App Platform (Амстердам).
+  App Platform сам пересобирает `Dockerfile` при пуше в `production`.
   Выкатить: `git push origin main:production` (или merge main → production).
+- Инфраструктура и переменные окружения (Telegram, SMTP, адрес для заявок) — репозиторий `Ad-Reach/infra`.
 
-Сервер: Ubuntu, Caddy (HTTPS, автосертификаты Let's Encrypt, www → без www) → Node на 127.0.0.1:3000,
-сервис `rangauto`, релизы в `/srv/rangauto/releases`, логи заявок: `journalctl -u rangauto`.
+Контент хранится в коде: `src/data/*.ts`. Отдельной CMS нет.
 
-Заявки с форм уходят в Telegram и дублируются на почту из Strapi («Настройки сайта» → email).
-Для почты в `/etc/rangauto.env` нужны `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` (необязательно);
-например для mail.ru: `SMTP_HOST=smtp.mail.ru`, логин — ящик, пароль — «пароль для внешних приложений». После правки: `systemctl restart rangauto`.
+Заявки с форм уходят в Telegram и дублируются на почту (`LEAD_EMAIL_TO`, по умолчанию email из `src/data/site.ts`).
+SMTP: `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` (необязательно).

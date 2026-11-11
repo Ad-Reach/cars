@@ -1,10 +1,9 @@
 import nodemailer, { type Transporter } from "nodemailer";
 import { site as localSite } from "@/data/site";
-import { cmsFetch } from "@/lib/cms/cmsFetch";
 
-// Дублирование заявок на почту. Адрес получателя — поле «email» в Strapi
-// (Настройки сайта), если CMS недоступна — из src/data/site.ts.
-// SMTP — переменные окружения сервера (/etc/rangauto.env):
+// Дублирование заявок на почту. Адрес получателя — LEAD_EMAIL_TO
+// (можно несколько через запятую), по умолчанию email из src/data/site.ts.
+// SMTP — переменные окружения приложения в App Platform (задаются в Ad-Reach/infra):
 //   SMTP_HOST, SMTP_PORT (по умолчанию 465), SMTP_USER, SMTP_PASS,
 //   SMTP_FROM (по умолчанию SMTP_USER). Без SMTP_HOST письма не отправляются.
 
@@ -27,9 +26,8 @@ function getTransport() {
   return transport;
 }
 
-async function recipient() {
-  const json = (await cmsFetch("/site-setting")) as { data?: { email?: string } } | null;
-  return json?.data?.email?.trim() || localSite.email;
+function recipient() {
+  return process.env.LEAD_EMAIL_TO?.trim() || localSite.email;
 }
 
 const htmlToText = (html: string) =>
@@ -44,7 +42,7 @@ export async function sendLeadEmail(subject: string, html: string) {
   const smtp = getTransport();
   if (!smtp) return false;
   try {
-    const to = await recipient();
+    const to = recipient();
     await smtp.sendMail({
       from: { name: "Сайт rangauto.ru", address: process.env.SMTP_FROM || process.env.SMTP_USER || to },
       to,

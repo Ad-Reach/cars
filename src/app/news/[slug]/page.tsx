@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticlePage } from "@/components/news/ArticlePage";
-import { getContent } from "@/lib/cms";
+import { getContent } from "@/lib/content";
 import { pageMeta, pageTitle } from "@/lib/seo";
 
 export async function generateStaticParams() {
