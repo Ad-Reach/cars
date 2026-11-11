@@ -33,9 +33,10 @@ jobs:
           ROOT_PW: ${{ secrets.ROOT_PW }}
         run: |
           [ -n "$ROOT_PW" ] || { echo "::error::Нет секрета ROOT_PW (пароль sudo пользователя w1thluv)"; exit 1; }
+          SCRIPT=$(head -1 deploy/RUN | awk '{print $1}')   # имя скрипта из первой строки deploy/RUN
+          echo "Запускаю deploy/$SCRIPT от root"
+          [ -f "deploy/$SCRIPT" ] || { echo "::error::нет deploy/$SCRIPT"; exit 1; }
           SSH="ssh -i $HOME/.ssh/id -o IdentitiesOnly=yes w1thluv@$HOST"
-          scp -i ~/.ssh/id -o IdentitiesOnly=yes deploy/cleanup-shared.sh w1thluv@$HOST:/tmp/cs.sh
-          # пароль уходит в stdin sudo -S; сам скрипт читается из файла, поэтому его stdin не мешает
-          $SSH 'sudo -S -p "" bash /tmp/cs.sh; rm -f /tmp/cs.sh' <<< "$ROOT_PW" 2>&1 | grep -vi "try again" || true
-          # проверим, что sudo реально сработал
-          $SSH 'sudo -S -p "" true' <<< "$ROOT_PW" 2>/dev/null && echo "SUDO-OK" || { echo "::error::Пароль ROOT_PW не подходит для sudo"; exit 1; }
+          scp -i ~/.ssh/id -o IdentitiesOnly=yes "deploy/$SCRIPT" w1thluv@$HOST:/tmp/run.sh
+          $SSH 'sudo -S -p "" bash /tmp/run.sh; rc=$?; rm -f /tmp/run.sh; exit $rc' <<< "$ROOT_PW" 2>&1 | grep -vi "try again" || true
+          $SSH 'sudo -S -p "" true' <<< "$ROOT_PW" 2>/dev/null && echo "SUDO-OK" || { echo "::error::Пароль ROOT_PW не подходит"; exit 1; }
