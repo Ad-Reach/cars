@@ -38,14 +38,10 @@ jobs:
             exit 1
           fi
           ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes $U@$HOST 'set +e
-            echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
-            echo "== диск"; df -h -x tmpfs -x devtmpfs
-            echo "== крупные каталоги"; du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -25
-            echo "== порты"; ss -ltnp
-            echo "== службы"; systemctl list-units --type=service --state=running --no-pager --no-legend | cut -c1-90
-            echo "== docker"; command -v docker && { docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"; docker system df; }
-            echo "== caddy"; cat /etc/caddy/Caddyfile; ls /etc/caddy
-            echo "== nginx"; ls /etc/nginx/sites-enabled 2>/dev/null && grep -h server_name /etc/nginx/sites-enabled/* 2>/dev/null
-            echo "== /srv /var/www /opt /home"; ls -la /srv /var/www /opt /home 2>/dev/null
-            echo "== cron"; crontab -l 2>/dev/null; ls /etc/cron.d
-            echo "== node"; command -v node && node -v'
+            echo "== кто я"; whoami; id -nG
+            echo "== sudo без пароля"; sudo -n true 2>/dev/null && echo "sudo-n: ДА" || echo "sudo-n: нет"
+            echo "== 443 держит (docker)"; docker ps --format "{{.Names}}  {{.Image}}  {{.Ports}}"
+            echo "== 443/1337/3000 (sudo)"; sudo -n ss -ltnp 2>/dev/null | grep -E ":(443|1337|3000) " || echo "нет данных без root"
+            echo "== node"; command -v node && node -v || echo "node нет"
+            echo "== caddy global"; sudo -n head -8 /etc/caddy/Caddyfile 2>/dev/null || head -8 /etc/caddy/Caddyfile 2>/dev/null
+            echo "== свободно"; df -h / | tail -1'
