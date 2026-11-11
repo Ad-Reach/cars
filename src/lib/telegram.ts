@@ -1,10 +1,12 @@
 import { createHash } from "node:crypto";
-import fs from "node:fs/promises";
-import os from "node:os";
-import path from "node:path";
+import { readChats, writeChats } from "@/lib/chatStore";
+
+// Бот заявок: заявки приходят во все группы, куда добавлен бот.
+// Группа подключается сама, когда бота в неё добавляют (или по команде /connect),
+// и отключается, когда бота удаляют (или по /disconnect). Список групп — в S3 (src/lib/chatStore.ts).
+// TELEGRAM_CHAT_IDS (необязательно) — чаты, куда слать всегда, через запятую.
 
 type Chat = { id: number; type: string; title?: string; username?: string; first_name?: string };
-type StoredChat = { id: number; title: string; addedBy: number; addedAt: string };
 
 const API = process.env.TELEGRAM_API_URL ?? "https://api.telegram.org";
 
@@ -16,49 +18,31 @@ const ids = (value: string | undefined) =>
     .map((s) => s.trim())
     .filter(Boolean);
 
-// В App Platform диск приложения сбрасывается при каждом деплое: группы, подключённые
-// через бота, живут до следующего деплоя. Постоянный список — TELEGRAM_CHAT_IDS.
-const storeFile = () => process.env.TELEGRAM_CHATS_FILE ?? path.join(os.tmpdir(), "telegram-chats.json");
-
 export const webhookSecret = () => createHash("sha256").update(`webhook:${token()}`).digest("hex").slice(0, 48);
 
-function admins() {
-  const list = [...ids(process.env.TELEGRAM_ADMIN_IDS), ...ids(process.env.TELEGRAM_CHAT_IDS).filter((id) => !id.startsWith("-"))];
-  return new Set(list.map(Number));
-}
-
-async function readStore(): Promise<StoredChat[]> {
-  try {
-    return JSON.parse(await fs.readFile(/*turbopackIgnore: true*/ storeFile(), "utf8"));
-  } catch {
-    return [];
-  }
-}
-
-async function writeStore(chats: StoredChat[]) {
-  const file = storeFile();
-  await fs.writeFile(/*turbopackIgnore: true*/ `${file}.tmp`, JSON.stringify(chats, null, 2));
-  await fs.rename(/*turbopackIgnore: true*/ `${file}.tmp`, file);
-}
-
 async function addChat(chat: Chat, addedBy: number) {
-  const chats = (await readStore()).filter((c) => c.id !== chat.id);
+  const chats = await readChats();
+  if (chats.some((c) => c.id === chat.id)) return false;
   chats.push({ id: chat.id, title: chat.title ?? chat.username ?? String(chat.id), addedBy, addedAt: new Date().toISOString() });
-  await writeStore(chats);
+  await writeChats(chats);
+  console.log("[telegram] группа подключена", chat.id, chat.title ?? "");
+  return true;
 }
 
 async function removeChat(id: number) {
-  const chats = await readStore();
+  const chats = await readChats();
   const rest = chats.filter((c) => c.id !== id);
-  if (rest.length !== chats.length) await writeStore(rest);
+  if (rest.length === chats.length) return;
+  await writeChats(rest);
+  console.log("[telegram] группа отключена", id);
 }
 
 async function replaceChat(from: number, to: number) {
-  const chats = await readStore();
+  const chats = await readChats();
   const found = chats.find((c) => c.id === from);
   if (!found) return;
   found.id = to;
-  await writeStore(chats);
+  await writeChats(chats);
 }
 
 async function call(method: string, body: Record<string, unknown>) {
@@ -76,7 +60,7 @@ const say = (chat_id: number, text: string) => call("sendMessage", { chat_id, te
 
 export async function sendToAll(text: string) {
   if (!token()) return false;
-  const stored = await readStore();
+  const stored = await readChats();
   const recipients = [...new Set([...ids(process.env.TELEGRAM_CHAT_IDS), ...stored.map((c) => String(c.id))])];
   if (!recipients.length) return false;
 
@@ -98,62 +82,51 @@ export async function sendToAll(text: string) {
   return results.some((r) => r.status === "fulfilled");
 }
 
-const CONNECTED = (chatId: number) =>
-  `✅ Группа подключена: сюда будут приходить заявки с сайта rangauto.ru.\n\n` +
-  `Чтобы подключение сохранилось после обновлений сайта, добавьте ID группы <code>${chatId}</code> в TELEGRAM_CHAT_IDS (репозиторий Ad-Reach/infra).`;
-const NOT_ADMIN = (userId: number) =>
-  `Подключать группы к заявкам может только администратор. Ваш Telegram ID: <code>${userId}</code> — попросите добавить его в список администраторов бота.`;
+const CONNECTED = "✅ Группа подключена: сюда будут приходить заявки с сайта rangauto.ru.";
 
 type Update = {
   my_chat_member?: { chat: Chat; from: { id: number }; new_chat_member: { status: string } };
   message?: { chat: Chat; from?: { id: number }; text?: string; migrate_to_chat_id?: number };
 };
 
+const isGroup = (chat: Chat) => chat.type === "group" || chat.type === "supergroup";
+
 export async function handleUpdate(update: Update) {
   const member = update.my_chat_member;
-  if (member && member.chat.type !== "private") {
+  if (member && isGroup(member.chat)) {
     const { chat, from } = member;
     const status = member.new_chat_member.status;
     if (status === "left" || status === "kicked") {
       await removeChat(chat.id);
     } else if (status === "member" || status === "administrator") {
-      if (admins().has(from.id)) {
-        await addChat(chat, from.id);
-        await say(chat.id, CONNECTED(chat.id));
-      } else {
-        await say(chat.id, `${NOT_ADMIN(from.id)}\nПосле этого администратор может отправить здесь /connect.`);
-      }
+      if (await addChat(chat, from.id)) await say(chat.id, CONNECTED);
     }
     return;
   }
 
   const message = update.message;
   if (!message) return;
+  const chat = message.chat;
   if (message.migrate_to_chat_id) {
-    await replaceChat(message.chat.id, message.migrate_to_chat_id);
+    await replaceChat(chat.id, message.migrate_to_chat_id);
     return;
   }
   const command = message.text?.trim().split(/[\s@]/)[0].toLowerCase();
-  const userId = message.from?.id ?? 0;
-  const chat = message.chat;
 
-  if (command === "/start" && chat.type === "private") {
-    await say(chat.id, admins().has(userId)
-      ? "Вы администратор бота заявок. Добавьте бота в группу — она подключится автоматически."
-      : NOT_ADMIN(userId));
+  if (chat.type === "private") {
+    if (command === "/start") await say(chat.id, "Это бот заявок сайта rangauto.ru. Добавьте его в группу — заявки начнут приходить туда.");
     return;
   }
-  if (chat.type === "private") return;
+  if (!isGroup(chat)) return;
 
-  if (command === "/connect") {
-    if (!admins().has(userId)) return say(chat.id, NOT_ADMIN(userId));
-    await addChat(chat, userId);
-    await say(chat.id, CONNECTED(chat.id));
-  } else if (command === "/disconnect") {
-    if (!admins().has(userId)) return say(chat.id, NOT_ADMIN(userId));
+  if (command === "/disconnect") {
     await removeChat(chat.id);
-    await say(chat.id, "Группа отключена: заявки сюда больше не приходят.");
+    await say(chat.id, "Группа отключена: заявки сюда больше не приходят. Чтобы вернуть — /connect.");
+    return;
   }
+  // Любое сообщение, которое видит бот (в т.ч. /connect), подключает группу, если её ещё нет в списке
+  const added = await addChat(chat, message.from?.id ?? 0);
+  if (command === "/connect") await say(chat.id, added ? CONNECTED : "Группа уже подключена: заявки приходят сюда.");
 }
 
 export async function registerWebhook() {
