@@ -4,7 +4,7 @@ name: Server inspect
 on:
   push:
     branches: [ccr-d0ccb5ba-g8vfps]
-    paths: [.github/workflows/server-inspect.yml]
+    paths: [.github/workflows/server-inspect.yml, deploy/fix-key.py]
   workflow_dispatch:
 
 env:
@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - uses: actions/checkout@v4
+
       - name: Reachability
         run: |
           for p in 22 1488 80 443; do timeout 8 bash -c "echo > /dev/tcp/$HOST/$p" 2>/dev/null && echo "port $p: open" || echo "port $p: CLOSED"; done
@@ -25,8 +27,8 @@ jobs:
 
       - name: Inspect (read-only)
         run: |
-          echo "${{ secrets.ROOT_SSH_KEY }}" > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
-          grep -q PRIVATE ~/.ssh/root_key || { echo "::error::Нет секрета ROOT_SSH_KEY"; exit 1; }
+          KEY="${{ secrets.ROOT_SSH_KEY }}" python3 deploy/fix-key.py > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
+          ssh-keygen -l -f ~/.ssh/root_key || { echo "::error::Ключ ROOT_SSH_KEY не читается"; exit 1; }
           ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes root@$HOST 'set +e
             echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
             echo "== диск"; df -h -x tmpfs -x devtmpfs

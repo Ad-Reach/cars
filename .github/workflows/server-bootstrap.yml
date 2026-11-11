@@ -33,8 +33,8 @@ jobs:
 
       - name: Run bootstrap as root
         run: |
-          echo "${{ secrets.ROOT_SSH_KEY }}" > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
-          grep -q PRIVATE ~/.ssh/root_key || { echo "::error::Нет секрета ROOT_SSH_KEY"; exit 1; }
+          KEY="${{ secrets.ROOT_SSH_KEY }}" python3 deploy/fix-key.py > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
+          ssh-keygen -l -f ~/.ssh/root_key || { echo "::error::Ключ ROOT_SSH_KEY не читается"; exit 1; }
           R="-i $HOME/.ssh/root_key -o IdentitiesOnly=yes"
           scp $R deploy/bootstrap-server.sh root@$HOST:/root/bootstrap.sh
           ssh $R root@$HOST 'bash /root/bootstrap.sh'
