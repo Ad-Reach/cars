@@ -2,11 +2,10 @@ import { sendLeadEmail } from "@/lib/mail";
 import { sendToAll } from "@/lib/telegram";
 
 // Приём заявок со всех форм сайта: лог + уведомление в Telegram и на почту (см. src/lib/mail.ts).
-// Настройки — переменные окружения сервера (/etc/rangauto.env):
+// Настройки — переменные окружения приложения (задаёт Ad-Reach/infra):
 //   TELEGRAM_BOT_TOKEN — токен бота от @BotFather
-//   TELEGRAM_CHAT_IDS  — ID чатов через запятую (личка менеджера, группа)
-//   TELEGRAM_ADMIN_IDS — кто может подключать группы (плюс личные чаты из TELEGRAM_CHAT_IDS)
-// Группы, куда бота добавил администратор, подключаются сами (см. src/lib/telegram.ts).
+//   TELEGRAM_CHAT_IDS  — необязательно: чаты, куда слать всегда, через запятую
+// Заявки приходят во все группы, куда добавлен бот (см. src/lib/telegram.ts).
 
 type LeadPayload = Record<string, unknown>;
 
