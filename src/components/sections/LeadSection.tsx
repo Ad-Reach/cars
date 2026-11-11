@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { CONTACT_METHODS, formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
-import type { Site } from "@/lib/cms";
+import type { Site } from "@/lib/content";
 import styles from "./LeadSection.module.css";
 
 export function LeadSection({ site }: { site: Site }) {

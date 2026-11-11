@@ -14,7 +14,7 @@ import { LeadSection } from "@/components/sections/LeadSection";
 import { Footer } from "@/components/sections/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { getCatalog } from "@/lib/catalog";
-import { getContent } from "@/lib/cms";
+import { getContent } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({

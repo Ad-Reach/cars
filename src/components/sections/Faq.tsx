@@ -5,7 +5,7 @@ import { ArrowRight, ChevronDown, Clock, UserRound, VolumeX } from "lucide-react
 import { useLeadModal } from "@/components/lead/LeadModal";
 import { Icon } from "@/components/ui/Icon";
 import type { FaqCategory, FaqItem, FaqKey } from "@/data/content";
-import type { Site } from "@/lib/cms";
+import type { Site } from "@/lib/content";
 import { Markdown } from "@/components/ui/Markdown";
 import styles from "./Faq.module.css";
 

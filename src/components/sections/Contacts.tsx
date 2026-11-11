@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MousePointerClick } from "lucide-react";
 import { telHref } from "@/data/site";
-import type { Site } from "@/lib/cms";
+import type { Site } from "@/lib/content";
 import styles from "./Contacts.module.css";
 
 // Виджет Яндекс Карт не требует ключа. Тёмная тема — CSS-фильтром (см. .mapFrame).
