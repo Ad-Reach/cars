@@ -24,16 +24,10 @@ jobs:
           grep -q ssh- ~/.ssh/known_hosts || { echo "::error::SSH на порту 1488 не отвечает"; exit 1; }
 
       - name: Inspect (read-only)
-        env:
-          SSHPASS: ${{ secrets.VDS_ROOT_PASSWORD }}
         run: |
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519; chmod 600 ~/.ssh/id_ed25519
-          for u in root deploy rangauto; do
-            ssh -o BatchMode=yes -o ConnectTimeout=15 $u@$HOST true 2>/dev/null && { echo "ключ DEPLOY_SSH_KEY пускает как $u"; U=$u; break; } || echo "ключ DEPLOY_SSH_KEY: $u — нет"
-          done
-          ssh -o BatchMode=yes -o PreferredAuthentications=none root@$HOST true 2>&1 | tail -1
-          [ -n "${U:-}" ] || exit 1
-          ssh $U@$HOST 'set +e
+          echo "${{ secrets.ROOT_SSH_KEY }}" > ~/.ssh/root_key; chmod 600 ~/.ssh/root_key
+          grep -q PRIVATE ~/.ssh/root_key || { echo "::error::Нет секрета ROOT_SSH_KEY"; exit 1; }
+          ssh -i ~/.ssh/root_key -o IdentitiesOnly=yes root@$HOST 'set +e
             echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
             echo "== диск"; df -h -x tmpfs -x devtmpfs
             echo "== крупные каталоги"; du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -25
