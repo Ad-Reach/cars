@@ -27,9 +27,13 @@ jobs:
         env:
           SSHPASS: ${{ secrets.VDS_ROOT_PASSWORD }}
         run: |
-          [ -n "$SSHPASS" ] || { echo "::error::Нет секрета VDS_ROOT_PASSWORD"; exit 1; }
-          sudo apt-get install -y -qq sshpass >/dev/null
-          sshpass -e ssh -o PubkeyAuthentication=no root@$HOST 'set +e
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519; chmod 600 ~/.ssh/id_ed25519
+          for u in root deploy rangauto; do
+            ssh -o BatchMode=yes -o ConnectTimeout=15 $u@$HOST true 2>/dev/null && { echo "ключ DEPLOY_SSH_KEY пускает как $u"; U=$u; break; } || echo "ключ DEPLOY_SSH_KEY: $u — нет"
+          done
+          ssh -o BatchMode=yes -o PreferredAuthentications=none root@$HOST true 2>&1 | tail -1
+          [ -n "${U:-}" ] || exit 1
+          ssh $U@$HOST 'set +e
             echo "== система"; head -2 /etc/os-release; uptime; nproc; free -h
             echo "== диск"; df -h -x tmpfs -x devtmpfs
             echo "== крупные каталоги"; du -xh --max-depth=2 / 2>/dev/null | sort -rh | head -25
