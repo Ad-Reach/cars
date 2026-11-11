@@ -1,10 +1,14 @@
 import { createHash } from "node:crypto";
+import { socksDispatcher } from "fetch-socks";
+import { ProxyAgent, fetch as proxyFetch, type Dispatcher } from "undici";
 import { readChats, writeChats } from "@/lib/chatStore";
 
 // Бот заявок: заявки приходят во все группы, куда добавлен бот.
 // Группа подключается сама, когда бота в неё добавляют (или по команде /connect),
 // и отключается, когда бота удаляют (или по /disconnect). Список групп — в S3 (src/lib/chatStore.ts).
 // TELEGRAM_CHAT_IDS (необязательно) — чаты, куда слать всегда, через запятую.
+// TELEGRAM_PROXY (необязательно) — прокси до api.telegram.org: http(s)://user:pass@host:port
+// или socks5://user:pass@host:port. Нужен в российском регионе, где Telegram API недоступен.
 
 type Chat = { id: number; type: string; title?: string; username?: string; first_name?: string };
 
@@ -45,14 +49,33 @@ async function replaceChat(from: number, to: number) {
   await writeChats(chats);
 }
 
+function makeDispatcher(): Dispatcher | undefined {
+  const proxy = process.env.TELEGRAM_PROXY?.trim();
+  if (!proxy) return undefined;
+  const url = new URL(proxy);
+  if (url.protocol.startsWith("socks")) {
+    return socksDispatcher({
+      type: url.protocol === "socks4:" ? 4 : 5,
+      host: url.hostname,
+      port: Number(url.port) || 1080,
+      userId: decodeURIComponent(url.username) || undefined,
+      password: decodeURIComponent(url.password) || undefined,
+    });
+  }
+  return new ProxyAgent(proxy);
+}
+
+const dispatcher = makeDispatcher();
+
 async function call(method: string, body: Record<string, unknown>) {
-  const res = await fetch(`${API}/bot${token()}/${method}`, {
+  const res = await proxyFetch(`${API}/bot${token()}/${method}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(8000),
+    signal: AbortSignal.timeout(10000),
+    dispatcher,
   });
-  const json = await res.json().catch(() => ({}));
+  const json = (await res.json().catch(() => ({}))) as { parameters?: { migrate_to_chat_id?: number } };
   return { ok: res.ok, status: res.status, json };
 }
 
