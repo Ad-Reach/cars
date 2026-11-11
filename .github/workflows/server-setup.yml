@@ -1,0 +1,40 @@
+name: Server setup
+
+# Общий сервер 185.196.117.71. Запускается вручную (workflow_dispatch).
+# stage=cleanup — чистка места, снос VPN pasarguard, удаление сайтов dashaanddima/rsy.
+# Вход: ключ ROOT_SSH_KEY (пускает как w1thluv, он в группе sudo), пароль sudo — секрет ROOT_PW.
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: "cleanup"
+        default: cleanup
+
+env:
+  HOST: 185.196.117.71
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SSH ready
+        run: |
+          install -m 700 -d ~/.ssh
+          printf 'Host %s\n  Port 1488\n' $HOST > ~/.ssh/config
+          ssh-keyscan -T 30 -p 1488 $HOST 2>/dev/null | sort > ~/.ssh/known_hosts
+          KEY="${{ secrets.ROOT_SSH_KEY }}" python3 deploy/fix-key.py > ~/.ssh/id; chmod 600 ~/.ssh/id
+          ssh-keygen -l -f ~/.ssh/id
+
+      - name: Run as root
+        env:
+          ROOT_PW: ${{ secrets.ROOT_PW }}
+        run: |
+          [ -n "$ROOT_PW" ] || { echo "::error::Нет секрета ROOT_PW (пароль для sudo пользователя w1thluv)"; exit 1; }
+          # загружаем скрипт и выполняем от root; пароль sudo читается из stdin первой строкой
+          { printf '%s\n' "$ROOT_PW"; cat deploy/cleanup-shared.sh; } | \
+            ssh -i ~/.ssh/id -o IdentitiesOnly=yes w1thluv@$HOST \
+              'read -r PW; printf "%s\n" "$PW" | sudo -S -p "" bash -s'
