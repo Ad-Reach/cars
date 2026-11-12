@@ -32,7 +32,9 @@ function Typewriter({ text, className }: { text: string; className: string }) {
   );
 }
 
-export function Header({ site }: { site: Site }) {
+// base — адрес основного сайта для страниц на поддоменах: якоря «#…» ведут на rangauto.ru
+export function Header({ site, base = "" }: { site: Site; base?: string }) {
+  const abs = (href: string) => (base && href.startsWith("#") ? `${base}/${href}` : href);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -74,14 +76,14 @@ export function Header({ site }: { site: Site }) {
 
       <header className={styles.header} data-scrolled={scrolled || undefined}>
         <div className={`container ${styles.inner}`}>
-          <a href="#top" className={styles.logo} aria-label="Ранг Авто — на главную">
+          <a href={base ? `${base}/` : "#top"} className={styles.logo} aria-label="Ранг Авто — на главную">
             <img src={"/icons/logo-dark.svg"} alt="Ранг Авто" width={200} height={40} />
           </a>
 
           <nav className={styles.nav} aria-label="Основное меню">
             {nav.map((item) => (
               <div key={item.label} className={styles.navItem}>
-                <a href={item.href} className={styles.navLink}>
+                <a href={abs(item.href)} className={styles.navLink}>
                   {item.label}
                   {item.children && <ChevronDown size={16} className={styles.chev} />}
                 </a>
@@ -90,20 +92,20 @@ export function Header({ site }: { site: Site }) {
                     {item.children.map((c) =>
                       c.children ? (
                         <div key={c.label} className={styles.subItem}>
-                          <a href={c.href} className={styles.subLink}>
+                          <a href={abs(c.href)} className={styles.subLink}>
                             {c.label}
                             <ChevronRight size={14} />
                           </a>
                           <div className={styles.submenu}>
                             {c.children.map((s) => (
-                              <a key={s.label} href={s.href}>
+                              <a key={s.label} href={abs(s.href)}>
                                 {s.label}
                               </a>
                             ))}
                           </div>
                         </div>
                       ) : (
-                        <a key={c.label} href={c.href}>
+                        <a key={c.label} href={abs(c.href)}>
                           {c.label}
                         </a>
                       ),
@@ -116,11 +118,11 @@ export function Header({ site }: { site: Site }) {
 
           <div className={styles.actions}>
             {/* TODO: поиск и избранное — после появления каталога */}
-            <a href="#catalog" className={styles.iconBtn}>
+            <a href={abs("#catalog")} className={styles.iconBtn}>
               <Search size={20} aria-hidden />
               <span className="visually-hidden">Поиск по каталогу</span>
             </a>
-            <a href="#catalog" className={styles.iconBtn}>
+            <a href={abs("#catalog")} className={styles.iconBtn}>
               <Heart size={20} aria-hidden />
               <span className="visually-hidden">Избранное</span>
             </a>
@@ -158,16 +160,16 @@ export function Header({ site }: { site: Site }) {
         <nav className={styles.mobileNav} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
           {nav.map((item) => (
             <div key={item.label}>
-              <a href={item.href} className={styles.mobileLink}>
+              <a href={abs(item.href)} className={styles.mobileLink}>
                 {item.label}
               </a>
               {item.children?.map((c) => (
                 <div key={c.label}>
-                  <a href={c.href} className={styles.mobileSub}>
+                  <a href={abs(c.href)} className={styles.mobileSub}>
                     {c.label}
                   </a>
                   {c.children?.map((s) => (
-                    <a key={s.label} href={s.href} className={styles.mobileSubSub}>
+                    <a key={s.label} href={abs(s.href)} className={styles.mobileSubSub}>
                       {s.label}
                     </a>
                   ))}
@@ -183,7 +185,7 @@ export function Header({ site }: { site: Site }) {
           <ul className={styles.mobileContacts}>
             {site.offices.map((o) => (
               <li key={o.address}>
-                <a href="#contacts">
+                <a href={abs("#contacts")}>
                   <MapPin size={18} />
                   {o.address}
                 </a>

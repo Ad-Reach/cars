@@ -1,0 +1,47 @@
+name: Sync new cars
+
+# Каталог новых авто из Китая (new.rangauto.ru): раз в сутки обновляет модели, цены и фото
+# (scripts/sync-new-cars.py). Изменения коммитятся в main → CI → production → App Platform.
+on:
+  schedule:
+    - cron: "17 2 * * *" # 05:17 МСК
+  workflow_dispatch:
+
+concurrency:
+  group: sync-new-cars
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install beautifulsoup4 lxml
+      - run: python3 scripts/sync-new-cars.py
+      - name: Commit changes
+        run: |
+          git add src/data/new-cars public/new-cars
+          if git diff --cached --quiet; then
+            echo "Изменений нет"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Каталог новых авто: обновление моделей и цен $(date -u +%F)"
+          git push origin HEAD:main
+      # push от GITHUB_TOKEN не запускает другие workflow — запускаем CI (проверка и выкладка) явно
+      - name: Deploy
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref main
