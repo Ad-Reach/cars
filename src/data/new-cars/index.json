@@ -1,0 +1,1628 @@
+[
+ {
+  "slug": "changan-qiyuan-q05",
+  "brand": "Changan",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "163 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2028000,
+  "priceMax": 2634000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v5",
+   "2-v5",
+   "3-v5",
+   "4-v5",
+   "5-v5"
+  ],
+  "name": "Changan Qiyuan Nevo Q05",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "changan-qiyuan-a06",
+  "brand": "Changan",
+  "fuel": "Гибрид",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "163 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2613000,
+  "priceMax": 2895000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Changan Qiyuan Nevo A06",
+  "tag": "Гибрид под заказ из Китая"
+ },
+ {
+  "slug": "mazdacx5",
+  "brand": "Mazda",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "2.0 л · Бензин",
+  "power": "155 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2688000,
+  "priceMax": 3268000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v3",
+   "2-v3",
+   "3-v3",
+   "4-v3",
+   "5-v3"
+  ],
+  "name": "Mazda CX-5",
+  "tag": "Заказ из Китая"
+ },
+ {
+  "slug": "seltos",
+  "brand": "Kia",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "115 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 2228000,
+  "priceMax": 2439000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Kia Seltos 1-го поколения",
+  "tag": "Заказ из Китая"
+ },
+ {
+  "slug": "toyota-bz3x",
+  "brand": "Toyota",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "204 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2572000,
+  "priceMax": 3278000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Toyota bZ3X",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "qashqai",
+  "brand": "Nissan",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "2.0 л · Бензин",
+  "power": "151 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 2303000,
+  "priceMax": 2362000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Nissan Qashqai",
+  "tag": "Заказ из Китая"
+ },
+ {
+  "slug": "xtrail",
+  "brand": "Nissan",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "2.0 л · Бензин",
+  "power": "151 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2548000,
+  "priceMax": 2590000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v3",
+   "2-v3",
+   "3-v3",
+   "4-v3",
+   "5-v3"
+  ],
+  "name": "Nissan X-Trail",
+  "tag": "Заказ из Китая за 4–8 недель"
+ },
+ {
+  "slug": "tiguan-l-pro",
+  "brand": "Volkswagen",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "220 л.с.",
+  "gearbox": "DSG",
+  "year": "2026",
+  "price": 4807000,
+  "priceMax": 4925000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Volkswagen Tiguan L Pro",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "toyota-rav4",
+  "brand": "Toyota",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "172 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 4154000,
+  "priceMax": 4256000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "hero-v5",
+   "1-v5",
+   "2-v5",
+   "3-v5",
+   "4-v5"
+  ],
+  "name": "Toyota RAV4",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "toyota-highlander",
+  "brand": "Toyota",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "248 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 5298000,
+  "priceMax": 5578000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Toyota Highlander",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "hyundai-tucson",
+  "brand": "Hyundai",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Бензин",
+  "power": "200 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3953000,
+  "priceMax": null,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Hyundai Tucson L",
+  "tag": "Кроссовер · новый из Китая"
+ },
+ {
+  "slug": "geely-monjaro",
+  "brand": "Geely",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "245–265 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 4142000,
+  "priceMax": 4222000,
+  "labels": [
+   "Хит продаж"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Geely Monjaro",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "audi-a5l",
+  "brand": "Audi",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD 4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "204–272 л.с.",
+  "gearbox": "DSG",
+  "year": "2026",
+  "price": 5672000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Audi A5L",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "audi-q5l",
+  "brand": "Audi",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "204–272 л.с.",
+  "gearbox": "DSG",
+  "year": "2026",
+  "price": 6290000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Audi Q5L",
+  "tag": "Новое поколение · доставка около 10 дней"
+ },
+ {
+  "slug": "audi-a6l",
+  "brand": "Audi",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "272 л.с.",
+  "gearbox": "DSG",
+  "year": "2026",
+  "price": 6988000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Audi A6L",
+  "tag": "Новое поколение · доставка около 10 дней"
+ },
+ {
+  "slug": "audi-q3",
+  "brand": "Audi",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD 4WD",
+  "engine": "1.5–2.0 л · Бензин",
+  "power": "160–220 л.с.",
+  "gearbox": "Робот",
+  "year": "2026",
+  "price": 3870000,
+  "priceMax": 4985000,
+  "labels": [],
+  "photos": [
+   "1-v3",
+   "2-v3",
+   "3-v3",
+   "4-v3",
+   "5-v3"
+  ],
+  "name": "Audi Q3",
+  "tag": "Премиум-кроссовер · новый из Китая"
+ },
+ {
+  "slug": "audi-q6",
+  "brand": "Audi",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "265 л.с.",
+  "gearbox": "Робот DSG",
+  "year": "2026",
+  "price": 7709000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Audi Q6",
+  "tag": "Шесть мест и quattro"
+ },
+ {
+  "slug": "bmw-x1",
+  "brand": "BMW",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "204 л.с.",
+  "gearbox": "Робот DSG",
+  "year": "2026",
+  "price": 5231000,
+  "priceMax": 5401000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "BMW X1",
+  "tag": "Самый доступный BMW"
+ },
+ {
+  "slug": "bmw-x3",
+  "brand": "BMW",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "258 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 6692000,
+  "priceMax": 7370000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v2",
+   "2-v2",
+   "3-v2",
+   "4-v2",
+   "5-v2"
+  ],
+  "name": "BMW X3",
+  "tag": "Новое поколение"
+ },
+ {
+  "slug": "bmw-x5",
+  "brand": "BMW",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "258 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 9191000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "BMW X5",
+  "tag": "Длиннобазная версия"
+ },
+ {
+  "slug": "byd-yuan-up",
+  "brand": "BYD",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "95 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2221000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "BYD Yuan UP",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "changan-qiyuan-q06",
+  "brand": "Changan",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "306 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 4644000,
+  "priceMax": 5812000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Changan Qiyuan Nevo Q06",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "changan-qiyuan-q07",
+  "brand": "Changan",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "322–374 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 3334000,
+  "priceMax": 4015000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Changan Qiyuan Q07",
+  "tag": "Гибридный кроссовер · новый из Китая"
+ },
+ {
+  "slug": "changan-uni-z",
+  "brand": "Changan",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "147 л.с.",
+  "gearbox": "Робот",
+  "year": "2026",
+  "price": 2189000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Changan UNI-Z",
+  "tag": "Новинка под заказ из Китая"
+ },
+ {
+  "slug": "citroen-c5x",
+  "brand": "Citroen",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.6 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "АКПП",
+  "year": "2025",
+  "price": 2437000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Citroen C5 X",
+  "tag": "Под заказ из Китая"
+ },
+ {
+  "slug": "gac-gs4",
+  "brand": "GAC",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "155 л.с.",
+  "gearbox": "Робот",
+  "year": "2026",
+  "price": 2338000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "GAC GS4",
+  "tag": "Новое поколение под заказ"
+ },
+ {
+  "slug": "gac-s7",
+  "brand": "GAC",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "540 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 4925000,
+  "priceMax": 5010000,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "GAC S7",
+  "tag": "Гибрид PHEV · доставка около 10 дней"
+ },
+ {
+  "slug": "gac-s9",
+  "brand": "GAC",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "500 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2025",
+  "price": 4773000,
+  "priceMax": 4857000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "GAC S9",
+  "tag": "Полноразмерный гибридный SUV · новый из Китая"
+ },
+ {
+  "slug": "geely-galaxy-e5",
+  "brand": "Geely",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "218 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 3901000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Geely Galaxy E5",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "geely-coolray",
+  "brand": "Geely",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "126 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 1713000,
+  "priceMax": 2011000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Geely Coolray",
+  "tag": "Вариатор или механика"
+ },
+ {
+  "slug": "geely-emgrand",
+  "brand": "Geely",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "120 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 1900000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Geely Emgrand",
+  "tag": "Новое, пятое поколение"
+ },
+ {
+  "slug": "geely-galaxy-m7",
+  "brand": "Geely",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "218 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3362000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Geely Galaxy M7",
+  "tag": "Гибридный кроссовер · новый из Китая"
+ },
+ {
+  "slug": "geely-starship-7",
+  "brand": "Geely",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "218 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3113000,
+  "priceMax": 3469000,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Geely Galaxy Starship 7",
+  "tag": "Гибридный кроссовер · новый из Китая"
+ },
+ {
+  "slug": "geely-starshine-7",
+  "brand": "Geely",
+  "fuel": "Гибрид",
+  "body": "Седан",
+  "drive": "4WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "424 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": null,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Geely Galaxy Starshine 7",
+  "tag": "Гибридный седан · новый из Китая"
+ },
+ {
+  "slug": "haval-h10",
+  "brand": "Haval",
+  "fuel": "Гибрид",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "598 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 6154000,
+  "priceMax": 6323000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Haval H10",
+  "tag": "Гибридный SUV на 6 мест · новый из Китая"
+ },
+ {
+  "slug": "honda-urv",
+  "brand": "Honda",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "261 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 5251000,
+  "priceMax": 5336000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Honda UR-V",
+  "tag": "Максималка"
+ },
+ {
+  "slug": "honda-crv",
+  "brand": "Honda",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5–2.0 л · Бензин",
+  "power": "193–231 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 3868000,
+  "priceMax": 4663000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v6",
+   "2-v6",
+   "3-v6",
+   "4-v6",
+   "5-v6"
+  ],
+  "name": "Honda CR-V",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "hyundai-elantra",
+  "brand": "Hyundai",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "115 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 1984000,
+  "priceMax": 2119000,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Hyundai Elantra",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "hyundai-santa-fe",
+  "brand": "Hyundai",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "247 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 5027000,
+  "priceMax": 5154000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v5",
+   "2-v5",
+   "3-v5",
+   "4-v5",
+   "5-v5"
+  ],
+  "name": "Hyundai Santa Fe",
+  "tag": "Новое поколение · доставка около 10 дней"
+ },
+ {
+  "slug": "infiniti-qx60",
+  "brand": "Infiniti",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "252 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 6141000,
+  "priceMax": 6353000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "hero-v4",
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4"
+  ],
+  "name": "Infiniti QX60",
+  "tag": "Новинка 2026 · доставка около 10 дней"
+ },
+ {
+  "slug": "jetta-vs5",
+  "brand": "Jetta",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.4 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2126000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Jetta VS5",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "jetta-vs7",
+  "brand": "Jetta",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.4 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2159000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Jetta VS7",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "jetta-vs8",
+  "brand": "Jetta",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.4 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2314000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Jetta VS8",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "kia-seltos-new",
+  "brand": "Kia",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "115–200 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3164000,
+  "priceMax": 3487000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Kia Seltos 2-го поколения",
+  "tag": "Кроссовер нового поколения · из Китая"
+ },
+ {
+  "slug": "kia-kx1",
+  "brand": "Kia",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.4 л · Бензин",
+  "power": "100 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 1758000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Kia KX1",
+  "tag": "Городской кроссовер Kia"
+ },
+ {
+  "slug": "kiak3",
+  "brand": "Kia",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "115 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 1976000,
+  "priceMax": 2102000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Kia K3",
+  "tag": "Заказ из Китая"
+ },
+ {
+  "slug": "kia-sportage",
+  "brand": "Kia",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD 4WD",
+  "engine": "1.5–2.0 л · Бензин",
+  "power": "200 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3783000,
+  "priceMax": 4561000,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Kia Sportage",
+  "tag": "Кроссовер · новый из Китая"
+ },
+ {
+  "slug": "rr-evoque",
+  "brand": "Land Rover",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "250 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": null,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Range Rover Evoque L",
+  "tag": "Длинная база"
+ },
+ {
+  "slug": "leapmotor-a10",
+  "brand": "Leapmotor",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "122 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2188000,
+  "priceMax": 2280000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Leapmotor A10",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "lexus-rx300",
+  "brand": "Lexus",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "Бензин",
+  "power": "248 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 7161000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Lexus RX 300",
+  "tag": "Премиум-кроссовер · новый под заказ"
+ },
+ {
+  "slug": "lynk-co-06",
+  "brand": "Lynk & Co",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "155 л.с.",
+  "gearbox": "Робот",
+  "year": "2026",
+  "price": 2179000,
+  "priceMax": 2475000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Lynk & Co 06",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "lynk-co-07-gt",
+  "brand": "Lynk & Co",
+  "fuel": "Гибрид",
+  "body": "Универсал",
+  "drive": "4WD",
+  "engine": "1.5 л · Гибрид",
+  "power": "530 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 5018000,
+  "priceMax": 5102000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Lynk & Co 07 GT",
+  "tag": "Гибридный универсал · новый из Китая"
+ },
+ {
+  "slug": "mazda-cx30",
+  "brand": "Mazda",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "2.0 л · Бензин",
+  "power": "158 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 2823000,
+  "priceMax": 3033000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Mazda CX-30",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "mazda-cx50",
+  "brand": "Mazda",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "2.0 л · Бензин",
+  "power": "155 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 3440000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Mazda CX-50",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "mercedes-glc-coupe",
+  "brand": "Mercedes-Benz",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "204–258 л.с.",
+  "gearbox": "АКПП",
+  "year": "2025",
+  "price": 8324000,
+  "priceMax": 8598000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "hero-v5",
+   "1-v5",
+   "2-v5",
+   "3-v5",
+   "4-v5"
+  ],
+  "name": "Mercedes-Benz GLC Coupe",
+  "tag": "Новый · доставка около 10 дней"
+ },
+ {
+  "slug": "mg-4x",
+  "brand": "MG",
+  "fuel": "Электро",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "170 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2339000,
+  "priceMax": 2567000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "MG 4X",
+  "tag": "Электрокроссовер под заказ"
+ },
+ {
+  "slug": "mg-5",
+  "brand": "MG",
+  "fuel": "Бензин",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "129 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 1822000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "MG 5",
+  "tag": "Седан с камерами 360°"
+ },
+ {
+  "slug": "mitsubishi-eclipse-cross",
+  "brand": "Mitsubishi",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Бензин",
+  "power": "152 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 3565000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v6",
+   "2-v6",
+   "3-v6",
+   "4-v6",
+   "5-v6"
+  ],
+  "name": "Mitsubishi Eclipse Cross",
+  "tag": "Новинка под заказ из ОАЭ · доставка под ключ"
+ },
+ {
+  "slug": "peugeot-5008",
+  "brand": "Peugeot",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.6 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 3029000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Peugeot 5008",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "suzuki-jimny",
+  "brand": "Suzuki",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "1.5 л · Бензин",
+  "power": "105 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 3438000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Suzuki Jimny 5-дверный",
+  "tag": "Рамный внедорожник · под заказ из ОАЭ"
+ },
+ {
+  "slug": "toyota-wildlander",
+  "brand": "Toyota",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "171 л.с.",
+  "gearbox": "Вариатор",
+  "year": "2026",
+  "price": 4366000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Toyota Wildlander",
+  "tag": "Брат-близнец RAV4"
+ },
+ {
+  "slug": "toyota-camry",
+  "brand": "Toyota",
+  "fuel": "Гибрид",
+  "body": "Седан",
+  "drive": "2WD",
+  "engine": "2.0 л · Гибрид",
+  "power": "197 л.с.",
+  "gearbox": "CVT",
+  "year": "2026",
+  "price": 4292000,
+  "priceMax": 4453000,
+  "labels": [],
+  "photos": [
+   "1-v6",
+   "2-v6",
+   "3-v6",
+   "4-v6",
+   "5-v6"
+  ],
+  "name": "Toyota Camry",
+  "tag": "Новое поколение · доставка около 10 дней"
+ },
+ {
+  "slug": "teramont",
+  "brand": "Volkswagen",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "272 л.с.",
+  "gearbox": "DSG",
+  "year": "2026",
+  "price": 6006000,
+  "priceMax": 6091000,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1-v3",
+   "2-v3",
+   "3-v3",
+   "4-v3",
+   "5-v3"
+  ],
+  "name": "Volkswagen Teramont Pro",
+  "tag": "272 л.с. · доставка около 10 дней"
+ },
+ {
+  "slug": "vw-touareg",
+  "brand": "Volkswagen",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "265 л.с.",
+  "gearbox": "АКПП",
+  "year": "2025",
+  "price": 7878000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Volkswagen Touareg",
+  "tag": "Флагманский кроссовер VW"
+ },
+ {
+  "slug": "t-roc",
+  "brand": "Volkswagen",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.4 л · Бензин",
+  "power": "150 л.с.",
+  "gearbox": "Робот DSG",
+  "year": "2026",
+  "price": 2252000,
+  "priceMax": null,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Volkswagen T-ROC",
+  "tag": "Новинка под заказ"
+ },
+ {
+  "slug": "tharu-xr",
+  "brand": "Volkswagen",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "2WD",
+  "engine": "1.5 л · Бензин",
+  "power": "110 л.с.",
+  "gearbox": "Автомат",
+  "year": "2026",
+  "price": 2036000,
+  "priceMax": 2162000,
+  "labels": [],
+  "photos": [
+   "1-v4",
+   "2-v4",
+   "3-v4",
+   "4-v4",
+   "5-v4"
+  ],
+  "name": "Volkswagen Tharu XR",
+  "tag": "Новинка · под заказ"
+ },
+ {
+  "slug": "volvo-xc60",
+  "brand": "Volvo",
+  "fuel": "Бензин",
+  "body": "SUV",
+  "drive": "4WD",
+  "engine": "2.0 л · Бензин",
+  "power": "250 л.с.",
+  "gearbox": "АКПП",
+  "year": "2026",
+  "price": 6226000,
+  "priceMax": null,
+  "labels": [
+   "4WD"
+  ],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Volvo XC60",
+  "tag": "Чёрный пакет"
+ },
+ {
+  "slug": "wuling-starlight-730",
+  "brand": "Wuling",
+  "fuel": "Электро",
+  "body": "Минивэн",
+  "drive": "2WD",
+  "engine": "Электро",
+  "power": "136 л.с.",
+  "gearbox": "Редуктор",
+  "year": "2026",
+  "price": 2609000,
+  "priceMax": 3570000,
+  "labels": [],
+  "photos": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "name": "Wuling Starlight 730",
+  "tag": "Семейный минивэн под заказ"
+ }
+]
