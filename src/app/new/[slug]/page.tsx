@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NewCarPage } from "@/components/newcars/NewCarPage";
-import { carImg, fullName, getNewCar, newCars, NEW_URL, rub } from "@/lib/newCars";
+import { carHref, carImg, fullName, getNewCar, newCars, rub } from "@/lib/newCars";
 import { pageMeta } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -15,8 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return pageMeta({
     title: `Купить ${title} из Китая${car.price ? ` от ${rub(car.price)}` : ""} под ключ | Ранг Авто`,
     description: car.description || car.lead,
-    path: `/${car.slug}`,
-    origin: NEW_URL,
+    path: carHref(car.slug),
     image: car.gallery[0] ? carImg(car.slug, car.gallery[0].img, "w1160") : undefined,
   });
 }

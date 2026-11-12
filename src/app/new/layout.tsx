@@ -4,8 +4,8 @@ import { Header } from "@/components/sections/Header";
 import { getContent } from "@/lib/content";
 import { SITE_URL } from "@/lib/seo";
 
-// new.rangauto.ru: страницы /new/* отдаются по домену поддомена (rewrites в next.config.ts),
-// поэтому якоря шапки и подвала ведут на основной сайт.
+// rangauto.ru/new — каталог новых авто из Китая. Якоря шапки и подвала («#contacts» и т.п.)
+// ведут на главную, поэтому base — адрес сайта.
 export default async function NewCarsLayout({ children }: { children: ReactNode }) {
   const { site } = await getContent();
   return (

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carImg, carSrcSet, fullName, rub, type NewCarSummary } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, fullName, rub, type NewCarSummary } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
 type Sort = "price" | "-price" | "name";
@@ -183,7 +183,7 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
 
   return (
     <article className={styles.card}>
-      <a href={`/${car.slug}`} className={styles.cardPhoto} onMouseLeave={() => setShown(0)}>
+      <a href={carHref(car.slug)} className={styles.cardPhoto} onMouseLeave={() => setShown(0)}>
         {photos[shown] && (
           <img
             src={carImg(car.slug, photos[shown], "w760")}
@@ -212,7 +212,7 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
         </span>
       </a>
       <div className={styles.cardBody}>
-        <a href={`/${car.slug}`} className={styles.cardTitle}>
+        <a href={carHref(car.slug)} className={styles.cardTitle}>
           {car.name} <span>{car.year}</span>
         </a>
         {specs.length > 0 && (
@@ -232,7 +232,7 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
           </b>
         </div>
         <div className={styles.cardActions}>
-          <a href={`/${car.slug}`} className="btn btn--gold">
+          <a href={carHref(car.slug)} className="btn btn--gold">
             Подробнее
           </a>
           <LeadButton
