@@ -4,6 +4,7 @@ import index from "@/data/new-cars/index.json";
 // Данные обновляет scripts/sync-new-cars.py: src/data/new-cars/*.json, фото — public/new-cars/<slug>/.
 
 export const NEW_PATH = "/new";
+export { NEW_CARS_PUBLIC } from "./newCarsFlag";
 export const NEW_URL = "https://rangauto.ru/new";
 export const carHref = (slug: string) => `${NEW_PATH}/${slug}`;
 

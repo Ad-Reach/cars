@@ -1,3 +1,4 @@
+import { NEW_CARS_PUBLIC } from "@/lib/newCarsFlag";
 // Контакты и реквизиты. Позже эти данные будут редактироваться из админки.
 export const site = {
   name: "Ранг Авто",
@@ -55,7 +56,7 @@ export const nav: NavLink[] = [
     label: "Каталог",
     href: "#catalog",
     children: [
-      { label: "Новые авто из Китая", href: "/new" },
+      ...(NEW_CARS_PUBLIC ? [{ label: "Новые авто из Китая", href: "/new" }] : []),
       { label: "Авто из Китая", href: catalogUrls.cn },
       { label: "Авто из Кореи", href: catalogUrls.kr },
       {
