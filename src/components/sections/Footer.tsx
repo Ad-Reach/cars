@@ -21,7 +21,8 @@ const companyLinks = [
   { label: "Контакты", href: "#contacts" },
 ];
 
-export function Footer({ site }: { site: Site }) {
+export function Footer({ site, base = "" }: { site: Site; base?: string }) {
+  const abs = (href: string) => (base && href.startsWith("#") ? `${base}/${href}` : href);
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
@@ -62,7 +63,7 @@ export function Footer({ site }: { site: Site }) {
             <a href={catalogUrls.home}>Каталог автомобилей</a>
           </h3>
           {catalogLinks.map((l) => (
-            <a key={l.label} href={l.href}>
+            <a key={l.label} href={abs(l.href)}>
               {l.label}
             </a>
           ))}
@@ -71,7 +72,7 @@ export function Footer({ site }: { site: Site }) {
         <nav className={styles.col} aria-label="Компания">
           <h3 className={styles.title}>Компания</h3>
           {companyLinks.map((l) => (
-            <a key={l.label} href={l.href}>
+            <a key={l.label} href={abs(l.href)}>
               {l.label}
             </a>
           ))}
@@ -89,7 +90,7 @@ export function Footer({ site }: { site: Site }) {
             </span>
           </a>
           {site.offices.map((office) => (
-            <a key={office.address} href="#contacts" className={styles.contact}>
+            <a key={office.address} href={abs("#contacts")} className={styles.contact}>
               <span className={styles.ci}>
                 <MapPin size={16} />
               </span>
@@ -105,10 +106,10 @@ export function Footer({ site }: { site: Site }) {
       <div className={styles.bottom}>
         <div className={`container ${styles.bottomInner}`}>
           <span>© 2026 Ранг Авто</span>
-          <Link href="/agreement">
+          <Link href={`${base}/agreement`}>
             Пользовательское соглашение <ArrowRight size={14} />
           </Link>
-          <Link href="/privacy">
+          <Link href={`${base}/privacy`}>
             Политика конфиденциальности <ArrowRight size={14} />
           </Link>
         </div>

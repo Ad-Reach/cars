@@ -55,6 +55,7 @@ export const nav: NavLink[] = [
     label: "Каталог",
     href: "#catalog",
     children: [
+      { label: "Новые авто из Китая", href: "https://new.rangauto.ru/" },
       { label: "Авто из Китая", href: catalogUrls.cn },
       { label: "Авто из Кореи", href: catalogUrls.kr },
       {

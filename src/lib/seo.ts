@@ -18,10 +18,12 @@ type PageMeta = {
   path: string;
   image?: string;
   type?: "website" | "article";
+  // сайт, к которому относится страница (для поддоменов, например new.rangauto.ru)
+  origin?: string;
 };
 
-export function pageMeta({ title, description, path, image = "/og.jpg", type = "website" }: PageMeta): Metadata {
-  const url = new URL(path, SITE_URL).toString();
+export function pageMeta({ title, description, path, image = "/og.jpg", type = "website", origin = SITE_URL }: PageMeta): Metadata {
+  const url = new URL(path, origin).toString();
   return {
     title,
     description,
@@ -33,7 +35,7 @@ export function pageMeta({ title, description, path, image = "/og.jpg", type = "
       url,
       title,
       description,
-      images: [{ url: new URL(image, SITE_URL).toString() }],
+      images: [{ url: new URL(image, origin).toString() }],
     },
   };
 }
