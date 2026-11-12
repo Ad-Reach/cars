@@ -1,9 +1,11 @@
 import index from "@/data/new-cars/index.json";
 
-// Каталог новых авто из Китая (new.rangauto.ru).
+// Каталог новых авто из Китая (rangauto.ru/new).
 // Данные обновляет scripts/sync-new-cars.py: src/data/new-cars/*.json, фото — public/new-cars/<slug>/.
 
-export const NEW_URL = "https://new.rangauto.ru";
+export const NEW_PATH = "/new";
+export const NEW_URL = "https://rangauto.ru/new";
+export const carHref = (slug: string) => `${NEW_PATH}/${slug}`;
 
 export type NewCarSummary = {
   slug: string;

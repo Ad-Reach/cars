@@ -35,7 +35,7 @@ const SOURCES: Record<string, string> = {
 function sourceLabel(source: string) {
   if (SOURCES[source]) return SOURCES[source];
   if (source.startsWith("promo:")) return `Акция «${source.slice(6)}»`;
-  if (source.startsWith("new:")) return `Новые авто из Китая (new.rangauto.ru): ${source.slice(4)}`;
+  if (source.startsWith("new:")) return `Новые авто из Китая (rangauto.ru/new): ${source.slice(4)}`;
   if (source.startsWith("geo:")) return `География — консультация (${source.slice(4).toUpperCase()})`;
   return source || "—";
 }

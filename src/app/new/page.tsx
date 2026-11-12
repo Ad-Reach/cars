@@ -1,6 +1,7 @@
 import { LeadButton } from "@/components/lead/LeadModal";
 import { NewCatalog } from "@/components/newcars/NewCatalog";
-import { newCars, NEW_URL, rub } from "@/lib/newCars";
+import Link from "next/link";
+import { newCars, rub } from "@/lib/newCars";
 import { pageMeta } from "@/lib/seo";
 import styles from "@/components/newcars/NewCars.module.css";
 
@@ -20,8 +21,7 @@ const brands = `${brandCount} ${plural(brandCount, "марки", "марок", "
 export const metadata = pageMeta({
   title: `Новые авто из Китая под заказ — ${models} от ${rub(minPrice)} под ключ | Ранг Авто`,
   description: `Новые автомобили с внутреннего рынка Китая под заказ: ${models} ${brands}, цены под ключ с доставкой, растаможкой и утильсбором. Подбор комплектации, договор, доставка 4–8 недель.`,
-  path: "/",
-  origin: NEW_URL,
+  path: "/new",
 });
 
 export default function NewCarsCatalogPage() {
@@ -30,7 +30,7 @@ export default function NewCarsCatalogPage() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroIn}`}>
           <nav className={styles.crumbs} aria-label="Хлебные крошки">
-            <a href="https://rangauto.ru/">Главная</a>
+            <Link href="/">Главная</Link>
             <span>/</span>
             <b>Новые авто из Китая</b>
           </nav>

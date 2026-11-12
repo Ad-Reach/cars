@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
-// new.rangauto.ru — каталог новых авто из Китая: те же приложение и сборка,
-// страницы лежат в src/app/new, поддомен обслуживает src/proxy.ts.
-const MAIN_HOST = [{ type: "host" as const, value: "(?:www\\.)?rangauto\\.ru" }];
+// Каталог новых авто из Китая — rangauto.ru/new (src/app/new).
+// Старый адрес new.rangauto.ru перенаправляется туда.
+const NEW_HOST = [{ type: "host" as const, value: "new\\.rangauto\\.ru" }];
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -10,8 +10,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   async redirects() {
     return [
-      { source: "/new", has: MAIN_HOST, destination: "https://new.rangauto.ru/", permanent: true },
-      { source: "/new/:slug", has: MAIN_HOST, destination: "https://new.rangauto.ru/:slug", permanent: true },
+      { source: "/", has: NEW_HOST, destination: "https://rangauto.ru/new", permanent: true },
+      { source: "/:slug([a-z0-9-]+)", has: NEW_HOST, destination: "https://rangauto.ru/new/:slug", permanent: true },
     ];
   },
 };

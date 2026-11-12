@@ -1,6 +1,6 @@
 name: Sync new cars
 
-# Каталог новых авто из Китая (new.rangauto.ru): раз в сутки обновляет модели, цены и фото
+# Каталог новых авто из Китая (rangauto.ru/new): раз в сутки обновляет модели, цены и фото
 # (scripts/sync-new-cars.py). Изменения коммитятся в main → CI → production → App Platform.
 on:
   schedule:

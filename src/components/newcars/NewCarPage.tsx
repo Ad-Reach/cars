@@ -1,5 +1,7 @@
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carImg, carSrcSet, fullName, newCars, NEW_URL, rub, type NewCarModel } from "@/lib/newCars";
+import Link from "next/link";
+import { carImg, carSrcSet, fullName, newCars, NEW_PATH, NEW_URL, rub, type NewCarModel } from "@/lib/newCars";
+import { SITE_URL } from "@/lib/seo";
 import { Gallery, Trims } from "./ModelParts";
 import { NewCarCard } from "./NewCatalog";
 import styles from "./NewCars.module.css";
@@ -23,7 +25,7 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
       bodyType: car.bodyType,
       vehicleTransmission: car.transmission,
       fuelType: car.fuelType,
-      image: car.gallery.slice(0, 5).map((g) => NEW_URL + carImg(car.slug, g.img, "w1160")),
+      image: car.gallery.slice(0, 5).map((g) => SITE_URL + carImg(car.slug, g.img, "w1160")),
       url: `${NEW_URL}/${car.slug}`,
       ...(car.price
         ? { offers: { "@type": "Offer", priceCurrency: "RUB", price: car.price, availability: "https://schema.org/PreOrder" } }
@@ -42,8 +44,8 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Ранг Авто", item: "https://rangauto.ru/" },
-        { "@type": "ListItem", position: 2, name: "Новые авто из Китая", item: `${NEW_URL}/` },
+        { "@type": "ListItem", position: 1, name: "Ранг Авто", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: "Новые авто из Китая", item: NEW_URL },
         { "@type": "ListItem", position: 3, name: title },
       ],
     },
@@ -67,11 +69,9 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
         )}
         <div className={`container ${styles.coverIn}`}>
           <nav className={styles.crumbs} aria-label="Хлебные крошки">
-            <a href="https://rangauto.ru/">Главная</a>
+            <Link href="/">Главная</Link>
             <span>/</span>
-            {/* обычная ссылка: «/» на поддомене — это каталог (rewrite по хосту) */}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a href="/">Новые авто из Китая</a>
+            <Link href={NEW_PATH}>Новые авто из Китая</Link>
             <span>/</span>
             <b>{title}</b>
           </nav>
@@ -237,10 +237,9 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
                 <span className="eyebrow" aria-hidden />
                 <h2 className="h2">Похожие модели</h2>
               </div>
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/" className="btn btn--outline">
+              <Link href={NEW_PATH} className="btn btn--outline">
                 Все модели
-              </a>
+              </Link>
             </div>
             <div className={styles.grid}>
               {similar.slice(0, 4).map((c) => (

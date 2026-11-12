@@ -18,7 +18,7 @@ type PageMeta = {
   path: string;
   image?: string;
   type?: "website" | "article";
-  // сайт, к которому относится страница (для поддоменов, например new.rangauto.ru)
+  // сайт, к которому относится страница (если не rangauto.ru)
   origin?: string;
 };
 
