@@ -13,6 +13,7 @@ export type Lead = {
   name: string;
   user: { id: number; username?: string };
   session: Session;
+  source?: "bot" | "miniapp";
 };
 
 export const LEAD_STEPS = ["Принята", "Менеджер звонит", "Подбираем авто"];
@@ -21,7 +22,7 @@ function format(lead: Lead) {
   const { session: s } = lead;
   const digits = lead.phone.replace(/\D/g, "");
   const tg = lead.user.username ? `@${lead.user.username}` : `<a href="tg://user?id=${lead.user.id}">профиль</a>`;
-  const lines = ["<b>🚗 Заявка из Telegram-бота</b>", ""];
+  const lines = [lead.source === "miniapp" ? "<b>🚗 Заявка из Telegram Mini App</b>" : "<b>🚗 Заявка из Telegram-бота</b>", ""];
   lines.push(`<b>Имя:</b> ${e(lead.name)}`);
   lines.push(`<b>Телефон:</b> <a href="tel:+${digits}">${e(lead.phone)}</a>`);
   lines.push(`<b>Telegram:</b> ${tg}`);
@@ -43,7 +44,7 @@ async function toSite(lead: Lead) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      source: "telegram-bot",
+      source: lead.source === "miniapp" ? "telegram-miniapp" : "telegram-bot",
       name: lead.name,
       phone: lead.phone,
       contact: lead.user.username ? `Telegram @${lead.user.username}` : `Telegram id ${lead.user.id}`,
