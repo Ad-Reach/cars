@@ -23,6 +23,7 @@
 - Mini App открывается по `PUBLIC_URL` (технический домен App Platform): кнопка меню и кнопка после /start.
 - Локально Mini App: `MINIAPP_DEV=1 npm run dev` → http://localhost:8080/ (заявки без подписи Telegram — только для проверки).
 - Timeweb App Platform (Амстердам), `bot/Dockerfile`, порт 8080, `/health`. Пуш в `main` → автодеплой.
+- Mini App живёт на https://tg.rangauto.ru (на техническом домене twc1.net сертификат не выпустился).
 - Переменные окружения задаёт `Ad-Reach/infra` (`terraform/bot.tf`); руками в панели не менять.
 - Новая переменная окружения → добавить в `src/config.ts`, `.env.example` и `bot.tf` в infra.
 
