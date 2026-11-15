@@ -52,6 +52,9 @@ export function parseCards(html: string, country: CountryId): Car[] {
 const EXCLUDE = /\b(toyoace|dyna|canter|fuso|dutro|elf|profia|ranger|condor|forward|giga|atlas|titan|quon|super great|fighter|liteace truck|townace truck|bongo truck|porter|hd\d+|xcient|mighty|bus|автобус|грузов|самосвал|эвакуатор|кран|рефрижератор|фургон)\b/i;
 export const isPassenger = (car: Car) => !EXCLUDE.test(car.title);
 
+// Последняя ошибка загрузки по стране — видна в ответе /api/cars, когда машин нет
+export const catalogErrors = new Map<CountryId, string>();
+
 // Кэш страниц на 10 минут: каталог медленный и иногда рвёт соединение
 const cache = new Map<string, { at: number; cars: Car[] }>();
 const TTL = 10 * 60_000;
@@ -70,11 +73,15 @@ async function fetchCars(country: CountryId, price?: [number, number]): Promise<
     try {
       const res = await fetch(key, { headers: { "User-Agent": config.catalogUserAgent }, signal: AbortSignal.timeout(15000) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const cars = parseCards(await res.text(), country).filter(isPassenger);
+      const html = await res.text();
+      const cars = parseCards(html, country).filter(isPassenger);
+      if (!cars.length) catalogErrors.set(country, `0 карточек в ответе (${html.length} байт)`);
+      else catalogErrors.delete(country);
       cache.set(key, { at: Date.now(), cars });
       return cars;
     } catch (error) {
-      if (attempt) console.warn("[catalog]", key, String(error));
+      catalogErrors.set(country, `${String(error)}${(error as { cause?: unknown }).cause ? ` (${String((error as { cause?: unknown }).cause)})` : ""}`);
+      if (attempt) console.warn("[catalog]", key, catalogErrors.get(country));
     }
   }
   return [];
