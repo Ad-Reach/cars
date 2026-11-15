@@ -21,8 +21,20 @@ export const config = {
   catalogOrigin: process.env.CATALOG_ORIGIN ?? "https://catalog.rangauto.ru",
   // Каталог блокирует User-Agent со словом «Bot» — используем тот же, что и сайт
   catalogUserAgent: process.env.CATALOG_USER_AGENT ?? "RangAutoSite/1.0",
-  // false — всегда показывать подбор обычными кнопками (без виджетов)
-  widgets: process.env.WIDGETS !== "off",
+  // Почта для заявок (как у сайта). Без SMTP_HOST письма не шлются.
+  smtp: {
+    host: process.env.SMTP_HOST ?? "",
+    port: Number(process.env.SMTP_PORT ?? 465),
+    user: process.env.SMTP_USER ?? "",
+    pass: process.env.SMTP_PASS ?? "",
+    from: process.env.SMTP_FROM ?? "",
+  },
+  leadEmailTo: process.env.LEAD_EMAIL_TO?.trim() || "rangauto@mail.ru",
+  // HTTP-порт: проверка здоровья для App Platform (позже — Mini App)
+  port: Number(process.env.PORT ?? 8080),
+  // Виджеты Bot API 10.4 выключены: в проде Telegram сейчас запрещает их обычным ботам.
+  // WIDGETS=on — включить (например, на тестовом сервере).
+  widgets: process.env.WIDGETS === "on",
 };
 
 if (!config.token) {

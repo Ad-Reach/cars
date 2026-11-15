@@ -1,11 +1,12 @@
 import type { Api } from "grammy";
 import { config } from "./config.js";
+import { sendLeadEmail } from "./mail.js";
 import { describe } from "./quiz.js";
 import { rub, COUNTRIES } from "./catalog.js";
 import type { Session } from "./session.js";
 import { escapeHtml as e } from "./texts.js";
 
-// Доставка заявки: в чаты LEAD_CHAT_IDS (с кнопками статуса) и/или на сайт (LEAD_API_URL).
+// Доставка заявки: в чаты LEAD_CHAT_IDS (с кнопками статуса), на почту (SMTP_*) и/или на сайт (LEAD_API_URL).
 
 export type Lead = {
   phone: string;
@@ -64,8 +65,9 @@ export async function deliverLead(api: Api, lead: Lead) {
       api.sendMessage(chat, text, { parse_mode: "HTML", link_preview_options: { is_disabled: true }, reply_markup: statusKeyboard(lead.user.id) }),
     ),
     ...(config.leadApiUrl ? [toSite(lead)] : []),
+    ...(config.smtp.host ? [sendLeadEmail(`Заявка из Telegram-бота: ${lead.name || lead.phone}`, text)] : []),
   ];
-  if (!jobs.length) console.warn("[lead] не настроены LEAD_CHAT_IDS / LEAD_API_URL — заявка только в логе");
+  if (!jobs.length) console.warn("[lead] не настроены LEAD_CHAT_IDS / SMTP / LEAD_API_URL — заявка только в логе");
   const results = await Promise.allSettled(jobs);
   results.forEach((r) => r.status === "rejected" && console.error("[lead]", r.reason));
   return results.some((r) => r.status === "fulfilled");

@@ -162,7 +162,7 @@ async function submitLead(ctx: Context, phone: string) {
   if (s.leadSentAt && Date.now() - s.leadSentAt < 60_000) return; // двойное нажатие
   const name = [ctx.message?.contact?.first_name ?? user.first_name, ctx.message?.contact?.last_name ?? user.last_name].filter(Boolean).join(" ");
   const ok = await deliverLead(ctx.api, { phone, name, user: { id: user.id, username: user.username }, session: s });
-  if (!ok && (config.leadChatIds.length || config.leadApiUrl)) return ctx.reply(T.leadFailed, { reply_markup: mainKeyboard });
+  if (!ok && (config.leadChatIds.length || config.leadApiUrl || config.smtp.host)) return ctx.reply(T.leadFailed, { reply_markup: mainKeyboard });
   s.leadSentAt = Date.now();
   await ctx.reply(T.thanks, { reply_markup: mainKeyboard });
   await sendLeadCard(ctx, s);

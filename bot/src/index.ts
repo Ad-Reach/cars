@@ -1,9 +1,11 @@
 import { bot } from "./bot.js";
 import { widgets } from "./widgets/render.js";
+import { startServer } from "./server.js";
 
-// Локальный запуск: long polling, без вебхука и без сервера.
+// Long polling (вебхук не нужен) + HTTP-сервер для проверки здоровья.
 // allowed_updates явно включает widget_query — иначе тапы по виджету не придут.
 
+const server = startServer();
 await bot.api.setMyCommands([{ command: "start", description: "Подобрать авто" }]);
 console.log(`Виджеты: quiz ${widgets.quiz.packed}/4096, lead ${widgets.lead.packed}/4096 байт (сжато)`);
 
@@ -12,6 +14,9 @@ bot.start({
   onStart: (me) => console.log(`Бот @${me.username} запущен. Ctrl+C — остановить.`),
 });
 
-const stop = () => bot.stop();
+const stop = () => {
+  server.close();
+  void bot.stop();
+};
 process.once("SIGINT", stop);
 process.once("SIGTERM", stop);
