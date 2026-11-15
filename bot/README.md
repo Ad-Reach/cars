@@ -18,4 +18,6 @@ npm run dev
 ## Деплой
 
 Timeweb App Platform, Амстердам, самый дешёвый backend-тариф. Настройки и секреты — в `Ad-Reach/infra` (`terraform/bot.tf`).
-Пуш в `main` → App Platform собирает `bot/Dockerfile` и перезапускает бота. Заявки: чаты `LEAD_CHAT_IDS` + почта (SMTP).
+Пуш в `main` → App Platform собирает `bot/Dockerfile` и перезапускает бота.
+Mini App: https://tg.rangauto.ru (A-запись на IP приложения 289399 + домен добавлен в панели App Platform).
+Новые переменные окружения из infra применяются только при следующем деплое. Заявки: чаты `LEAD_CHAT_IDS` + почта (SMTP).
