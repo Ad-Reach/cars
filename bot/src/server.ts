@@ -62,8 +62,8 @@ async function handleCars(url: URL, res: ServerResponse) {
   const cars = await pickCars(findOption("b", url.searchParams.get("b") ?? ""), findOption("w", url.searchParams.get("w") ?? ""), 6);
   json(res, 200, {
     cars: cars.map((c) => ({ ...c, flag: COUNTRIES[c.country].flag, countryName: COUNTRIES[c.country].name })),
-    // для отладки: почему каталог ничего не вернул
-    ...(cars.length ? {} : { errors: Object.fromEntries(catalogErrors) }),
+    // для отладки: какие страны каталога сейчас не загрузились и почему
+    ...(catalogErrors.size ? { errors: Object.fromEntries(catalogErrors) } : {}),
   });
 }
 
