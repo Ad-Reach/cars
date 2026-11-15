@@ -30,6 +30,11 @@ export const config = {
     from: process.env.SMTP_FROM ?? "",
   },
   leadEmailTo: process.env.LEAD_EMAIL_TO?.trim() || "rangauto@mail.ru",
+  // Публичный HTTPS-адрес приложения (технический домен App Platform) — на нём живёт Mini App.
+  // Пусто — кнопки Mini App в боте не показываются.
+  publicUrl: (process.env.PUBLIC_URL ?? "").replace(/\/$/, ""),
+  // MINIAPP_DEV=1 — принимать заявки из Mini App без подписи Telegram (только для локальной проверки в браузере!)
+  miniappDev: process.env.MINIAPP_DEV === "1",
   // HTTP-порт: проверка здоровья для App Platform (позже — Mini App)
   port: Number(process.env.PORT ?? 8080),
   // Виджеты Bot API 10.4 выключены: в проде Telegram сейчас запрещает их обычным ботам.

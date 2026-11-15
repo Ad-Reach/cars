@@ -95,6 +95,12 @@ bot.command("start", async (ctx) => {
   resetSession(ctx.from!.id);
   await ctx.reply(T.start(escapeHtml(ctx.from?.first_name ?? "")), { parse_mode: "HTML", reply_markup: mainKeyboard });
   await sendQuiz(ctx);
+  // Mini App — для тех, кому удобнее форма с фото (если задан PUBLIC_URL)
+  if (config.publicUrl) {
+    await ctx.reply("Или заполните заявку в приложении — там фото машин и всё на одном экране:", {
+      reply_markup: new InlineKeyboard().webApp(T.btnMiniApp, `${config.publicUrl}/`),
+    });
+  }
 });
 
 // /id — узнать id чата, чтобы вписать его в LEAD_CHAT_IDS

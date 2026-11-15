@@ -14,10 +14,14 @@
 - `src/bot.ts` — сценарий: /start → подбор (виджет или кнопки) → машины из каталога → «Хочу эту» → контакт → заявка.
 - `src/catalog.ts` — машины с catalog.rangauto.ru (парсинг HTML, фильтр ?price_from/price_to, руль → страна, без грузовиков).
 - `src/lead.ts` — доставка заявки: чаты `LEAD_CHAT_IDS` (с кнопками статуса) и/или сайт `LEAD_API_URL`.
+- `src/server.ts` — HTTP: `/` Mini App, `/api/cars`, `/api/lead` (подпись initData проверяет `src/miniapp/auth.ts`), `/health`.
+- `src/miniapp/index.html` — Mini App (одна страница без сборки, цвета и вопросы подставляются из brand.ts/quiz.ts).
 - `src/session.ts` — состояние пользователя в памяти (сбрасывается при перезапуске).
 - `src/widgets/*.html` — виджеты Bot API 10.4; `render.ts` подставляет `{{переменные}}` и проверяет лимиты.
 
 ## Деплой
+- Mini App открывается по `PUBLIC_URL` (технический домен App Platform): кнопка меню и кнопка после /start.
+- Локально Mini App: `MINIAPP_DEV=1 npm run dev` → http://localhost:8080/ (заявки без подписи Telegram — только для проверки).
 - Timeweb App Platform (Амстердам), `bot/Dockerfile`, порт 8080, `/health`. Пуш в `main` → автодеплой.
 - Переменные окружения задаёт `Ad-Reach/infra` (`terraform/bot.tf`); руками в панели не менять.
 - Новая переменная окружения → добавить в `src/config.ts`, `.env.example` и `bot.tf` в infra.
