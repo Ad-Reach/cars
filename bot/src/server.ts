@@ -2,7 +2,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import type { Api } from "grammy";
 import { config } from "./config.js";
 import { findOption } from "./quiz.js";
-import { pickCars, COUNTRIES } from "./catalog.js";
+import { pickCars, COUNTRIES, catalogErrors } from "./catalog.js";
 import { deliverLead } from "./lead.js";
 import { T } from "./texts.js";
 import { miniappHtml } from "./miniapp/render.js";
@@ -62,6 +62,8 @@ async function handleCars(url: URL, res: ServerResponse) {
   const cars = await pickCars(findOption("b", url.searchParams.get("b") ?? ""), findOption("w", url.searchParams.get("w") ?? ""), 6);
   json(res, 200, {
     cars: cars.map((c) => ({ ...c, flag: COUNTRIES[c.country].flag, countryName: COUNTRIES[c.country].name })),
+    // для отладки: почему каталог ничего не вернул
+    ...(cars.length ? {} : { errors: Object.fromEntries(catalogErrors) }),
   });
 }
 
