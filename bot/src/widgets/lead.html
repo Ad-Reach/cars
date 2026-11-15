@@ -1,0 +1,31 @@
+<style>
+*{box-sizing:border-box;margin:0}
+body{font:14px/1.35 system-ui,sans-serif;background:{{dark}};color:#fff;padding:14px}
+.logo{font-weight:800;letter-spacing:.08em;color:{{gold}};font-size:12px}
+h3{font-size:18px;margin:6px 0 10px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #333}
+.k{color:#aaa}.v{text-align:right;font-weight:600}
+.st{margin-top:12px;display:flex;gap:6px}
+.p{flex:1;height:4px;border-radius:2px;background:#444}.p.on{background:{{gold}};background:{{grad}}}
+.n{color:#aaa;font-size:12px;margin-top:6px}
+.b{margin-top:12px;width:100%;padding:11px;border:0;border-radius:10px;background:{{gold}};background:{{grad}};color:{{dark}};font-weight:800}
+</style>
+<div class="logo">РАНГ АВТО</div>
+<h3 id="h">Заявка принята</h3>
+<div id="rows"></div>
+<div class="st" id="st"></div>
+<div class="n" id="n"></div>
+<button class="b" id="b">Открыть каталог</button>
+<script>
+var W=window.TelegramWidget,S=['Принята','Менеджер звонит','Подбираем авто'];
+function draw(){
+ var d={};try{d=JSON.parse(W.chatData||'{}')}catch(e){}
+ var h='';(d.rows||[]).forEach(function(r){h+='<div class="row"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>'});
+ document.getElementById('rows').innerHTML=h;
+ var s=d.step||0,p='';S.forEach(function(x,i){p+='<div class="p'+(i<=s?' on':'')+'"></div>'});
+ document.getElementById('st').innerHTML=p;
+ document.getElementById('n').textContent=S[s]+(s==0?' · менеджер позвонит в течение 15 минут':'');
+ document.getElementById('b').onclick=function(){W.openLink(d.url||'{{site}}')};
+}
+draw();W.onEvent('chatDataChanged',draw);W.ready();
+</script>
