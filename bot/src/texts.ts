@@ -22,6 +22,7 @@ export const T = {
   btnMore: "Подробнее",
   btnCatalog: "Все варианты в каталоге",
   btnGo: "Показать машины",
+  btnMiniApp: "📝 Заявка с фото машин",
 };
 
 export const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

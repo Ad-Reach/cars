@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>Ранг Авто — подбор авто</title>
+<script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+<style>
+:root{--dark:{{dark}};--dark2:{{dark2}};--gold:{{gold}};--grad:{{grad}};--muted:#9a9a9a;--line:rgba(255,255,255,.12);--r:12px}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--dark);color:#fff;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{padding:16px 16px calc(96px + env(safe-area-inset-bottom))}
+.logo{font-weight:800;letter-spacing:.1em;color:var(--gold);font-size:13px}
+h1{font-size:24px;line-height:1.15;margin:6px 0 4px}
+.lead{color:var(--muted);font-size:14px;margin-bottom:18px}
+.q{margin-bottom:16px}
+.t{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.chips{display:grid;gap:8px}
+.chip{padding:11px 8px;border-radius:var(--r);border:1px solid var(--line);background:var(--dark2);color:#fff;font:inherit;font-size:14px;cursor:pointer}
+.chip.on{background:var(--grad);border-color:transparent;color:var(--dark);font-weight:700}
+.cars{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 16px;padding:0 16px 4px}
+.cars::-webkit-scrollbar{display:none}
+.car{flex:0 0 72%;scroll-snap-align:start;border-radius:var(--r);background:var(--dark2);border:2px solid transparent;overflow:hidden;cursor:pointer}
+.car.on{border-color:var(--gold)}
+.car img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#333}
+.car .b{padding:10px 12px}
+.car .n{font-weight:600;font-size:14px}
+.car .p{color:var(--gold);font-weight:700;margin-top:2px}
+.car .s{color:var(--muted);font-size:12px;margin-top:2px}
+.empty{color:var(--muted);font-size:14px;padding:14px;border:1px dashed var(--line);border-radius:var(--r);margin-bottom:16px}
+label{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px}
+input,textarea{width:100%;padding:13px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--dark2);color:#fff;font:inherit;font-size:16px;margin-bottom:14px;outline:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+textarea{resize:none;height:76px}
+.row{display:flex;gap:8px}.row input{flex:1}
+.tg{flex:0 0 auto;padding:0 14px;height:49px;border-radius:var(--r);border:1px solid var(--gold);background:transparent;color:var(--gold);font:inherit;font-size:14px;font-weight:600}
+.err{color:#ff8a7a;font-size:13px;margin:-8px 0 12px;display:none}
+.note{color:var(--muted);font-size:12px;text-align:center;margin-top:4px}
+.send{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));padding:15px;border:0;border-radius:var(--r);background:var(--grad);color:var(--dark);font:inherit;font-weight:800;font-size:16px}
+.send[disabled]{opacity:.5}
+.done{text-align:center;padding:40px 8px}
+.done .ok{font-size:56px}
+.done h1{margin:12px 0 8px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div id="form">
+  <div class="logo">РАНГ АВТО</div>
+  <h1>Подберём авто под&nbsp;ключ</h1>
+  <p class="lead">Китай, Корея и Япония. Выберите параметры — покажем машины из каталога.</p>
+  <div id="qs"></div>
+  <div class="t">Машины из каталога</div>
+  <div class="cars" id="cars"></div>
+  <div class="empty hide" id="empty"></div>
+  <label for="name">Имя</label>
+  <input id="name" autocomplete="name" placeholder="Как к вам обращаться">
+  <label for="phone">Телефон</label>
+  <div class="row"><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00"><button class="tg" id="tgPhone" type="button">Из Telegram</button></div>
+  <div class="err" id="phoneErr">Укажите телефон — менеджер перезвонит</div>
+  <label for="comment">Пожелания</label>
+  <textarea id="comment" placeholder="Модель, цвет, комплектация — необязательно"></textarea>
+  <p class="note">Нажимая «Отправить», вы соглашаетесь на обработку персональных данных.</p>
+  <button class="send" id="send" type="button">Отправить заявку</button>
+</div>
+<div id="done" class="done hide">
+  <div class="ok">✅</div>
+  <h1>Заявка принята</h1>
+  <p class="lead">Менеджер позвонит в течение 15 минут (с 9:00 до 21:00 МСК).</p>
+  <button class="send" id="close" type="button">Вернуться в чат</button>
+</div>
+<script>
+var tg = window.Telegram && Telegram.WebApp, Q = {{questions}}, A = {}, car = null, cars = [];
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function haptic() { try { tg.HapticFeedback.selectionChanged(); } catch (e) {} }
+var rub = function (n) { return Math.round(n).toLocaleString("ru-RU") + " ₽"; };
+
+function drawQs() {
+  $("qs").innerHTML = Q.map(function (q) {
+    return '<div class="q"><div class="t">' + esc(q[1]) + '</div><div class="chips" style="grid-template-columns:repeat(' + (q[2].length === 4 ? 2 : q[2].length) + ',1fr)">' + q[2].map(function (o) {
+      return '<button type="button" class="chip' + (A[q[0]] === o[0] ? " on" : "") + '" data-q="' + q[0] + '" data-o="' + o[0] + '">' + esc(o[1]) + "</button>";
+    }).join("") + "</div></div>";
+  }).join("");
+}
+$("qs").addEventListener("click", function (e) {
+  var b = e.target.closest(".chip"); if (!b) return;
+  A[b.dataset.q] = b.dataset.o; haptic(); drawQs();
+  if (b.dataset.q === "b" || b.dataset.q === "w") loadCars();
+});
+
+var loading = 0;
+function loadCars() {
+  var id = ++loading;
+  $("cars").innerHTML = ""; $("empty").classList.remove("hide"); $("empty").textContent = "Подбираю машины…";
+  fetch("api/cars?b=" + (A.b || "") + "&w=" + (A.w || "")).then(function (r) { return r.json(); }).then(function (d) {
+    if (id !== loading) return;
+    cars = d.cars || []; car = null; drawCars();
+  }).catch(function () { if (id === loading) $("empty").textContent = "Каталог не ответил — оставьте заявку, подберём вручную."; });
+}
+function drawCars() {
+  $("empty").classList.toggle("hide", cars.length > 0);
+  if (!cars.length) $("empty").textContent = "Под эти параметры подберём под заказ — оставьте заявку.";
+  $("cars").innerHTML = cars.map(function (c, i) {
+    return '<div class="car' + (car === i ? " on" : "") + '" data-i="' + i + '"><img loading="lazy" src="' + esc(c.img) + '" alt=""><div class="b"><div class="n">' + esc(c.title) +
+      '</div><div class="p">' + rub(c.price) + '</div><div class="s">' + esc(c.flag + " " + c.countryName + (c.specs ? " · " + c.specs : "")) + "</div></div></div>";
+  }).join("");
+}
+$("cars").addEventListener("click", function (e) {
+  var el = e.target.closest(".car"); if (!el) return;
+  var i = +el.dataset.i; car = car === i ? null : i; haptic(); drawCars();
+});
+
+$("tgPhone").onclick = function () {
+  if (!tg || !tg.requestContact) return;
+  tg.requestContact(function (ok, res) {
+    var c = ok && res && res.responseUnsafe && res.responseUnsafe.contact;
+    if (c) { $("phone").value = "+" + String(c.phone_number).replace(/^\+/, ""); if (!$("name").value) $("name").value = [c.first_name, c.last_name].filter(Boolean).join(" "); $("phoneErr").style.display = "none"; }
+  });
+};
+
+$("send").onclick = function () {
+  var phone = $("phone").value.trim();
+  if (phone.replace(/\D/g, "").length < 10) { $("phoneErr").style.display = "block"; $("phone").focus(); return; }
+  var btn = $("send"); btn.disabled = true; btn.textContent = "Отправляю…";
+  fetch("api/lead", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ initData: tg ? tg.initData : "", answers: A, carUrl: car === null ? "" : cars[car].url, name: $("name").value.trim(), phone: phone, comment: $("comment").value.trim() })
+  }).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d.ok) throw new Error(d.error || "fail");
+    $("form").classList.add("hide"); $("done").classList.remove("hide");
+    try { tg.HapticFeedback.notificationOccurred("success"); } catch (e) {}
+  }).catch(function () {
+    btn.disabled = false; btn.textContent = "Отправить заявку";
+    alert("Не получилось отправить. Позвоните нам: {{phone}}");
+  });
+};
+$("close").onclick = function () { tg ? tg.close() : history.back(); };
+
+if (tg) {
+  tg.ready(); tg.expand();
+  try { tg.setHeaderColor("{{dark}}"); tg.setBackgroundColor("{{dark}}"); tg.setBottomBarColor && tg.setBottomBarColor("{{dark}}"); } catch (e) {}
+  var u = tg.initDataUnsafe && tg.initDataUnsafe.user;
+  if (u) $("name").value = [u.first_name, u.last_name].filter(Boolean).join(" ");
+}
+drawQs(); loadCars();
+</script>
+</body>
+</html>
