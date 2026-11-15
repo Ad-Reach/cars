@@ -1,0 +1,52 @@
+<style>
+*{box-sizing:border-box;margin:0}
+body{font:14px/1.3 system-ui,sans-serif;background:{{dark}};color:#fff;padding:12px}
+.h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logo{font-weight:800;letter-spacing:.08em;color:{{gold}}}
+.sub{color:#aaa;font-size:12px}
+.q{margin-bottom:10px}
+.t{font-size:12px;color:#aaa;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.r{display:flex;flex-wrap:wrap;gap:6px}
+.o{flex:1 1 0;min-width:70px;padding:9px 4px;border-radius:10px;border:1px solid #444;background:{{dark2}};color:#fff;font-size:13px}
+.o.on{background:{{gold}};background:{{grad}};border-color:{{gold}};color:{{dark}};font-weight:700}
+.go{width:100%;padding:12px;border:0;border-radius:10px;background:{{gold}};background:{{grad}};color:{{dark}};font-weight:800;font-size:15px}
+.go[disabled]{opacity:.35}
+.s{text-align:center;color:#aaa;font-size:12px;margin-top:6px;min-height:15px}
+</style>
+<div class="h"><span class="logo">РАНГ АВТО</span><span class="sub">подбор за 3 тапа</span></div>
+<div id="qs"></div>
+<button class="go" id="go">Показать машины</button>
+<div class="s" id="s"></div>
+<script>
+var W=window.TelegramWidget,Q={{questions}},A={},busy=0;
+function load(){try{var d=JSON.parse(W.chatData||'{}');A=d.a||{};if(d.done)busy=2}catch(e){}}
+function $(i){return document.getElementById(i)}
+function say(t){$('s').textContent=t||''}
+function draw(){
+ var h='';
+ Q.forEach(function(q){h+='<div class="q"><div class="t">'+q[1]+'</div><div class="r">';
+  q[2].forEach(function(o){h+='<button class="o'+(A[q[0]]==o[0]?' on':'')+'" data-q="'+q[0]+'" data-o="'+o[0]+'">'+o[1]+'</button>'});
+  h+='</div></div>'});
+ $('qs').innerHTML=h;
+ var ok=Q.every(function(q){return A[q[0]]});
+ $('go').disabled=!ok||busy==1;
+ $('go').textContent=busy==2?'Показать ещё раз':'Показать машины';
+ [].forEach.call(document.querySelectorAll('.o'),function(b){b.onclick=function(){pick(b.getAttribute('data-q'),b.getAttribute('data-o'))}});
+}
+function ask(d,done){
+ W.request(d).then(function(r){if(done)done(r);say('')}).catch(function(e){
+  busy=busy==1?0:busy;draw();
+  say(e.code=='RATE_LIMITED'||e.code=='BUSY'?'Не так быстро 🙂 Нажмите ещё раз':'Не получилось, нажмите ещё раз')});
+}
+function pick(q,o){
+ A[q]=o;draw();if(W.HapticFeedback)W.HapticFeedback.selectionChanged();
+ ask(q+':'+o);
+}
+$('go').onclick=function(){
+ busy=1;draw();say('Подбираю машины…');
+ ask('go',function(){busy=2;draw();say('Готово — смотрите ниже 👇')});
+};
+load();draw();
+W.onEvent('chatDataChanged',function(){load();draw()});
+W.ready();
+</script>
