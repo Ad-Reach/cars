@@ -49,7 +49,7 @@ export function parseCards(html: string, country: CountryId): Car[] {
 
 // Грузовики и спецтехнику не показываем — ленивому покупателю легковой нужен.
 // Пополняйте список, если в выдачу пролезает лишнее.
-const EXCLUDE = /\b(toyoace|dyna|canter|fuso|dutro|elf|profia|ranger|condor|forward|giga|atlas|titan|quon|super great|fighter|liteace truck|townace truck|bongo truck|porter|hd\d+|xcient|mighty|bus|автобус|грузов|самосвал|эвакуатор|кран|рефрижератор|фургон)\b/i;
+const EXCLUDE = /\b(truck|van|toyoace|dyna|canter|fuso|dutro|elf|profia|ranger|condor|forward|giga|atlas|titan|quon|super great|fighter|liteace truck|townace truck|bongo truck|porter|hd\d+|xcient|mighty|bus|автобус|грузов|самосвал|эвакуатор|кран|рефрижератор|фургон)\b/i;
 export const isPassenger = (car: Car) => !EXCLUDE.test(car.title);
 
 // Последняя ошибка загрузки по стране — видна в ответе /api/cars, когда машин нет
