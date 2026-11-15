@@ -8,7 +8,7 @@ import { T, escapeHtml } from "./texts.js";
 import { widgets } from "./widgets/render.js";
 import { sendWidget, answerWidgetQuery, editMessageWidgetData, type WidgetQuery } from "./widgets/api.js";
 
-export const bot = new Bot(config.token, { client: { apiRoot: config.apiRoot } });
+export const bot = new Bot(config.token, { client: { apiRoot: config.apiRoot, environment: config.testEnv ? "test" : "prod" } });
 
 // Нижняя клавиатура: всегда под рукой «Перезвоните мне» (номер отправляется одним нажатием)
 const mainKeyboard = new Keyboard().requestContact(T.btnContact).row().text(T.btnRestart).resized().persistent();
@@ -24,9 +24,17 @@ const fallbackKeyboard = (s: Session) => {
   return kb.text(`🔍 ${T.btnGo}`, "q:go");
 };
 
+// Если Telegram ответил INPUT_MEDIA_WIDGET_NOT_ALLOWED — виджеты боту запрещены,
+// дальше до перезапуска сразу показываем кнопки и не дёргаем API зря.
+let widgetsAllowed = config.widgets;
+function widgetFailed(error: unknown) {
+  console.warn("[widget] не отправился, показываю кнопки:", String(error));
+  if (String(error).includes("WIDGET_NOT_ALLOWED")) widgetsAllowed = false;
+}
+
 async function sendQuiz(ctx: Context) {
   const s = getSession(ctx.from!.id);
-  if (config.widgets) {
+  if (widgetsAllowed) {
     try {
       const msg = await sendWidget(ctx.api, {
         chat_id: ctx.chat!.id,
@@ -38,7 +46,7 @@ async function sendQuiz(ctx: Context) {
       s.quizMessageId = msg.message_id;
       return;
     } catch (error) {
-      console.warn("[widget] sendWidget не сработал, показываю кнопки:", String(error));
+      widgetFailed(error);
     }
   }
   await ctx.reply(T.quizFallback, { parse_mode: "HTML", reply_markup: fallbackKeyboard(s) });
@@ -165,12 +173,12 @@ async function sendLeadCard(ctx: Context, s: Session) {
   const rows: [string, string][] = describe(s.answers).map(([k, v]) => [k, v]);
   if (s.car) rows.push(["Машина", short(s.car.title)]);
   const data = { rows: rows.map(([k, v]) => [escapeHtml(k), escapeHtml(v)] as [string, string]), url: s.car?.url ?? catalogLink(findOption("w", s.answers.w), findOption("b", s.answers.b)), step: 0 };
-  if (!config.widgets) return;
+  if (!widgetsAllowed) return;
   try {
     const msg = await sendWidget(ctx.api, { chat_id: ctx.chat!.id, html: widgets.lead.html, height: 160 + rows.length * 34, chat_data: JSON.stringify(data) });
     s.leadCard = { messageId: msg.message_id, data };
   } catch (error) {
-    console.warn("[widget] карточка заявки не отправилась:", String(error));
+    widgetFailed(error);
   }
 }
 

@@ -15,6 +15,9 @@ export const config = {
   leadApiUrl: process.env.LEAD_API_URL ?? "",
   // Необязательно: свой адрес Bot API (прокси/зеркало), если api.telegram.org недоступен.
   apiRoot: process.env.TELEGRAM_API_ROOT || undefined,
+  // TELEGRAM_TEST_ENV=1 — тестовый сервер Telegram (отдельный аккаунт и бот из тестового @BotFather).
+  // Там виджеты работают, в проде обычным ботам их сейчас запретили (с 13.11.2026).
+  testEnv: process.env.TELEGRAM_TEST_ENV === "1",
   catalogOrigin: process.env.CATALOG_ORIGIN ?? "https://catalog.rangauto.ru",
   // Каталог блокирует User-Agent со словом «Bot» — используем тот же, что и сайт
   catalogUserAgent: process.env.CATALOG_USER_AGENT ?? "RangAutoSite/1.0",
