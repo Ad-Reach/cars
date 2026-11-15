@@ -3,6 +3,8 @@ import { bot } from "./bot.js";
 import { widgets } from "./widgets/render.js";
 import { startServer } from "./server.js";
 import { config } from "./config.js";
+import { warmCatalog } from "./catalog.js";
+import { QUESTIONS } from "./quiz.js";
 
 // Long polling (вебхук не нужен) + HTTP-сервер (Mini App и /health).
 // Запуск не должен падать из-за Telegram: при передеплое старый контейнер ещё какое-то время
@@ -44,6 +46,8 @@ async function poll() {
 
 await setup();
 void poll();
+// Машины из каталога грузим заранее, чтобы клиент не ждал
+warmCatalog(QUESTIONS.find((q) => q.id === "b")?.options ?? [undefined]);
 
 const stop = () => {
   stopping = true;

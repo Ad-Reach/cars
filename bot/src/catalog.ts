@@ -55,23 +55,38 @@ export const isPassenger = (car: Car) => !EXCLUDE.test(car.title);
 // Последняя ошибка загрузки по стране — видна в ответе /api/cars, когда машин нет
 export const catalogErrors = new Map<CountryId, string>();
 
-// Кэш страниц на 10 минут: каталог медленный и иногда рвёт соединение
+// Кэш страниц: свежий — 10 минут; при сбое каталога отдаём последний удачный ответ (до суток).
+// Каталог плохо переносит параллельные подключения с одного IP (из Амстердама — таймауты),
+// поэтому все запросы к нему идут строго по очереди, а кэш прогревается в фоне (warmCatalog).
 const cache = new Map<string, { at: number; cars: Car[] }>();
 const TTL = 10 * 60_000;
+const STALE_TTL = 24 * 60 * 60_000;
 
-async function fetchCars(country: CountryId, price?: [number, number]): Promise<Car[]> {
+let queue: Promise<unknown> = Promise.resolve();
+const inQueue = <T>(job: () => Promise<T>): Promise<T> => {
+  const run = queue.then(job, job);
+  queue = run.catch(() => {});
+  return run;
+};
+
+const describeError = (error: unknown) => {
+  const cause = (error as { cause?: unknown }).cause;
+  return `${String(error)}${cause ? ` (${String(cause)})` : ""}`;
+};
+
+function catalogUrl(country: CountryId, price?: [number, number]) {
   const url = new URL(COUNTRIES[country].path, config.catalogOrigin);
   if (price) {
     if (price[0]) url.searchParams.set("price_from", String(price[0]));
     url.searchParams.set("price_to", String(price[1]));
   }
-  const key = url.toString();
-  const hit = cache.get(key);
-  if (hit && Date.now() - hit.at < TTL) return hit.cars;
+  return url.toString();
+}
 
-  for (let attempt = 0; attempt < 2; attempt++) {
+async function load(country: CountryId, key: string): Promise<Car[] | null> {
+  for (let attempt = 1; attempt <= 3; attempt++) {
     try {
-      const res = await fetch(key, { headers: { "User-Agent": config.catalogUserAgent }, signal: AbortSignal.timeout(15000) });
+      const res = await fetch(key, { headers: { "User-Agent": config.catalogUserAgent }, signal: AbortSignal.timeout(20000) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
       const cars = parseCards(html, country).filter(isPassenger);
@@ -80,23 +95,42 @@ async function fetchCars(country: CountryId, price?: [number, number]): Promise<
       cache.set(key, { at: Date.now(), cars });
       return cars;
     } catch (error) {
-      catalogErrors.set(country, `${String(error)}${(error as { cause?: unknown }).cause ? ` (${String((error as { cause?: unknown }).cause)})` : ""}`);
-      if (attempt) console.warn("[catalog]", key, catalogErrors.get(country));
+      catalogErrors.set(country, describeError(error));
+      if (attempt === 3) console.warn("[catalog]", key, catalogErrors.get(country));
+      else await new Promise((r) => setTimeout(r, attempt * 1500));
     }
   }
-  return [];
+  return null;
+}
+
+async function fetchCars(country: CountryId, price?: [number, number]): Promise<Car[]> {
+  const key = catalogUrl(country, price);
+  const hit = cache.get(key);
+  if (hit && Date.now() - hit.at < TTL) return hit.cars;
+  const fresh = await inQueue(() => load(country, key));
+  if (fresh) return fresh;
+  // каталог не ответил — показываем то, что было (если не слишком старое)
+  return hit && Date.now() - hit.at < STALE_TTL ? hit.cars : [];
+}
+
+/** Фоновый прогрев: все страны × все бюджеты, по очереди. Запускается при старте и раз в 10 минут. */
+export function warmCatalog(budgets: (Option | undefined)[]) {
+  const run = async () => {
+    for (const b of budgets) for (const c of Object.keys(COUNTRIES) as CountryId[]) await fetchCars(c, b?.price);
+  };
+  void run();
+  setInterval(() => void run(), TTL).unref();
 }
 
 /** Подбор: до `limit` машин в бюджете, поровну из подходящих стран, дешёвые и дорогие вперемешку. */
 export async function pickCars(budget: Option | undefined, wheel: Option | undefined, limit = 4): Promise<Car[]> {
   const countries = wheel?.countries ?? (Object.keys(COUNTRIES) as CountryId[]);
-  const lists = await Promise.all(
-    countries.map(async (c) => {
-      const cars = await fetchCars(c, budget?.price);
-      // страхуемся: каталог может проигнорировать фильтр
-      return budget?.price ? cars.filter((car) => car.price >= budget.price![0] && car.price <= budget.price![1]) : cars;
-    }),
-  );
+  const lists: Car[][] = [];
+  for (const c of countries) {
+    const cars = await fetchCars(c, budget?.price);
+    // страхуемся: каталог может проигнорировать фильтр
+    lists.push(budget?.price ? cars.filter((car) => car.price >= budget.price![0] && car.price <= budget.price![1]) : cars);
+  }
   const result: Car[] = [];
   for (let i = 0; result.length < limit && lists.some((l) => l[i]); i++) {
     for (const l of lists) if (l[i] && result.length < limit) result.push(l[i]);
