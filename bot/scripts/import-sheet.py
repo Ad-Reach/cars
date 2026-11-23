@@ -38,6 +38,7 @@ TABS = {
     "2065412685": ("r", "от 2 млн"),
 }
 ROOT = Path(__file__).resolve().parent.parent
+REPO = ROOT.parent
 DATA = ROOT / "data"
 PHOTOS = DATA / "photos"
 YADISK = "https://cloud-api.yandex.net/v1/disk/public/resources"
@@ -242,6 +243,46 @@ def download_photo(cid: str, ref: dict, force: bool) -> bool:
     return True
 
 
+# Фото, которых нет в папках Яндекс.Диска, берём из каталогов самого сайта (public/new-cars*, главное фото модели).
+# id машины → папка модели относительно public/. Это внешний вид модели: у таких машин салон/руль на фото
+# могут не совпадать с таблицей (в каталоге ОАЭ руль левый).
+SITE_PHOTOS = {
+    "suzuki-fronx-l": "new-cars-uae/suzuki-fronx",
+    "nissan-magnite-l": "new-cars-uae/nissan-magnite",
+    "suzuki-baleno-l": "new-cars-uae/suzuki-baleno",
+    "suzuki-grand-vitara-l": "new-cars-uae/suzuki-grand-vitara",
+    "suzuki-swift-l": "new-cars-uae/suzuki-swift-mild-hybrid",
+    "toyota-veloz-l": "new-cars-uae/toyota-veloz",
+    "mitsubishi-asx-l": "new-cars-uae/mitsubishi-asx",
+    "mitsubishi-xpander-l": "new-cars-uae/mitsubishi-xpander",
+    "mitsubishi-xcross-l": "new-cars-uae/mitsubishi-xpander-cross",
+    "suzuki-across-l": "new-cars-uae/suzuki-across",
+    "suzuki-ertiga-l": "new-cars-uae/suzuki-ertiga",
+    "mitsubishi-eclipse-cross-l": "new-cars-uae/mitsubishi-eclipse-cross",
+    "suzuki-jimny-r": "new-cars-uae/suzuki-jimny",
+    "mazda-cx-30-r": "new-cars/mazda-cx30",
+}
+# та же модель в другой вкладке: id → id, у которого берём фото
+SAME_MODEL = {"honda-stepwgn-r": "honda-stepwgn-r-2"}
+
+
+def site_photo(cid: str, force: bool) -> bool:
+    from PIL import Image
+
+    out = PHOTOS / f"{cid}.jpg"
+    if out.exists() and not force:
+        return True
+    src = REPO / "public" / SITE_PHOTOS[cid] / "1-w1160.webp"
+    if not src.exists():
+        return False
+    img = Image.open(src).convert("RGB")
+    if img.width > PHOTO_WIDTH:
+        img = img.resize((PHOTO_WIDTH, round(img.height * PHOTO_WIDTH / img.width)), Image.LANCZOS)
+    PHOTOS.mkdir(parents=True, exist_ok=True)
+    img.save(out, "JPEG", quality=80, optimize=True, progressive=True)
+    return True
+
+
 def main() -> None:
     force = "--photos" in sys.argv
     csv_dir = Path(sys.argv[sys.argv.index("--csv-dir") + 1]) if "--csv-dir" in sys.argv else None
@@ -257,6 +298,13 @@ def main() -> None:
                 c["photo"] = download_photo(c["id"], ref, force)
             except Exception as e:  # noqa: BLE001
                 print(f"  фото {c['title']}: {e}", file=sys.stderr)
+        if not c["photo"] and c["id"] in SITE_PHOTOS:
+            c["photo"] = site_photo(c["id"], force)
+        if not c["photo"] and c["id"] in SAME_MODEL and (PHOTOS / f"{SAME_MODEL[c['id']]}.jpg").exists():
+            import shutil
+
+            shutil.copy(PHOTOS / f"{SAME_MODEL[c['id']]}.jpg", PHOTOS / f"{c['id']}.jpg")
+            c["photo"] = True
         if not c["photo"]:
             missing.append(f"{c['title']} ({'лев.' if c['wheel'] == 'l' else 'прав.'}, {c['tab']})")
     keep = ("id", "brand", "model", "title", "price", "from", "year", "specs", "wheel", "tab", "photo")
