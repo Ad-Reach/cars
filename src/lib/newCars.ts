@@ -1,6 +1,6 @@
 // Каталоги новых авто под заказ: rangauto.ru/new/<рынок>/<модель>.
 //   /new/china — из Китая. Данные: scripts/sync-new-cars.py → src/data/new-cars/, фото — public/new-cars/<slug>/.
-//   /new/uae   — из ОАЭ.   Данные: scripts/sync-new-cars-uae.py (Google-таблица) → src/data/new-cars-uae/
+//   /new/uae   — из ОАЭ.   Данные выгружены один раз (scripts/import-new-cars-uae.py) → src/data/new-cars-uae/
 //                          (index.json + models.json), фото с Яндекс.Диска — public/new-cars-uae/<slug>/.
 // /new — выбор рынка. Тестовый режим и доступ по ключу — src/lib/newCarsFlag.ts и src/proxy.ts.
 // Здесь — общее для сервера и браузера; чтение данных каталога — src/lib/newCarsData.ts (только сервер).

@@ -20,10 +20,10 @@ npm run dev   # http://localhost:3000
 Каталоги новых авто под заказ (`src/app/new`, `src/lib/newCars.ts`):
 - `/new` — выбор страны, `/new/china` и `/new/china/<модель>` — из Китая, `/new/uae` и `/new/uae/<модель>` — из ОАЭ.
 - Китай: `src/data/new-cars/`, фото `public/new-cars/`, обновляет `scripts/sync-new-cars.py` (раз в сутки в CI).
-- ОАЭ: источник — Google-таблица (марка, модель, комплектация, итоговая цена, папка фото на Яндекс.Диске).
-  `scripts/sync-new-cars-uae.py` раз в сутки (CI) собирает из неё `src/data/new-cars-uae/` (`index.json` — список,
-  `models.json` — страницы моделей) и докачивает фото в `public/new-cars-uae/`. Если таблица закрыта по ссылке,
-  берётся её копия `src/data/new-cars-uae/source.csv`.
+- ОАЭ: выгружено один раз из присланной таблицы (`src/data/new-cars-uae/source.csv`) скриптом
+  `scripts/import-new-cars-uae.py`: цены — из таблицы, фото — с Яндекс.Диска, характеристики и оснащение — с drom.ru.
+  Данные: `src/data/new-cars-uae/` (`index.json` — список, `models.json` — страницы моделей), фото `public/new-cars-uae/`.
+  Автообновления нет; при новой таблице — заменить `source.csv` и запустить скрипт.
 - Старые адреса `/new/<модель>` перенаправляются на `/new/china/<модель>`.
 - Тестовый режим (`src/lib/newCarsFlag.ts`): каталоги открываются только по ссылке с ключом,
   например `https://rangauto.ru/new/uae?preview=<NEW_CARS_PREVIEW_KEY>`; ключ запоминается в cookie на весь `/new`.
