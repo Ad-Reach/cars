@@ -114,18 +114,20 @@ export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }
       )}
 
       {/* галерея */}
-      <section className="section section--white">
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <span className="eyebrow" aria-hidden />
-              <h2 className="h2">Знакомство с {car.name}</h2>
-              {car.galleryIntro && <p className={`section-sub ${styles.sub}`}>{car.galleryIntro}</p>}
+      {car.gallery.length > 0 && (
+        <section className="section section--white">
+          <div className="container">
+            <div className="section-head">
+              <div>
+                <span className="eyebrow" aria-hidden />
+                <h2 className="h2">Знакомство с {car.name}</h2>
+                {car.galleryIntro && <p className={`section-sub ${styles.sub}`}>{car.galleryIntro}</p>}
+              </div>
             </div>
+            <Gallery market={market} car={car} title={title} />
           </div>
-          <Gallery market={market} car={car} title={title} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* главы: дизайн, комфорт, техника */}
       {car.chapters.map((ch, k) => (

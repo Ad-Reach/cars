@@ -20,7 +20,10 @@ npm run dev   # http://localhost:3000
 Каталоги новых авто под заказ (`src/app/new`, `src/lib/newCars.ts`):
 - `/new` — выбор страны, `/new/china` и `/new/china/<модель>` — из Китая, `/new/uae` и `/new/uae/<модель>` — из ОАЭ.
 - Китай: `src/data/new-cars/`, фото `public/new-cars/`, обновляет `scripts/sync-new-cars.py` (раз в сутки в CI).
-- ОАЭ: `src/data/new-cars-uae/` (`index.json` — список, `models.json` — страницы моделей), фото `public/new-cars-uae/`.
+- ОАЭ: источник — Google-таблица (марка, модель, комплектация, итоговая цена, папка фото на Яндекс.Диске).
+  `scripts/sync-new-cars-uae.py` раз в сутки (CI) собирает из неё `src/data/new-cars-uae/` (`index.json` — список,
+  `models.json` — страницы моделей) и докачивает фото в `public/new-cars-uae/`. Если таблица закрыта по ссылке,
+  берётся её копия `src/data/new-cars-uae/source.csv`.
 - Старые адреса `/new/<модель>` перенаправляются на `/new/china/<модель>`.
 - Тестовый режим (`src/lib/newCarsFlag.ts`): каталоги открываются только по ссылке с ключом,
   например `https://rangauto.ru/new/uae?preview=<NEW_CARS_PREVIEW_KEY>`; ключ запоминается в cookie на весь `/new`.

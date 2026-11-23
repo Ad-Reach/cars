@@ -184,6 +184,12 @@ export function NewCarCard({ market, car }: { market: Market; car: NewCarSummary
   return (
     <article className={styles.card}>
       <a href={carHref(market, car.slug)} className={styles.cardPhoto} onMouseLeave={() => setShown(0)}>
+        {!photos.length && (
+          <span className={styles.noPhoto} aria-hidden>
+            <b>{car.brand}</b>
+            {car.name.replace(car.brand, "").trim()}
+          </span>
+        )}
         {photos[shown] && (
           <img
             src={carImg(market, car.slug, photos[shown], "w760")}

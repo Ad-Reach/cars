@@ -1,1 +1,1825 @@
-{}
+{
+ "suzuki-fronx": {
+  "slug": "suzuki-fronx",
+  "name": "Suzuki Fronx",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Fronx",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2390000,
+  "lead": "Suzuki Fronx GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 390 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2390000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Fronx из ОАЭ под заказ от 2 390 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-yaris": {
+  "slug": "toyota-yaris",
+  "name": "Toyota Yaris",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Yaris",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2363000,
+  "lead": "Toyota Yaris E с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "E",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 363 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "E",
+    "sub": "",
+    "badge": "",
+    "price": 2363000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-corolla-cross-hybrid",
+   "toyota-urban-cruiser",
+   "toyota-veloz",
+   "toyota-fortuner",
+   "toyota-corolla",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota Yaris из ОАЭ под заказ от 2 363 000 ₽ под ключ: комплектация E, доставка, растаможка и утильсбор включены."
+ },
+ "nissan-magnite": {
+  "slug": "nissan-magnite",
+  "name": "Nissan Magnite",
+  "year": "",
+  "brand": "Nissan",
+  "model": "Magnite",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2133000,
+  "lead": "Nissan Magnite SL с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "SL",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 133 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "SL",
+    "sub": "",
+    "badge": "",
+    "price": 2133000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "nissan-silphy",
+   "nissan-kicks",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Nissan Magnite из ОАЭ под заказ от 2 133 000 ₽ под ключ: комплектация SL, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-dzire": {
+  "slug": "suzuki-dzire",
+  "name": "Suzuki Dzire",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Dzire",
+  "tag": "Под заказ из ОАЭ",
+  "price": 1925000,
+  "lead": "Suzuki Dzire GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "1 925 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 1925000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Dzire из ОАЭ под заказ от 1 925 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "hyundai-creta": {
+  "slug": "hyundai-creta",
+  "name": "Hyundai Creta",
+  "year": "",
+  "brand": "Hyundai",
+  "model": "Creta",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2949000,
+  "lead": "Hyundai Creta Premium с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "Premium",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 949 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "Premium",
+    "sub": "",
+    "badge": "",
+    "price": 2949000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "audi-q3",
+   "volkswagen-tiguan",
+   "nissan-silphy",
+   "nissan-kicks"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Hyundai Creta из ОАЭ под заказ от 2 949 000 ₽ под ключ: комплектация Premium, доставка, растаможка и утильсбор включены."
+ },
+ "audi-q3": {
+  "slug": "audi-q3",
+  "name": "Audi Q3",
+  "year": "",
+  "brand": "Audi",
+  "model": "Q3",
+  "tag": "Под заказ из ОАЭ",
+  "price": 4874000,
+  "lead": "Audi Q3 35 TFSI ADVANCED с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "35 TFSI ADVANCED",
+    "label": "Комплектация"
+   },
+   {
+    "value": "4 874 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "35 TFSI ADVANCED",
+    "sub": "",
+    "badge": "",
+    "price": 4874000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "volkswagen-tiguan",
+   "nissan-silphy",
+   "nissan-kicks"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Audi Q3 из ОАЭ под заказ от 4 874 000 ₽ под ключ: комплектация 35 TFSI ADVANCED, доставка, растаможка и утильсбор включены."
+ },
+ "volkswagen-tiguan": {
+  "slug": "volkswagen-tiguan",
+  "name": "Volkswagen Tiguan",
+  "year": "",
+  "brand": "Volkswagen",
+  "model": "Tiguan",
+  "tag": "Под заказ из ОАЭ",
+  "price": 5244000,
+  "lead": "Volkswagen Tiguan LIFE PLUS 1.4L с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "1.4 л",
+    "label": "Бензин"
+   },
+   {
+    "value": "LIFE PLUS 1.4L",
+    "label": "Комплектация"
+   },
+   {
+    "value": "5 244 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "LIFE PLUS 1.4L",
+    "sub": "",
+    "badge": "",
+    "price": 5244000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "nissan-silphy",
+   "nissan-kicks"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Volkswagen Tiguan из ОАЭ под заказ от 5 244 000 ₽ под ключ: комплектация LIFE PLUS 1.4L, доставка, растаможка и утильсбор включены."
+ },
+ "nissan-silphy": {
+  "slug": "nissan-silphy",
+  "name": "Nissan Silphy",
+  "year": "",
+  "brand": "Nissan",
+  "model": "Silphy",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2042000,
+  "lead": "Nissan Silphy SV с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "122 л.с.",
+    "label": "Мощность"
+   },
+   {
+    "value": "Вариатор",
+    "label": "Коробка"
+   },
+   {
+    "value": "2WD",
+    "label": "Привод"
+   },
+   {
+    "value": "SV",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 042 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "SV",
+    "sub": "",
+    "badge": "",
+    "price": 2042000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [
+   [
+    "Объём и тип",
+    "бензиновый, 4-цилиндровый рядный (1598 см³, DOHC)"
+   ],
+   [
+    "Мощность",
+    "122 л.с. (в отдельных версиях/модификациях могут встречаться иные значения)"
+   ],
+   [
+    "Крутящий момент",
+    "155 Н·м"
+   ],
+   [
+    "Привод",
+    "передний (FWD)"
+   ],
+   [
+    "Коробка передач",
+    "автоматическая / вариатор (CVT)"
+   ]
+  ],
+  "faq": [],
+  "similar": [
+   "nissan-magnite",
+   "nissan-kicks",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": 122,
+  "bodyType": "",
+  "transmission": "Вариатор",
+  "description": "Купить новый Nissan Silphy из ОАЭ под заказ от 2 042 000 ₽ под ключ: комплектация SV, доставка, растаможка и утильсбор включены."
+ },
+ "nissan-kicks": {
+  "slug": "nissan-kicks",
+  "name": "Nissan Kicks",
+  "year": "",
+  "brand": "Nissan",
+  "model": "Kicks",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3631000,
+  "lead": "Nissan Kicks SL с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "SL",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 631 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "SL",
+    "sub": "",
+    "badge": "",
+    "price": 3631000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "nissan-magnite",
+   "nissan-silphy",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Nissan Kicks из ОАЭ под заказ от 3 631 000 ₽ под ключ: комплектация SL, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-jimny": {
+  "slug": "suzuki-jimny",
+  "name": "Suzuki Jimny",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Jimny",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3167000,
+  "lead": "Suzuki Jimny GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 167 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 3167000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Jimny из ОАЭ под заказ от 3 167 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-baleno": {
+  "slug": "suzuki-baleno",
+  "name": "Suzuki Baleno",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Baleno",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2167000,
+  "lead": "Suzuki Baleno GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 167 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2167000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Baleno из ОАЭ под заказ от 2 167 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-grand-vitara": {
+  "slug": "suzuki-grand-vitara",
+  "name": "Suzuki Grand Vitara",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Grand Vitara",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2481000,
+  "lead": "Suzuki Grand Vitara GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 481 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2481000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Grand Vitara из ОАЭ под заказ от 2 481 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-swift-mild-hybrid": {
+  "slug": "suzuki-swift-mild-hybrid",
+  "name": "Suzuki Swift Mild Hybrid",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Swift Mild Hybrid",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2126000,
+  "lead": "Suzuki Swift Mild Hybrid GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Гибрид",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 126 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2126000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-alto",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Гибрид",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Swift Mild Hybrid из ОАЭ под заказ от 2 126 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-alto": {
+  "slug": "suzuki-alto",
+  "name": "Suzuki Alto",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Alto",
+  "tag": "Под заказ из ОАЭ",
+  "price": 1604000,
+  "lead": "Suzuki Alto GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "48 л.с.",
+    "label": "Мощность"
+   },
+   {
+    "value": "Механика",
+    "label": "Коробка"
+   },
+   {
+    "value": "2WD",
+    "label": "Привод"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "1 604 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 1604000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [
+   [
+    "Мощность",
+    "48 л.с."
+   ],
+   [
+    "КПП",
+    "Механика"
+   ],
+   [
+    "Привод",
+    "передний"
+   ],
+   [
+    "Кузов",
+    "Хэтчбек"
+   ]
+  ],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-across",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": 48,
+  "bodyType": "Хэтчбек",
+  "transmission": "Механика",
+  "description": "Купить новый Suzuki Alto из ОАЭ под заказ от 1 604 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-corolla-cross-hybrid": {
+  "slug": "toyota-corolla-cross-hybrid",
+  "name": "Toyota Corolla Cross Hybrid",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Corolla Cross Hybrid",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3540000,
+  "lead": "Toyota Corolla Cross Hybrid GLI с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Гибрид",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLI",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 540 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLI",
+    "sub": "",
+    "badge": "",
+    "price": 3540000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-urban-cruiser",
+   "toyota-veloz",
+   "toyota-fortuner",
+   "toyota-corolla",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Гибрид",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota Corolla Cross Hybrid из ОАЭ под заказ от 3 540 000 ₽ под ключ: комплектация GLI, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-urban-cruiser": {
+  "slug": "toyota-urban-cruiser",
+  "name": "Toyota Urban Cruiser",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Urban Cruiser",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3036000,
+  "lead": "Toyota Urban Cruiser 1.5L с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "1.5 л",
+    "label": "Бензин"
+   },
+   {
+    "value": "1.5L",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 036 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "1.5L",
+    "sub": "",
+    "badge": "",
+    "price": 3036000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-corolla-cross-hybrid",
+   "toyota-veloz",
+   "toyota-fortuner",
+   "toyota-corolla",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota Urban Cruiser из ОАЭ под заказ от 3 036 000 ₽ под ключ: комплектация 1.5L, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-veloz": {
+  "slug": "toyota-veloz",
+  "name": "Toyota Veloz",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Veloz",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2763000,
+  "lead": "Toyota Veloz GX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 763 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GX",
+    "sub": "",
+    "badge": "",
+    "price": 2763000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-corolla-cross-hybrid",
+   "toyota-urban-cruiser",
+   "toyota-fortuner",
+   "toyota-corolla",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota Veloz из ОАЭ под заказ от 2 763 000 ₽ под ключ: комплектация GX, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-asx": {
+  "slug": "mitsubishi-asx",
+  "name": "Mitsubishi ASX",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "ASX",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2509000,
+  "lead": "Mitsubishi ASX GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 509 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2509000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-attrage",
+   "mitsubishi-xpander-cross",
+   "mitsubishi-xpander",
+   "mitsubishi-xforce",
+   "mitsubishi-eclipse-cross",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi ASX из ОАЭ под заказ от 2 509 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-attrage": {
+  "slug": "mitsubishi-attrage",
+  "name": "Mitsubishi Attrage",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "Attrage",
+  "tag": "Под заказ из ОАЭ",
+  "price": 1740000,
+  "lead": "Mitsubishi Attrage 1.2L с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "1.2 л",
+    "label": "Бензин"
+   },
+   {
+    "value": "1.2L",
+    "label": "Комплектация"
+   },
+   {
+    "value": "1 740 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "1.2L",
+    "sub": "",
+    "badge": "",
+    "price": 1740000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-asx",
+   "mitsubishi-xpander-cross",
+   "mitsubishi-xpander",
+   "mitsubishi-xforce",
+   "mitsubishi-eclipse-cross",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi Attrage из ОАЭ под заказ от 1 740 000 ₽ под ключ: комплектация 1.2L, доставка, растаможка и утильсбор включены."
+ },
+ "peugeot-2008": {
+  "slug": "peugeot-2008",
+  "name": "Peugeot 2008",
+  "year": "",
+  "brand": "Peugeot",
+  "model": "2008",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3540000,
+  "lead": "Peugeot 2008 GT с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GT",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 540 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GT",
+    "sub": "",
+    "badge": "",
+    "price": 3540000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan",
+   "nissan-silphy"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Peugeot 2008 из ОАЭ под заказ от 3 540 000 ₽ под ключ: комплектация GT, доставка, растаможка и утильсбор включены."
+ },
+ "kia-sportage": {
+  "slug": "kia-sportage",
+  "name": "Kia Sportage",
+  "year": "",
+  "brand": "Kia",
+  "model": "Sportage",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3540000,
+  "lead": "Kia Sportage Basic с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "Basic",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 540 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "Basic",
+    "sub": "",
+    "badge": "",
+    "price": 3540000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "kia-k4",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Kia Sportage из ОАЭ под заказ от 3 540 000 ₽ под ключ: комплектация Basic, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-fortuner": {
+  "slug": "toyota-fortuner",
+  "name": "Toyota Fortuner",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Fortuner",
+  "tag": "Под заказ из ОАЭ",
+  "price": 4985000,
+  "lead": "Toyota Fortuner 2.4 Diesel с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Дизель",
+    "label": "Двигатель"
+   },
+   {
+    "value": "2.4 Diesel",
+    "label": "Комплектация"
+   },
+   {
+    "value": "4 985 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "2.4 Diesel",
+    "sub": "",
+    "badge": "",
+    "price": 4985000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-corolla-cross-hybrid",
+   "toyota-urban-cruiser",
+   "toyota-veloz",
+   "toyota-corolla",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Дизель",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota Fortuner из ОАЭ под заказ от 4 985 000 ₽ под ключ: комплектация 2.4 Diesel, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-corolla": {
+  "slug": "toyota-corolla",
+  "name": "Toyota Corolla",
+  "year": "",
+  "brand": "Toyota",
+  "model": "Corolla",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2560000,
+  "lead": "Toyota Corolla XLi с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "1.6 л",
+    "label": "Бензин"
+   },
+   {
+    "value": "121 л.с.",
+    "label": "Мощность"
+   },
+   {
+    "value": "Вариатор",
+    "label": "Коробка"
+   },
+   {
+    "value": "2WD",
+    "label": "Привод"
+   },
+   {
+    "value": "XLi",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 560 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "XLi",
+    "sub": "",
+    "badge": "",
+    "price": 2560000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [
+   [
+    "Двигатель",
+    "бензиновый, 4-цилиндровый, 1.6 л (1598 см³), мощность 121 л.с. при 6000 об/мин, крутящий момент 154 Н·м при 5200 об/мин"
+   ],
+   [
+    "Трансмиссия и привод",
+    "вариатор CVT, передний привод"
+   ],
+   [
+    "Габариты и масса",
+    "длина 4630 мм, ширина 1780 мм, высота 1435 мм; объём багажника 470 л, топливный бак 50 л, 5 мест"
+   ],
+   [
+    "Динамика и расход",
+    "максимальная скорость 190 км/ч; средний расход в городе около 15 км/л (≈6,7 л/100 км) и на трассе 18 км/л (≈5,6 л/100 км)"
+   ]
+  ],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-corolla-cross-hybrid",
+   "toyota-urban-cruiser",
+   "toyota-veloz",
+   "toyota-fortuner",
+   "toyota-fj-cruiser",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": 121,
+  "bodyType": "",
+  "transmission": "Вариатор",
+  "description": "Купить новый Toyota Corolla из ОАЭ под заказ от 2 560 000 ₽ под ключ: комплектация XLi, доставка, растаможка и утильсбор включены."
+ },
+ "toyota-fj-cruiser": {
+  "slug": "toyota-fj-cruiser",
+  "name": "Toyota FJ Cruiser",
+  "year": "",
+  "brand": "Toyota",
+  "model": "FJ Cruiser",
+  "tag": "Под заказ из ОАЭ",
+  "price": 8753000,
+  "lead": "Toyota FJ Cruiser GXR 2.7 Full with radar с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GXR 2.7 Full with radar",
+    "label": "Комплектация"
+   },
+   {
+    "value": "8 753 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GXR 2.7 Full with radar",
+    "sub": "",
+    "badge": "",
+    "price": 8753000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "toyota-yaris",
+   "toyota-corolla-cross-hybrid",
+   "toyota-urban-cruiser",
+   "toyota-veloz",
+   "toyota-fortuner",
+   "toyota-corolla",
+   "suzuki-fronx",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Toyota FJ Cruiser из ОАЭ под заказ от 8 753 000 ₽ под ключ: комплектация GXR 2.7 Full with radar, доставка, растаможка и утильсбор включены."
+ },
+ "kia-k4": {
+  "slug": "kia-k4",
+  "name": "Kia K4",
+  "year": "",
+  "brand": "Kia",
+  "model": "K4",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2753000,
+  "lead": "Kia K4 1.6 123hp с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "123 л.с.",
+    "label": "Мощность"
+   },
+   {
+    "value": "1.6 123hp",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 753 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "1.6 123hp",
+    "sub": "",
+    "badge": "",
+    "price": 2753000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "kia-sportage",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite",
+   "suzuki-dzire",
+   "hyundai-creta",
+   "audi-q3",
+   "volkswagen-tiguan"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": 123,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Kia K4 из ОАЭ под заказ от 2 753 000 ₽ под ключ: комплектация 1.6 123hp, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-xpander-cross": {
+  "slug": "mitsubishi-xpander-cross",
+  "name": "Mitsubishi Xpander Cross",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "Xpander Cross",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2952000,
+  "lead": "Mitsubishi Xpander Cross Cross с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "Cross",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 952 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "Cross",
+    "sub": "",
+    "badge": "",
+    "price": 2952000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-asx",
+   "mitsubishi-attrage",
+   "mitsubishi-xpander",
+   "mitsubishi-xforce",
+   "mitsubishi-eclipse-cross",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi Xpander Cross из ОАЭ под заказ от 2 952 000 ₽ под ключ: комплектация Cross, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-xpander": {
+  "slug": "mitsubishi-xpander",
+  "name": "Mitsubishi Xpander",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "Xpander",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2504000,
+  "lead": "Mitsubishi Xpander Medium Line с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "Medium Line",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 504 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "Medium Line",
+    "sub": "",
+    "badge": "",
+    "price": 2504000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-asx",
+   "mitsubishi-attrage",
+   "mitsubishi-xpander-cross",
+   "mitsubishi-xforce",
+   "mitsubishi-eclipse-cross",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi Xpander из ОАЭ под заказ от 2 504 000 ₽ под ключ: комплектация Medium Line, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-xforce": {
+  "slug": "mitsubishi-xforce",
+  "name": "Mitsubishi Xforce",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "Xforce",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2741000,
+  "lead": "Mitsubishi Xforce H line с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "H line",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 741 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "H line",
+    "sub": "",
+    "badge": "",
+    "price": 2741000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-asx",
+   "mitsubishi-attrage",
+   "mitsubishi-xpander-cross",
+   "mitsubishi-xpander",
+   "mitsubishi-eclipse-cross",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi Xforce из ОАЭ под заказ от 2 741 000 ₽ под ключ: комплектация H line, доставка, растаможка и утильсбор включены."
+ },
+ "mitsubishi-eclipse-cross": {
+  "slug": "mitsubishi-eclipse-cross",
+  "name": "Mitsubishi Eclipse Cross",
+  "year": "",
+  "brand": "Mitsubishi",
+  "model": "Eclipse Cross",
+  "tag": "Под заказ из ОАЭ",
+  "price": 3170000,
+  "lead": "Mitsubishi Eclipse Cross GLS с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLS",
+    "label": "Комплектация"
+   },
+   {
+    "value": "3 170 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLS",
+    "sub": "",
+    "badge": "",
+    "price": 3170000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "mitsubishi-asx",
+   "mitsubishi-attrage",
+   "mitsubishi-xpander-cross",
+   "mitsubishi-xpander",
+   "mitsubishi-xforce",
+   "suzuki-fronx",
+   "toyota-yaris",
+   "nissan-magnite"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Mitsubishi Eclipse Cross из ОАЭ под заказ от 3 170 000 ₽ под ключ: комплектация GLS, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-across": {
+  "slug": "suzuki-across",
+  "name": "Suzuki Across",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Across",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2893000,
+  "lead": "Suzuki Across GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 893 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2893000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-ertiga"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Across из ОАЭ под заказ от 2 893 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-ertiga": {
+  "slug": "suzuki-ertiga",
+  "name": "Suzuki Ertiga",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "Ertiga",
+  "tag": "Под заказ из ОАЭ",
+  "price": 2334000,
+  "lead": "Suzuki Ertiga GLX с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "GLX",
+    "label": "Комплектация"
+   },
+   {
+    "value": "2 334 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "GLX",
+    "sub": "",
+    "badge": "",
+    "price": 2334000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki Ertiga из ОАЭ под заказ от 2 334 000 ₽ под ключ: комплектация GLX, доставка, растаможка и утильсбор включены."
+ },
+ "suzuki-s-presso": {
+  "slug": "suzuki-s-presso",
+  "name": "Suzuki S-Presso",
+  "year": "",
+  "brand": "Suzuki",
+  "model": "S-Presso",
+  "tag": "Под заказ из ОАЭ",
+  "price": 1540000,
+  "lead": "Suzuki S-Presso 1.0 AT с рынка ОАЭ — новый автомобиль под заказ. Цена под ключ: доставка, таможенные платежи и утилизационный сбор уже включены.",
+  "ribbon": [
+   {
+    "value": "Бензин",
+    "label": "Двигатель"
+   },
+   {
+    "value": "1.0 AT",
+    "label": "Комплектация"
+   },
+   {
+    "value": "1 540 000 ₽",
+    "label": "Под ключ"
+   }
+  ],
+  "galleryIntro": "",
+  "gallery": [],
+  "chapters": [],
+  "trims": [
+   {
+    "name": "1.0 AT",
+    "sub": "",
+    "badge": "",
+    "price": 1540000,
+    "features": []
+   }
+  ],
+  "trimsNote": "Цена под ключ включает автомобиль, доставку из ОАЭ, таможенные платежи и утилизационный сбор. Менеджер подтвердит актуальную цену и сроки — курс валют меняется.",
+  "specs": [],
+  "faq": [],
+  "similar": [
+   "suzuki-fronx",
+   "suzuki-dzire",
+   "suzuki-jimny",
+   "suzuki-baleno",
+   "suzuki-grand-vitara",
+   "suzuki-swift-mild-hybrid",
+   "suzuki-alto",
+   "suzuki-across"
+  ],
+  "fuelType": "Бензин",
+  "powerHp": null,
+  "bodyType": "",
+  "transmission": "",
+  "description": "Купить новый Suzuki S-Presso из ОАЭ под заказ от 1 540 000 ₽ под ключ: комплектация 1.0 AT, доставка, растаможка и утильсбор включены."
+ }
+}
