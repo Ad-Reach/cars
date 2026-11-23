@@ -345,6 +345,39 @@
   font-size: 18px;
 }
 
+/* ---------- /new: выбор рынка ---------- */
+.markets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  gap: 24px;
+}
+
+.market {
+  display: grid;
+  gap: 10px;
+  padding: 32px;
+  border-radius: var(--radius-xl);
+  background: var(--c-white);
+  box-shadow: 0 1px 0 var(--c-line);
+  transition:
+    box-shadow 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.market:hover {
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+.market b {
+  font-size: 24px;
+}
+
+.market em {
+  font-style: normal;
+  font-weight: 600;
+}
+
 /* ---------- страница модели: обложка ---------- */
 .cover {
   position: relative;

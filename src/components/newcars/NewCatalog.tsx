@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carHref, carImg, carSrcSet, fullName, rub, type NewCarSummary } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, fullName, leadSource, rub, type Market, type NewCarSummary } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
 type Sort = "price" | "-price" | "name";
@@ -19,7 +19,7 @@ const PRICE_STEPS = [
 const uniq = (list: (string | undefined)[]) =>
   [...new Set(list.filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b, "ru"));
 
-export function NewCatalog({ cars }: { cars: NewCarSummary[] }) {
+export function NewCatalog({ market, cars }: { market: Market; cars: NewCarSummary[] }) {
   const [brand, setBrand] = useState("");
   const [fuel, setFuel] = useState("");
   const [body, setBody] = useState("");
@@ -128,13 +128,13 @@ export function NewCatalog({ cars }: { cars: NewCarSummary[] }) {
         {list.length ? (
           <div className={styles.grid}>
             {list.map((car) => (
-              <NewCarCard key={car.slug} car={car} />
+              <NewCarCard key={car.slug} market={market} car={car} />
             ))}
           </div>
         ) : (
           <div className={styles.empty}>
             <p>Под эти фильтры моделей нет — подберём автомобиль под ваш запрос.</p>
-            <LeadButton source="new:каталог — пустая выдача" title="Подобрать новый автомобиль" className="btn btn--gold">
+            <LeadButton source={leadSource(market, "каталог — пустая выдача")} title="Подобрать новый автомобиль" className="btn btn--gold">
               Подобрать под заказ
             </LeadButton>
           </div>
@@ -170,7 +170,7 @@ function Select({
   );
 }
 
-export function NewCarCard({ car }: { car: NewCarSummary }) {
+export function NewCarCard({ market, car }: { market: Market; car: NewCarSummary }) {
   const [shown, setShown] = useState(0);
   const photos = car.photos.length ? car.photos : [];
   const title = fullName(car);
@@ -183,11 +183,11 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
 
   return (
     <article className={styles.card}>
-      <a href={carHref(car.slug)} className={styles.cardPhoto} onMouseLeave={() => setShown(0)}>
+      <a href={carHref(market, car.slug)} className={styles.cardPhoto} onMouseLeave={() => setShown(0)}>
         {photos[shown] && (
           <img
-            src={carImg(car.slug, photos[shown], "w760")}
-            srcSet={carSrcSet(car.slug, photos[shown])}
+            src={carImg(market, car.slug, photos[shown], "w760")}
+            srcSet={carSrcSet(market, car.slug, photos[shown])}
             sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 30vw"
             alt={title}
             loading="lazy"
@@ -212,7 +212,7 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
         </span>
       </a>
       <div className={styles.cardBody}>
-        <a href={carHref(car.slug)} className={styles.cardTitle}>
+        <a href={carHref(market, car.slug)} className={styles.cardTitle}>
           {car.name} <span>{car.year}</span>
         </a>
         {specs.length > 0 && (
@@ -232,11 +232,11 @@ export function NewCarCard({ car }: { car: NewCarSummary }) {
           </b>
         </div>
         <div className={styles.cardActions}>
-          <a href={carHref(car.slug)} className="btn btn--gold">
+          <a href={carHref(market, car.slug)} className="btn btn--gold">
             Подробнее
           </a>
           <LeadButton
-            source={`new:${title}`}
+            source={leadSource(market, title)}
             title={`Консультация по ${title}`}
             className="btn btn--outline"
           >

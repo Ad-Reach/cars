@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getContent } from "@/lib/content";
-import { carHref, NEW_CARS_PUBLIC, newCars } from "@/lib/newCars";
+import { carHref, marketList, NEW_CARS_PUBLIC } from "@/lib/newCars";
+import { carsOf } from "@/lib/newCarsData";
 import { SITE_URL } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -12,7 +13,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(NEW_CARS_PUBLIC
       ? [
           { url: url("/new"), changeFrequency: "daily" as const, priority: 0.9 },
-          ...newCars.map((c) => ({ url: url(carHref(c.slug)), changeFrequency: "daily" as const, priority: 0.8 })),
+          ...marketList.flatMap((m) => [
+            { url: url(m.path), changeFrequency: "daily" as const, priority: 0.9 },
+            ...carsOf(m).map((c) => ({ url: url(carHref(m, c.slug)), changeFrequency: "daily" as const, priority: 0.8 })),
+          ]),
         ]
       : []),
     { url: url("/privacy"), changeFrequency: "yearly", priority: 0.2 },

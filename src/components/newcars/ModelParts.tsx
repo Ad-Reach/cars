@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carImg, carSrcSet, rub, type NewCarModel } from "@/lib/newCars";
+import { carImg, carSrcSet, leadSource, rub, type Market, type NewCarModel } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
-export function Gallery({ car, title }: { car: NewCarModel; title: string }) {
+export function Gallery({ market, car, title }: { market: Market; car: NewCarModel; title: string }) {
   const [i, setI] = useState(0);
   const n = car.gallery.length;
   const go = (d: number) => setI((v) => (v + d + n) % n);
@@ -28,8 +28,8 @@ export function Gallery({ car, title }: { car: NewCarModel; title: string }) {
       <div className={styles.galStage}>
         <img
           key={cur.img}
-          src={carImg(car.slug, cur.img, "w1160")}
-          srcSet={carSrcSet(car.slug, cur.img)}
+          src={carImg(market, car.slug, cur.img, "w1160")}
+          srcSet={carSrcSet(market, car.slug, cur.img)}
           sizes="(max-width: 900px) 100vw, 70vw"
           alt={cur.alt || title}
           width={1160}
@@ -55,7 +55,7 @@ export function Gallery({ car, title }: { car: NewCarModel; title: string }) {
       <div className={styles.galStrip}>
         {car.gallery.map((g, k) => (
           <button key={g.img} onClick={() => setI(k)} data-on={k === i || undefined} aria-label={`Фото ${k + 1}`}>
-            <img src={carImg(car.slug, g.img, "w380")} alt="" loading="lazy" width={190} height={127} />
+            <img src={carImg(market, car.slug, g.img, "w380")} alt="" loading="lazy" width={190} height={127} />
           </button>
         ))}
       </div>
@@ -65,7 +65,7 @@ export function Gallery({ car, title }: { car: NewCarModel; title: string }) {
 
 const SHORT_LIST = 10;
 
-export function Trims({ car, title }: { car: NewCarModel; title: string }) {
+export function Trims({ market, car, title }: { market: Market; car: NewCarModel; title: string }) {
   const [i, setI] = useState(0);
   const [more, setMore] = useState(false);
   if (!car.trims.length) return null;
@@ -124,7 +124,7 @@ export function Trims({ car, title }: { car: NewCarModel; title: string }) {
         <div className={styles.trimFoot}>
           {car.trimsNote && <p>{car.trimsNote}</p>}
           <LeadButton
-            source={`new:${title} · ${t.name}`}
+            source={leadSource(market, `${title} · ${t.name}`)}
             title={`Заказать ${title}`}
             subtitle={`Комплектация ${t.name} — ${rub(t.price)} под ключ. Менеджер подтвердит цену и сроки.`}
             className="btn btn--gold"
