@@ -3,14 +3,14 @@
 // Ограничения: id вопроса и варианта — латиница, коротко (запрос виджета ≤ 64 байт);
 // подписи короткие — кнопки в виджете узкие.
 
-export type CountryId = "cn" | "kr" | "jp";
+export type Wheel = "l" | "r";
 
 export type Option = {
   id: string;
   label: string;
-  // для фильтра каталога
+  // для фильтра каталога: цена от (включительно) до (не включая)
   price?: [from: number, to: number];
-  countries?: CountryId[];
+  wheels?: Wheel[];
 };
 
 export type Question = { id: string; title: string; options: Option[] };
@@ -20,19 +20,20 @@ export const QUESTIONS: Question[] = [
     id: "b",
     title: "Бюджет",
     options: [
-      { id: "1", label: "до 1,5 млн", price: [0, 1_500_000] },
-      { id: "2", label: "1,5–2,5 млн", price: [1_500_000, 2_500_000] },
-      { id: "3", label: "2,5–4 млн", price: [2_500_000, 4_000_000] },
-      { id: "4", label: "от 4 млн", price: [4_000_000, 50_000_000] },
+      // те же границы, что у вкладок таблицы с машинами
+      { id: "1", label: "до 2 млн", price: [0, 2_000_000] },
+      { id: "2", label: "2–3 млн", price: [2_000_000, 3_000_000] },
+      { id: "3", label: "3–4 млн", price: [3_000_000, 4_000_000] },
+      { id: "4", label: "от 4 млн", price: [4_000_000, Infinity] },
     ],
   },
   {
     id: "w",
     title: "Руль",
     options: [
-      { id: "l", label: "Левый", countries: ["cn", "kr"] },
-      { id: "r", label: "Правый", countries: ["jp"] },
-      { id: "a", label: "Не важно", countries: ["cn", "kr", "jp"] },
+      { id: "l", label: "Левый", wheels: ["l"] },
+      { id: "r", label: "Правый", wheels: ["r"] },
+      { id: "a", label: "Не важно", wheels: ["l", "r"] },
     ],
   },
   {

@@ -22,7 +22,9 @@ h1{font-size:24px;line-height:1.15;margin:6px 0 4px}
 .cars::-webkit-scrollbar{display:none}
 .car{flex:0 0 72%;scroll-snap-align:start;border-radius:var(--r);background:var(--dark2);border:2px solid transparent;overflow:hidden;cursor:pointer}
 .car.on{border-color:var(--gold)}
-.car img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#333}
+.car img,.car .ph{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#333}
+.car .ph{display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;text-align:center;padding:8px}
+.car .m{display:inline-block;margin-top:6px;color:var(--gold);font-size:13px;text-decoration:none}
 .car .b{padding:10px 12px}
 .car .n{font-weight:600;font-size:14px}
 .car .p{color:var(--gold);font-weight:700;margin-top:2px}
@@ -48,9 +50,9 @@ textarea{resize:none;height:76px}
 <div id="form">
   <div class="logo">РАНГ АВТО</div>
   <h1>Подберём авто под&nbsp;ключ</h1>
-  <p class="lead">Китай, Корея и Япония. Выберите параметры — покажем машины из каталога.</p>
+  <p class="lead">Китай, Корея и Япония. Выберите бюджет и руль — покажем машины с ценами и фото.</p>
   <div id="qs"></div>
-  <div class="t">Машины из каталога</div>
+  <div class="t">Подходящие машины</div>
   <div class="cars" id="cars"></div>
   <div class="empty hide" id="empty"></div>
   <label for="name">Имя</label>
@@ -96,17 +98,20 @@ function loadCars() {
   fetch("api/cars?b=" + (A.b || "") + "&w=" + (A.w || "")).then(function (r) { return r.json(); }).then(function (d) {
     if (id !== loading) return;
     cars = d.cars || []; car = null; drawCars();
-  }).catch(function () { if (id === loading) $("empty").textContent = "Каталог не ответил — оставьте заявку, подберём вручную."; });
+  }).catch(function () { if (id === loading) $("empty").textContent = "Не получилось загрузить машины — оставьте заявку, подберём вручную."; });
 }
 function drawCars() {
   $("empty").classList.toggle("hide", cars.length > 0);
   if (!cars.length) $("empty").textContent = "Под эти параметры подберём под заказ — оставьте заявку.";
   $("cars").innerHTML = cars.map(function (c, i) {
-    return '<div class="car' + (car === i ? " on" : "") + '" data-i="' + i + '"><img loading="lazy" src="' + esc(c.img) + '" alt=""><div class="b"><div class="n">' + esc(c.title) +
-      '</div><div class="p">' + rub(c.price) + '</div><div class="s">' + esc(c.flag + " " + c.countryName + (c.specs ? " · " + c.specs : "")) + "</div></div></div>";
+    var pic = c.img ? '<img loading="lazy" src="' + esc(c.img) + '" alt="">' : '<div class="ph">' + esc(c.title) + "</div>";
+    return '<div class="car' + (car === i ? " on" : "") + '" data-i="' + i + '">' + pic + '<div class="b"><div class="n">' + esc(c.title) + ", " + esc(c.year) +
+      '</div><div class="p">' + esc(c.price) + '</div><div class="s">' + esc(c.wheel + (c.specs ? " · " + c.specs : "")) + '</div><a class="m" href="' + esc(c.similar) + '" data-similar="1">Похожие →</a></div></div>';
   }).join("");
 }
 $("cars").addEventListener("click", function (e) {
+  var link = e.target.closest("a[data-similar]");
+  if (link) { e.preventDefault(); if (tg && tg.openLink) tg.openLink(link.href); else window.open(link.href, "_blank"); return; }
   var el = e.target.closest(".car"); if (!el) return;
   var i = +el.dataset.i; car = car === i ? null : i; haptic(); drawCars();
 });
@@ -125,7 +130,7 @@ $("send").onclick = function () {
   var btn = $("send"); btn.disabled = true; btn.textContent = "Отправляю…";
   fetch("api/lead", {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ initData: tg ? tg.initData : "", answers: A, carUrl: car === null ? "" : cars[car].url, name: $("name").value.trim(), phone: phone, comment: $("comment").value.trim() })
+    body: JSON.stringify({ initData: tg ? tg.initData : "", answers: A, carId: car === null ? "" : cars[car].id, name: $("name").value.trim(), phone: phone, comment: $("comment").value.trim() })
   }).then(function (r) { return r.json(); }).then(function (d) {
     if (!d.ok) throw new Error(d.error || "fail");
     $("form").classList.add("hide"); $("done").classList.remove("hide");

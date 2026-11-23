@@ -1,8 +1,9 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { createReadStream, existsSync } from "node:fs";
 import type { Api } from "grammy";
 import { config } from "./config.js";
 import { findOption } from "./quiz.js";
-import { pickCars, COUNTRIES, catalogErrors } from "./catalog.js";
+import { pickCars, carById, photoFile, priceText, similarUrl, WHEEL_NAME } from "./catalog.js";
 import { deliverLead } from "./lead.js";
 import { T } from "./texts.js";
 import { miniappHtml } from "./miniapp/render.js";
@@ -11,7 +12,8 @@ import { verifyInitData, type TgUser } from "./miniapp/auth.js";
 // HTTP-сервер приложения:
 //   GET  /            — Mini App (src/miniapp/index.html)
 //   GET  /health      — проверка здоровья для App Platform
-//   GET  /api/cars    — машины из каталога по ?b=бюджет&w=руль
+//   GET  /api/cars    — машины из таблицы по ?b=бюджет&w=руль
+//   GET  /photos/<id>.jpg — фото машины
 //   POST /api/lead    — заявка из Mini App (подпись initData проверяется)
 
 const json = (res: ServerResponse, status: number, body: unknown) =>
@@ -41,16 +43,15 @@ async function handleLead(api: Api, req: IncomingMessage, res: ServerResponse) {
 
   const answers: Record<string, string> = {};
   for (const [q, o] of Object.entries(body.answers ?? {})) if (findOption(q, String(o))) answers[q] = String(o);
-  // машину ищем у себя (тот же кэш каталога), а не верим клиенту на слово
-  const carUrl = clean(body.carUrl, 300);
-  const car = carUrl ? (await pickCars(findOption("b", answers.b), findOption("w", answers.w))).find((c) => c.url === carUrl) : undefined;
+  // машину берём из своего каталога по id, а не верим клиенту на слово
+  const car = carById(clean(body.carId, 80));
 
   const name = clean(body.name, 100) || [user.first_name, user.last_name].filter(Boolean).join(" ");
   const ok = await deliverLead(api, {
     phone,
     name,
     user: { id: user.id, username: user.username },
-    session: { answers, shown: [], car, comment: clean(body.comment) || undefined },
+    session: { answers, shown: [], shownCount: 0, car, comment: clean(body.comment) || undefined },
     source: "miniapp",
   });
   if (!ok && (config.leadChatIds.length || config.leadApiUrl || config.smtp.host)) return json(res, 502, { ok: false, error: "deliver" });
@@ -58,13 +59,28 @@ async function handleLead(api: Api, req: IncomingMessage, res: ServerResponse) {
   json(res, 200, { ok: true });
 }
 
-async function handleCars(url: URL, res: ServerResponse) {
-  const cars = await pickCars(findOption("b", url.searchParams.get("b") ?? ""), findOption("w", url.searchParams.get("w") ?? ""), 6);
+function handleCars(url: URL, res: ServerResponse) {
+  const cars = pickCars(findOption("b", url.searchParams.get("b") ?? ""), findOption("w", url.searchParams.get("w") ?? ""));
   json(res, 200, {
-    cars: cars.map((c) => ({ ...c, flag: COUNTRIES[c.country].flag, countryName: COUNTRIES[c.country].name })),
-    // для отладки: какие страны каталога сейчас не загрузились и почему
-    ...(catalogErrors.size ? { errors: Object.fromEntries(catalogErrors) } : {}),
+    cars: cars.map((c) => ({
+      id: c.id,
+      title: c.title,
+      year: c.year,
+      price: priceText(c),
+      specs: c.specs,
+      wheel: WHEEL_NAME[c.wheel],
+      img: c.photo ? `photos/${c.id}.jpg` : "",
+      similar: similarUrl(c),
+    })),
   });
+}
+
+function handlePhoto(id: string, res: ServerResponse) {
+  const car = /^[a-z0-9-]+$/.test(id) ? carById(id) : undefined;
+  const file = car && photoFile(car);
+  if (!file || !existsSync(file)) return res.writeHead(404).end();
+  res.writeHead(200, { "Content-Type": "image/jpeg", "Cache-Control": "public, max-age=86400" });
+  createReadStream(file).pipe(res);
 }
 
 export function startServer(api: Api) {
@@ -75,7 +91,9 @@ export function startServer(api: Api) {
       if (req.method === "GET" && url.pathname === "/") {
         return res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-cache" }).end(miniappHtml);
       }
-      if (req.method === "GET" && url.pathname === "/api/cars") return await handleCars(url, res);
+      if (req.method === "GET" && url.pathname === "/api/cars") return handleCars(url, res);
+      const photo = url.pathname.match(/^\/photos\/([a-z0-9-]+)\.jpg$/);
+      if (req.method === "GET" && photo) return handlePhoto(photo[1], res);
       if (req.method === "POST" && url.pathname === "/api/lead") return await handleLead(api, req, res);
       res.writeHead(404).end();
     } catch (error) {
