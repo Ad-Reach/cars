@@ -1,23 +1,23 @@
 import { LeadButton } from "@/components/lead/LeadModal";
 import Link from "next/link";
-import { carImg, carSrcSet, fullName, newCars, NEW_PATH, NEW_URL, rub, type NewCarModel } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, fullName, leadSource, NEW_PATH, rub, type Market, type NewCarModel } from "@/lib/newCars";
+import { carsOf } from "@/lib/newCarsData";
 import { SITE_URL } from "@/lib/seo";
 import { Gallery, Trims } from "./ModelParts";
 import { NewCarCard } from "./NewCatalog";
 import styles from "./NewCars.module.css";
 
-export function NewCarPage({ car }: { car: NewCarModel }) {
+export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }) {
   const title = fullName(car);
   const cover = car.gallery[0]?.img;
-  const similar = car.similar
-    .map((s) => newCars.find((c) => c.slug === s))
-    .filter(Boolean) as typeof newCars;
+  const cars = carsOf(market);
+  const similar = car.similar.map((s) => cars.find((c) => c.slug === s)).filter((c) => c !== undefined);
 
   const ld = [
     {
       "@context": "https://schema.org",
       "@type": "Car",
-      name: `${title} из Китая`,
+      name: `${title} ${market.from}`,
       description: car.description,
       brand: { "@type": "Brand", name: car.brand },
       model: car.model,
@@ -25,8 +25,8 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
       bodyType: car.bodyType,
       vehicleTransmission: car.transmission,
       fuelType: car.fuelType,
-      image: car.gallery.slice(0, 5).map((g) => SITE_URL + carImg(car.slug, g.img, "w1160")),
-      url: `${NEW_URL}/${car.slug}`,
+      image: car.gallery.slice(0, 5).map((g) => SITE_URL + carImg(market, car.slug, g.img, "w1160")),
+      url: SITE_URL + carHref(market, car.slug),
       ...(car.price
         ? { offers: { "@type": "Offer", priceCurrency: "RUB", price: car.price, availability: "https://schema.org/PreOrder" } }
         : {}),
@@ -45,8 +45,9 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Ранг Авто", item: `${SITE_URL}/` },
-        { "@type": "ListItem", position: 2, name: "Новые авто из Китая", item: NEW_URL },
-        { "@type": "ListItem", position: 3, name: title },
+        { "@type": "ListItem", position: 2, name: "Новые авто", item: SITE_URL + NEW_PATH },
+        { "@type": "ListItem", position: 3, name: market.title, item: market.url },
+        { "@type": "ListItem", position: 4, name: title },
       ],
     },
   ];
@@ -60,8 +61,8 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
         {cover && (
           <img
             className={styles.coverBg}
-            src={carImg(car.slug, cover, "w1160")}
-            srcSet={carSrcSet(car.slug, cover)}
+            src={carImg(market, car.slug, cover, "w1160")}
+            srcSet={carSrcSet(market, car.slug, cover)}
             sizes="100vw"
             alt=""
             aria-hidden
@@ -71,7 +72,9 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
           <nav className={styles.crumbs} aria-label="Хлебные крошки">
             <Link href="/">Главная</Link>
             <span>/</span>
-            <Link href={NEW_PATH}>Новые авто из Китая</Link>
+            <Link href={NEW_PATH}>Новые авто</Link>
+            <span>/</span>
+            <Link href={market.path}>{market.title}</Link>
             <span>/</span>
             <b>{title}</b>
           </nav>
@@ -85,7 +88,7 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
           </p>
           {car.lead && <p className={styles.coverLead}>{car.lead}</p>}
           <div className={styles.coverCta}>
-            <LeadButton source={`new:${title}`} title={`Заявка на ${title}`} className="btn btn--gold">
+            <LeadButton source={leadSource(market, title)} title={`Заявка на ${title}`} className="btn btn--gold">
               Оставить заявку
             </LeadButton>
             <a href="#prices" className="btn btn--ghost-light">
@@ -111,18 +114,20 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
       )}
 
       {/* галерея */}
-      <section className="section section--white">
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <span className="eyebrow" aria-hidden />
-              <h2 className="h2">Знакомство с {car.name}</h2>
-              {car.galleryIntro && <p className={`section-sub ${styles.sub}`}>{car.galleryIntro}</p>}
+      {car.gallery.length > 0 && (
+        <section className="section section--white">
+          <div className="container">
+            <div className="section-head">
+              <div>
+                <span className="eyebrow" aria-hidden />
+                <h2 className="h2">Знакомство с {car.name}</h2>
+                {car.galleryIntro && <p className={`section-sub ${styles.sub}`}>{car.galleryIntro}</p>}
+              </div>
             </div>
+            <Gallery market={market} car={car} title={title} />
           </div>
-          <Gallery car={car} title={title} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* главы: дизайн, комфорт, техника */}
       {car.chapters.map((ch, k) => (
@@ -131,8 +136,8 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
             {ch.img && (
               <div className={styles.chapterPh}>
                 <img
-                  src={carImg(car.slug, ch.img, "w1160")}
-                  srcSet={carSrcSet(car.slug, ch.img)}
+                  src={carImg(market, car.slug, ch.img, "w1160")}
+                  srcSet={carSrcSet(market, car.slug, ch.img)}
                   sizes="(max-width: 900px) 100vw, 50vw"
                   alt={ch.alt}
                   loading="lazy"
@@ -165,7 +170,7 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
               </p>
             </div>
           </div>
-          <Trims car={car} title={title} />
+          <Trims market={market} car={car} title={title} />
         </div>
       </section>
 
@@ -218,12 +223,12 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
         <div className={`container ${styles.leadBandIn}`}>
           <div>
             <span className="eyebrow" aria-hidden />
-            <h2 className="h2">Закажите {car.name} из Китая</h2>
+            <h2 className="h2">Закажите {car.name} {market.from}</h2>
             <p className={`section-sub ${styles.subDark}`}>
               Рассчитаем цену под ключ в вашем городе, подберём комплектацию и цвет. Перезвоним в течение 15 минут.
             </p>
           </div>
-          <LeadButton source={`new:${title} · низ страницы`} title={`Заявка на ${title}`} className="btn btn--gold">
+          <LeadButton source={leadSource(market, `${title} · низ страницы`)} title={`Заявка на ${title}`} className="btn btn--gold">
             Получить расчёт
           </LeadButton>
         </div>
@@ -237,13 +242,13 @@ export function NewCarPage({ car }: { car: NewCarModel }) {
                 <span className="eyebrow" aria-hidden />
                 <h2 className="h2">Похожие модели</h2>
               </div>
-              <Link href={NEW_PATH} className="btn btn--outline">
+              <Link href={market.path} className="btn btn--outline">
                 Все модели
               </Link>
             </div>
             <div className={styles.grid}>
               {similar.slice(0, 4).map((c) => (
-                <NewCarCard key={c.slug} car={c} />
+                <NewCarCard key={c.slug} market={market} car={c} />
               ))}
             </div>
           </div>

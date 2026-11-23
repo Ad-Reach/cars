@@ -9,7 +9,7 @@ import { SITE_URL } from "@/lib/seo";
 // в тестовом режиме страницы не индексируются
 export const metadata: Metadata = NEW_CARS_PUBLIC ? {} : { robots: { index: false, follow: false } };
 
-// rangauto.ru/new — каталог новых авто из Китая. Якоря шапки и подвала («#contacts» и т.п.)
+// rangauto.ru/new — каталоги новых авто (/new/china, /new/uae). Якоря шапки и подвала («#contacts» и т.п.)
 // ведут на главную, поэтому base — адрес сайта.
 export default async function NewCarsLayout({ children }: { children: ReactNode }) {
   const { site } = await getContent();
