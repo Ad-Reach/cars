@@ -36,7 +36,18 @@ export default async function NewCarsMarketPage({ params }: { params: Params }) 
 
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} data-photo={m.hero ? true : undefined}>
+        {m.hero && (
+          <img
+            className={styles.heroBg}
+            src={`${m.hero}-w1280.webp`}
+            srcSet={`${m.hero}-w760.webp 760w, ${m.hero}-w1280.webp 1280w`}
+            sizes="100vw"
+            alt=""
+            aria-hidden
+            fetchPriority="high"
+          />
+        )}
         <div className={`container ${styles.heroIn}`}>
           <nav className={styles.crumbs} aria-label="Хлебные крошки">
             <Link href="/">Главная</Link>

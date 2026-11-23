@@ -20,6 +20,7 @@ export type Market = {
   origin: string; // с внутреннего рынка Китая
   images: string; // /new-cars — папка фото в public/
   term: string | null; // срок от оплаты до выдачи, если известен
+  hero: string | null; // фон первого экрана каталога: /img/new/<имя> → <имя>-w760.webp и -w1280.webp
 };
 
 export const MARKETS: Record<MarketId, Market> = {
@@ -33,6 +34,7 @@ export const MARKETS: Record<MarketId, Market> = {
     origin: "с внутреннего рынка Китая",
     images: "/new-cars",
     term: "4–8 недель",
+    hero: "/img/new/china-hero",
   },
   uae: {
     id: "uae",
@@ -44,6 +46,7 @@ export const MARKETS: Record<MarketId, Market> = {
     origin: "с рынка ОАЭ",
     images: "/new-cars-uae",
     term: null,
+    hero: "/img/new/uae-hero",
   },
 };
 
