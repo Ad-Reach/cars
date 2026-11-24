@@ -262,6 +262,22 @@ SITE_PHOTOS = {
     "suzuki-jimny-r": "new-cars-uae/suzuki-jimny",
     "mazda-cx-30-r": "new-cars/mazda-cx30",
 }
+# Фото из каталога drom.ru (страница поколения модели, снимок из каталога) — для машин, которых нет ни в папках
+# Яндекс.Диска, ни в каталогах сайта. id машины → путь картинки gen144x2_… на s.auto.drom.ru; скачиваем крупный вариант gen473x2_….
+# Поколение выбрано под годы из таблицы. Фото — внешний вид модели: комплектация и руль могут не совпадать.
+DROM = "https://s.auto.drom.ru/"
+DROM_PHOTOS = {
+    "honda-envix-l": "i24288/c/photos/fullsize/honda/envix/gen144x2_honda_envix_1174547.jpg",
+    "honda-crider-l": "i24278/c/photos/fullsize/honda/crider/gen144x2_honda_crider_1119794.jpg",
+    "kia-morning-l": "i24294/c/photos/fullsize/kia/morning/gen144x2_kia_morning_1210389.jpg",
+    "mazda-3-l": "i24276/c/photos/fullsize/mazda/mazda3/gen144x2_mazda_mazda3_1110054.jpg",
+    "mercedes-gla-l": "i24240/c/photos/fullsize/mercedes-benz/gla-class/gen144x2_mercedes-benz_gla-class_930675.jpg",
+    "mercedes-a-class-l": "i24279/c/photos/fullsize/mercedes-benz/a-class/gen144x2_mercedes-benz_a-class_1123869.jpg",
+    "mercedes-glb-l": "i24234/c/photos/fullsize/mercedes-benz/glb/gen144x2_mercedes-benz_glb_899197.jpg",
+    "kia-sorento-l": "i24309/c/photos/fullsize/kia/sorento/gen144x2_kia_sorento_1291702.jpg",
+    "suzuki-xbee-r": "i24271/c/photos/fullsize/suzuki/xbee/gen144x2_suzuki_xbee_1082525.jpg",
+}
+
 # та же модель в другой вкладке: id → id, у которого берём фото
 SAME_MODEL = {"honda-stepwgn-r": "honda-stepwgn-r-2"}
 
@@ -276,6 +292,20 @@ def site_photo(cid: str, force: bool) -> bool:
     if not src.exists():
         return False
     img = Image.open(src).convert("RGB")
+    if img.width > PHOTO_WIDTH:
+        img = img.resize((PHOTO_WIDTH, round(img.height * PHOTO_WIDTH / img.width)), Image.LANCZOS)
+    PHOTOS.mkdir(parents=True, exist_ok=True)
+    img.save(out, "JPEG", quality=80, optimize=True, progressive=True)
+    return True
+
+
+def drom_photo(cid: str, force: bool) -> bool:
+    from PIL import Image
+
+    out = PHOTOS / f"{cid}.jpg"
+    if out.exists() and not force:
+        return True
+    img = Image.open(io.BytesIO(get(DROM + DROM_PHOTOS[cid].replace("gen144x2", "gen473x2")))).convert("RGB")
     if img.width > PHOTO_WIDTH:
         img = img.resize((PHOTO_WIDTH, round(img.height * PHOTO_WIDTH / img.width)), Image.LANCZOS)
     PHOTOS.mkdir(parents=True, exist_ok=True)
@@ -300,6 +330,11 @@ def main() -> None:
                 print(f"  фото {c['title']}: {e}", file=sys.stderr)
         if not c["photo"] and c["id"] in SITE_PHOTOS:
             c["photo"] = site_photo(c["id"], force)
+        if not c["photo"] and c["id"] in DROM_PHOTOS:
+            try:
+                c["photo"] = drom_photo(c["id"], force)
+            except Exception as e:  # noqa: BLE001
+                print(f"  фото drom {c['title']}: {e}", file=sys.stderr)
         if not c["photo"] and c["id"] in SAME_MODEL and (PHOTOS / f"{SAME_MODEL[c['id']]}.jpg").exists():
             import shutil
 
