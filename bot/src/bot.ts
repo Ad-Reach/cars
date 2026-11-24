@@ -5,6 +5,7 @@ import { brand } from "./brand.js";
 import { getSession, type Form, type Session } from "./session.js";
 import { pickCars, catalogLink, priceText, similarUrl, photoFile, carById, WHEEL_NAME, type Car } from "./catalog.js";
 import { budgetsFor, bracketOf, budgetPhrase, lowerFirst, wheelLabel, WHEEL_CHOICES, CONDITIONS, type WheelChoice } from "./flow.js";
+import { carCaption } from "./format.js";
 import { deliverLead, LEAD_STEPS } from "./lead.js";
 import { T, escapeHtml } from "./texts.js";
 import { widgets } from "./widgets/render.js";
@@ -48,7 +49,8 @@ bot.callbackQuery("menu", async (ctx) => {
 
 // ---------- Каталоги ----------
 
-const PAGE = 4;
+// Сколько машин показываем за раз (кнопка «Показать ещё» — следующие)
+const PAGE = 10;
 
 function catalogKeyboard() {
   const kb = new InlineKeyboard();
@@ -73,10 +75,10 @@ function siteCatalogUrl(s: Session) {
 async function sendCarsPage(ctx: Context, s: Session) {
   const chatId = ctx.chat!.id;
   const page = s.shown.slice(s.shownCount, s.shownCount + PAGE);
+  await ctx.api.sendChatAction(chatId, "upload_photo").catch(() => {});
   s.shownCount += page.length;
   for (const car of page) {
-    const caption =
-      `<b>${escapeHtml(car.title)}</b>, ${escapeHtml(car.year)}\n${priceText(car)} · ${WHEEL_NAME[car.wheel]}` + (car.specs ? `\n${escapeHtml(car.specs)}` : "");
+    const caption = carCaption(car);
     const kb = new InlineKeyboard().text(T.btnCalc, `calc:${car.id}`).row().text(T.btnSimilar, `sim:${car.id}`);
     const file = photoFile(car);
     if (file) {
