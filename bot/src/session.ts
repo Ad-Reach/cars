@@ -6,8 +6,9 @@ import type { Car } from "./catalog.js";
 
 export type Session = {
   answers: Answers;
-  // машины, которые показали последними (чтобы по кнопке «Хочу эту» знать, какую)
+  // подобранные машины и сколько из них уже показано (по кнопке «Показать ещё» — следующие)
   shown: Car[];
+  shownCount: number;
   car?: Car;
   // что пользователь написал текстом («хочу камри»)
   comment?: string;
@@ -23,7 +24,7 @@ const sessions = new Map<number, Session>();
 export function getSession(userId: number): Session {
   let s = sessions.get(userId);
   if (!s) {
-    s = { answers: {}, shown: [] };
+    s = { answers: {}, shown: [], shownCount: 0 };
     sessions.set(userId, s);
   }
   return s;
