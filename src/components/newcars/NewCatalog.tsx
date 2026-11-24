@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carHref, carImg, carSrcSet, fullName, leadSource, rub, type Market, type NewCarSummary } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, fullName, leadSource, rubFrom, type Market, type NewCarSummary } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
 type Sort = "price" | "-price" | "name";
@@ -234,7 +234,7 @@ export function NewCarCard({ market, car }: { market: Market; car: NewCarSummary
         <div className={styles.cardPrice}>
           <span>Цена под ключ</span>
           <b>
-            {car.price ? (car.priceMax && car.priceMax > car.price ? `от ${rub(car.price)}` : rub(car.price)) : "по запросу"}
+            {rubFrom(car.price)}
           </b>
         </div>
         <div className={styles.cardActions}>

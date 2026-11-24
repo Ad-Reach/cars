@@ -111,6 +111,12 @@ export const carSrcSet = (m: Market, slug: string, name: string) =>
 
 export const rub = (n: number | null | undefined) => (n ? n.toLocaleString("ru-RU").replace(/[\s,]/g, " ") + " ₽" : "по запросу");
 
+// Цена всегда «от»: итог зависит от комплектации, цвета и курса на день сделки.
+export const rubFrom = (n: number | null | undefined) => (n ? `от ${rub(n)}` : "по запросу");
+
+// «4.14–4.22 млн ₽» → «от 4.14–4.22 млн ₽» (значения ленты приходят готовой строкой)
+export const fromText = (v: string) => (/₽|млн/.test(v) && !/^от\s/i.test(v) ? `от ${v}` : v);
+
 export const fullName = (c: { name: string; year: string }) => (c.year ? `${c.name} ${c.year}` : c.name);
 
 export const plural = (n: number, one: string, few: string, many: string) => {
