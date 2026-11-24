@@ -3,6 +3,7 @@ import { bot } from "./bot.js";
 import { widgets } from "./widgets/render.js";
 import { startServer } from "./server.js";
 import { config } from "./config.js";
+import { T } from "./texts.js";
 import { warmCatalog } from "./catalog.js";
 
 // Long polling (вебхук не нужен) + HTTP-сервер (Mini App и /health).
@@ -14,7 +15,9 @@ console.log(`Виджеты: quiz ${widgets.quiz.packed}/4096, lead ${widgets.le
 
 async function setup() {
   try {
-    await bot.api.setMyCommands([{ command: "start", description: "Подобрать авто" }]);
+    await bot.api.setMyCommands([{ command: "start", description: "Главное меню" }]);
+    await bot.api.setMyDescription(T.botDescription);
+    await bot.api.setMyShortDescription(T.botShortDescription);
     // Кнопка меню слева от поля ввода открывает Mini App
     if (config.publicUrl) {
       await bot.api.setChatMenuButton({ menu_button: { type: "web_app", text: "Заявка", web_app: { url: `${config.publicUrl}/` } } });
