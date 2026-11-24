@@ -84,7 +84,9 @@ export async function POST(request: Request) {
   }
 
   const digits = clean(data.phone).replace(/\D/g, "");
-  if (digits.length !== 11) {
+  // Заявки из Telegram-бота: клиент может выбрать «связаться в Telegram» (без телефона) или поделиться чужим номером
+  const fromTelegram = clean(data.source).startsWith("telegram") && !!clean(data.contact);
+  if (digits.length !== 11 && !fromTelegram) {
     return Response.json({ ok: false, error: "phone" }, { status: 422 });
   }
 
