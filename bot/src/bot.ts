@@ -296,15 +296,21 @@ bot.callbackQuery(/^nav:menu:\w+$/, async (ctx) => {
 
 // ---------- Телефон и город текстом, контакт кнопкой ----------
 
+/** Российский номер в виде +7XXXXXXXXXX: «8 900…», «900…» и «+7 900…» приводятся к одному виду, остальное — не номер. */
 const normalPhone = (text: string) => {
-  const digits = text.replace(/\D/g, "");
-  return /^[\d\s()+-]{10,20}$/.test(text) && digits.length >= 10 && digits.length <= 12 ? text : null;
+  if (!/^[\d\s()+-]{10,20}$/.test(text)) return null;
+  let digits = text.replace(/\D/g, "");
+  if (digits.length === 10 && digits.startsWith("9")) digits = `7${digits}`;
+  if (digits.length === 11 && digits.startsWith("8")) digits = `7${digits.slice(1)}`;
+  return digits.length === 11 && digits.startsWith("7") ? `+${digits}` : null;
 };
 
 bot.on("message:contact", async (ctx) => {
   const s = getSession(ctx.from.id);
   if (s.form.at !== "phone") return ctx.reply(T.useButtons, { reply_markup: menuKeyboard() });
-  s.form.phone = ctx.message.contact.phone_number;
+  // номер из Telegram может быть и не российским — тогда берём как есть
+  const raw = ctx.message.contact.phone_number;
+  s.form.phone = normalPhone(raw) ?? `+${raw.replace(/\D/g, "")}`;
   s.form.viaTelegram = false;
   await advance(ctx, s, "phone", false);
 });
