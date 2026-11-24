@@ -18,6 +18,8 @@ let widgetsAllowed = config.widgets;
 
 // ---------- Главное меню ----------
 
+const WELCOME_PHOTO = new URL("../data/welcome.jpg", import.meta.url);
+
 const menuKeyboard = () => new InlineKeyboard().text(T.btnLead, "lead").row().text(T.btnCatalogs, "cat");
 const sendMenu = (ctx: Context) => ctx.reply(T.menu, { reply_markup: menuKeyboard() });
 
@@ -25,8 +27,12 @@ bot.command("start", async (ctx) => {
   if (ctx.chat.type !== "private") return;
   const s = getSession(ctx.from!.id);
   s.form.at = undefined; // незавершённая заявка сохраняется, но бот больше не ждёт от клиента текст
-  // remove_keyboard — убирает нижнюю клавиатуру прошлой версии бота
-  await ctx.reply(T.start, { reply_markup: { remove_keyboard: true } });
+  // Приветственная картинка с текстом в подписи. remove_keyboard — убирает нижнюю клавиатуру прошлой версии бота.
+  // Картинку можно заменить файлом data/welcome.jpg (подпись — до 1024 символов).
+  await ctx.replyWithPhoto(new InputFile(fileURLToPath(WELCOME_PHOTO)), { caption: T.start, reply_markup: { remove_keyboard: true } }).catch((error) => {
+    console.error("[welcome]", String(error));
+    return ctx.reply(T.start, { reply_markup: { remove_keyboard: true } });
+  });
   await sendMenu(ctx);
 });
 bot.command("menu", (ctx) => sendMenu(ctx));
