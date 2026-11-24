@@ -34,7 +34,7 @@ export const carById = (id: string) => BY_ID.get(id);
 export const photoFile = (car: Car) => (car.photo ? new URL(`photos/${car.id}.jpg`, DATA) : undefined);
 
 /** Подбор: все машины нужного руля и бюджета, от дешёвых к дорогим. */
-export function pickCars(budget: Option | undefined, wheel: Option | undefined): Car[] {
+export function pickCars(budget: Pick<Option, "price"> | undefined, wheel: Pick<Option, "wheels"> | undefined): Car[] {
   const wheels = wheel?.wheels ?? ["l", "r"];
   const [from, to] = budget?.price ?? [0, Infinity];
   return ALL.filter((c) => wheels.includes(c.wheel) && c.price >= from && c.price < to).sort((a, b) => a.price - b.price);
@@ -94,7 +94,7 @@ export function similarUrl(car: Car): string {
 }
 
 /** «Все варианты в каталоге» под списком: каталог страны по рулю и бюджету. */
-export const catalogLink = (wheel: Option | undefined, budget: Option | undefined) => {
+export const catalogLink = (wheel: Pick<Option, "wheels"> | undefined, budget: Pick<Option, "price"> | undefined) => {
   const url = new URL(wheel?.wheels?.length === 1 && wheel.wheels[0] === "r" ? "/statistika/" : "/china-used/", config.catalogOrigin);
   if (budget?.price) {
     if (budget.price[0]) url.searchParams.set("price_from", String(budget.price[0]));
