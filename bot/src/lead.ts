@@ -2,7 +2,7 @@ import type { Api } from "grammy";
 import { config } from "./config.js";
 import { sendLeadEmail } from "./mail.js";
 import { describe } from "./quiz.js";
-import { rub, COUNTRIES } from "./catalog.js";
+import { priceText, similarUrl, WHEEL_NAME } from "./catalog.js";
 import type { Session } from "./session.js";
 import { escapeHtml as e } from "./texts.js";
 
@@ -27,7 +27,7 @@ function format(lead: Lead) {
   lines.push(`<b>Телефон:</b> <a href="tel:+${digits}">${e(lead.phone)}</a>`);
   lines.push(`<b>Telegram:</b> ${tg}`);
   for (const [k, v] of describe(s.answers)) lines.push(`<b>${k}:</b> ${e(v)}`);
-  if (s.car) lines.push(`<b>Машина:</b> <a href="${s.car.url}">${e(s.car.title)}</a> — ${rub(s.car.price)} (${COUNTRIES[s.car.country].name})`);
+  if (s.car) lines.push(`<b>Машина:</b> <a href="${similarUrl(s.car)}">${e(s.car.title)}</a>, ${e(s.car.year)} — ${priceText(s.car)} (${WHEEL_NAME[s.car.wheel]})`);
   if (s.comment) lines.push(`<b>Пожелания:</b> ${e(s.comment)}`);
   lines.push("", `<i>${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })} МСК</i>`);
   return lines.join("\n");
@@ -49,7 +49,7 @@ async function toSite(lead: Lead) {
       phone: lead.phone,
       contact: lead.user.username ? `Telegram @${lead.user.username}` : `Telegram id ${lead.user.id}`,
       budget: answers["Бюджет"],
-      wishes: [s.car && `${s.car.title} — ${s.car.url}`, answers["Руль"] && `Руль: ${answers["Руль"]}`].filter(Boolean).join("; "),
+      wishes: [s.car && `${s.car.title}, ${s.car.year} — ${priceText(s.car)}`, answers["Руль"] && `Руль: ${answers["Руль"]}`].filter(Boolean).join("; "),
       comment: [answers["Когда нужна машина"] && `Когда: ${answers["Когда нужна машина"]}`, s.comment].filter(Boolean).join("; "),
     }),
     signal: AbortSignal.timeout(10000),

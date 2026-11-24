@@ -2,7 +2,7 @@ import { Bot, InlineKeyboard, InputFile, Keyboard, type Context } from "grammy";
 import { config } from "./config.js";
 import { QUESTIONS, findOption, isComplete, describe } from "./quiz.js";
 import { getSession, resetSession, type Session } from "./session.js";
-import { pickCars, catalogLink, rub, COUNTRIES, fetchImage } from "./catalog.js";
+import { pickCars, catalogLink, priceText, similarUrl, photoFile, carById, WHEEL_NAME } from "./catalog.js";
 import { deliverLead, LEAD_STEPS } from "./lead.js";
 import { T, escapeHtml } from "./texts.js";
 import { widgets } from "./widgets/render.js";
@@ -61,32 +61,50 @@ function applyAnswer(s: Session, data: string) {
   return true;
 }
 
-async function showCars(api: Context["api"], chatId: number, s: Session) {
-  const budget = findOption("b", s.answers.b);
+const PAGE = 4;
+
+/** Показать следующие PAGE машин из подобранных; под ними — «Показать ещё», если остались. */
+async function sendCarsPage(api: Context["api"], chatId: number, s: Session) {
   const wheel = findOption("w", s.answers.w);
-  const status = await api.sendMessage(chatId, T.searching);
-  const cars = await pickCars(budget, wheel);
-  await api.deleteMessage(chatId, status.message_id).catch(() => {});
+  const budget = findOption("b", s.answers.b);
+  const page = s.shown.slice(s.shownCount, s.shownCount + PAGE);
+  s.shownCount += page.length;
+  for (const car of page) {
+    const caption =
+      `<b>${escapeHtml(car.title)}</b>, ${escapeHtml(car.year)}\n${priceText(car)} · ${WHEEL_NAME[car.wheel]}` + (car.specs ? `\n${escapeHtml(car.specs)}` : "");
+    const kb = new InlineKeyboard().text(T.btnWant, `car:${car.id}`).url(T.btnMore, similarUrl(car));
+    const file = photoFile(car);
+    if (file) {
+      await api.sendPhoto(chatId, new InputFile(file), { caption, parse_mode: "HTML", reply_markup: kb }).catch(() =>
+        api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb }),
+      );
+    } else {
+      await api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb });
+    }
+  }
+  const left = s.shown.length - s.shownCount;
+  const kb = new InlineKeyboard();
+  if (left > 0) kb.text(T.btnMoreCars(left), "more").row();
+  kb.url(T.btnCatalog, catalogLink(wheel, budget));
+  await api.sendMessage(chatId, T.afterCars, { parse_mode: "HTML", reply_markup: kb });
+}
+
+async function showCars(api: Context["api"], chatId: number, s: Session) {
+  const cars = pickCars(findOption("b", s.answers.b), findOption("w", s.answers.w));
   s.shown = cars;
+  s.shownCount = 0;
   if (!cars.length) {
     await api.sendMessage(chatId, T.noCars, { reply_markup: mainKeyboard });
     return;
   }
-  for (const [i, car] of cars.entries()) {
-    const caption = `${COUNTRIES[car.country].flag} <b>${escapeHtml(car.title)}</b>\n${rub(car.price)}${car.specs ? ` · ${escapeHtml(car.specs)}` : ""}`;
-    const kb = new InlineKeyboard().text(T.btnWant, `car:${i}`).url(T.btnMore, car.url);
-    // Картинки каталога — webp на внешнем сервере; надёжнее скачать и загрузить самим
-    const photo = await fetchImage(car.img);
-    await api.sendPhoto(chatId, photo ? new InputFile(photo, "car.webp") : car.img, { caption, parse_mode: "HTML", reply_markup: kb }).catch(() =>
-      // картинка не загрузилась — шлём текстом
-      api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb }),
-    );
-  }
-  await api.sendMessage(chatId, T.afterCars, {
-    parse_mode: "HTML",
-    reply_markup: new InlineKeyboard().url(T.btnCatalog, catalogLink(wheel, budget)),
-  });
+  await sendCarsPage(api, chatId, s);
 }
+
+bot.callbackQuery("more", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.editMessageReplyMarkup({ reply_markup: new InlineKeyboard() }).catch(() => {});
+  await sendCarsPage(ctx.api, ctx.chat!.id, getSession(ctx.from.id));
+});
 
 // ---------- Команды ----------
 
@@ -151,9 +169,9 @@ bot.callbackQuery(/^q:(.+)$/, async (ctx) => {
 
 // ---------- «Хочу эту» ----------
 
-bot.callbackQuery(/^car:(\d+)$/, async (ctx) => {
+bot.callbackQuery(/^car:([a-z0-9-]+)$/, async (ctx) => {
   const s = getSession(ctx.from.id);
-  const car = s.shown[Number(ctx.match[1])];
+  const car = carById(ctx.match[1]);
   await ctx.answerCallbackQuery();
   if (!car) return ctx.reply(T.askContact, { parse_mode: "HTML", reply_markup: mainKeyboard });
   s.car = car;
@@ -178,7 +196,7 @@ async function sendLeadCard(ctx: Context, s: Session) {
   const short = (v: string) => (v.length > 34 ? `${v.slice(0, 33)}…` : v);
   const rows: [string, string][] = describe(s.answers).map(([k, v]) => [k, v]);
   if (s.car) rows.push(["Машина", short(s.car.title)]);
-  const data = { rows: rows.map(([k, v]) => [escapeHtml(k), escapeHtml(v)] as [string, string]), url: s.car?.url ?? catalogLink(findOption("w", s.answers.w), findOption("b", s.answers.b)), step: 0 };
+  const data = { rows: rows.map(([k, v]) => [escapeHtml(k), escapeHtml(v)] as [string, string]), url: s.car ? similarUrl(s.car) : catalogLink(findOption("w", s.answers.w), findOption("b", s.answers.b)), step: 0 };
   if (!widgetsAllowed) return;
   try {
     const msg = await sendWidget(ctx.api, { chat_id: ctx.chat!.id, html: widgets.lead.html, height: 160 + rows.length * 34, chat_data: JSON.stringify(data) });
