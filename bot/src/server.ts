@@ -2,7 +2,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { createReadStream, existsSync } from "node:fs";
 import type { Api } from "grammy";
 import { config } from "./config.js";
-import { findOption } from "./quiz.js";
+import { findOption, describe } from "./quiz.js";
 import { pickCars, carById, photoFile, priceText, similarUrl, WHEEL_NAME } from "./catalog.js";
 import { deliverLead } from "./lead.js";
 import { T } from "./texts.js";
@@ -51,7 +51,9 @@ async function handleLead(api: Api, req: IncomingMessage, res: ServerResponse) {
     phone,
     name,
     user: { id: user.id, username: user.username },
-    session: { answers, shown: [], shownCount: 0, car, comment: clean(body.comment) || undefined },
+    rows: describe(answers).map(([k, v]) => [k, v]),
+    car,
+    comment: clean(body.comment) || undefined,
     source: "miniapp",
   });
   if (!ok && (config.leadChatIds.length || config.leadApiUrl || config.smtp.host)) return json(res, 502, { ok: false, error: "deliver" });
