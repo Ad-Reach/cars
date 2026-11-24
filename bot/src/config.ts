@@ -12,7 +12,9 @@ export const config = {
   leadChatIds: list(process.env.LEAD_CHAT_IDS),
   // Необязательно: эндпоинт заявок сайта (https://rangauto.ru/api/lead) — тогда заявка уйдёт
   // туда же, куда заявки с форм сайта (группы + почта). Локально не включать, чтобы не спамить боевые группы.
-  leadApiUrl: process.env.LEAD_API_URL ?? "",
+  // В проде (задан PUBLIC_URL) по умолчанию заявки идут через сайт — он шлёт их в Telegram-группы и на почту.
+  // Напрямую почта из Амстердама не работает. LEAD_API_URL="" (пустая строка) — отключить.
+  leadApiUrl: process.env.LEAD_API_URL ?? (process.env.PUBLIC_URL ? "https://rangauto.ru/api/lead" : ""),
   // Необязательно: свой адрес Bot API (прокси/зеркало), если api.telegram.org недоступен.
   apiRoot: process.env.TELEGRAM_API_ROOT || undefined,
   // TELEGRAM_TEST_ENV=1 — тестовый сервер Telegram (отдельный аккаунт и бот из тестового @BotFather).

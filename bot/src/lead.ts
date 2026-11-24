@@ -73,7 +73,17 @@ export async function deliverLead(api: Api, lead: Lead) {
     ...(config.smtp.host ? [sendLeadEmail(`Заявка из Telegram-бота: ${lead.name || lead.phone || "без телефона"}`, text)] : []),
   ];
   if (!jobs.length) console.warn("[lead] не настроены LEAD_CHAT_IDS / SMTP / LEAD_API_URL — заявка только в логе");
-  const results = await Promise.allSettled(jobs);
-  results.forEach((r) => r.status === "rejected" && console.error("[lead]", r.reason));
-  return results.some((r) => r.status === "fulfilled");
+  // Клиенту отвечаем, как только заявка ушла хотя бы в один канал: медленный (например, почта с таймаутом) не задерживает ответ
+  const logged = jobs.map((job) =>
+    job.catch((error) => {
+      console.error("[lead]", error);
+      throw error;
+    }),
+  );
+  try {
+    await Promise.any(logged);
+    return true;
+  } catch {
+    return false;
+  }
 }
