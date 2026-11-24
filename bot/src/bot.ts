@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { Bot, InlineKeyboard, InputFile, Keyboard, type Context } from "grammy";
 import { config } from "./config.js";
 import { QUESTIONS, findOption, isComplete, describe } from "./quiz.js";
@@ -75,9 +76,11 @@ async function sendCarsPage(api: Context["api"], chatId: number, s: Session) {
     const kb = new InlineKeyboard().text(T.btnWant, `car:${car.id}`).url(T.btnMore, similarUrl(car));
     const file = photoFile(car);
     if (file) {
-      await api.sendPhoto(chatId, new InputFile(file), { caption, parse_mode: "HTML", reply_markup: kb }).catch(() =>
-        api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb }),
-      );
+      // grammY не умеет file:-ссылки (качает их по сети и падает) — отдаём обычный путь
+      await api.sendPhoto(chatId, new InputFile(fileURLToPath(file)), { caption, parse_mode: "HTML", reply_markup: kb }).catch((error) => {
+        console.error("[photo]", car.id, String(error));
+        return api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb });
+      });
     } else {
       await api.sendMessage(chatId, caption, { parse_mode: "HTML", reply_markup: kb });
     }
