@@ -90,9 +90,8 @@ def summarize_specs(text: str) -> str:
     if not lines:
         return ""
     short = [l for l in lines if re.match(r"^\d[.,]\d\s*л", l)]
-    if short:  # «1.4 л, 141 л.с., бензин, вариатор (CVT), передний привод» — берём до двух вариантов
-        both = " / ".join(short[:2])
-        return both if len(both) <= 60 else short[0]
+    if short:  # «1.4 л, 141 л.с., бензин, вариатор (CVT), передний привод» — по варианту на строку таблицы
+        return " / ".join(short)  # все варианты: бот показывает каждый отдельной строкой
     joined = " ".join(lines)
     vol = re.search(r"(\d[.,]\d{1,3})\s*л\b", joined)
     power = re.search(r"(\d{2,3})\s*л\.с\.", joined)
