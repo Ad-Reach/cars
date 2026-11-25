@@ -11,6 +11,7 @@ export const geoMap = {
     moscow: [134.3, 237.2],
     krasnodar: [142.4, 337.8],
     astrakhan: [196.4, 326.7],
+    tolyatti: [201.5, 258.5],
     vladivostok: [696, 353.8],
     suifenhe: [691.6, 343.2],
     khorgos: [389.2, 344.9],

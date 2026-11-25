@@ -1,6 +1,6 @@
 import { LeadButton } from "@/components/lead/LeadModal";
 import Link from "next/link";
-import { carHref, carImg, carSrcSet, fullName, leadSource, NEW_PATH, rub, type Market, type NewCarModel } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, fullName, leadSource, NEW_PATH, ribbonValue, rub, type Market, type NewCarModel } from "@/lib/newCars";
 import { carsOf } from "@/lib/newCarsData";
 import { SITE_URL } from "@/lib/seo";
 import { Gallery, Trims } from "./ModelParts";
@@ -104,7 +104,7 @@ export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }
             <dl className={styles.ribbonIn}>
               {car.ribbon.map((r) => (
                 <div key={r.label}>
-                  <dt>{r.value}</dt>
+                  <dt>{ribbonValue(market, r.label, r.value)}</dt>
                   <dd>{r.label}</dd>
                 </div>
               ))}

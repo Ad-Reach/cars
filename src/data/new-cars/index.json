@@ -795,29 +795,6 @@
   "tag": "Гибридный кроссовер · новый из Китая"
  },
  {
-  "slug": "geely-starshine-7",
-  "brand": "Geely",
-  "fuel": "Гибрид",
-  "body": "Седан",
-  "drive": "4WD",
-  "engine": "1.5 л · Гибрид",
-  "power": "424 л.с.",
-  "gearbox": "Автомат",
-  "year": "2026",
-  "price": null,
-  "priceMax": null,
-  "labels": [],
-  "photos": [
-   "1",
-   "2",
-   "3",
-   "4",
-   "5"
-  ],
-  "name": "Geely Galaxy Starshine 7",
-  "tag": "Гибридный седан · новый из Китая"
- },
- {
   "slug": "haval-h10",
   "brand": "Haval",
   "fuel": "Гибрид",
@@ -1042,7 +1019,7 @@
   "power": "115–200 л.с.",
   "gearbox": "Автомат",
   "year": "2026",
-  "price": 3164000,
+  "price": 2500000,
   "priceMax": 3487000,
   "labels": [],
   "photos": [
@@ -1123,31 +1100,6 @@
   ],
   "name": "Kia Sportage",
   "tag": "Кроссовер · новый из Китая"
- },
- {
-  "slug": "rr-evoque",
-  "brand": "Land Rover",
-  "fuel": "Бензин",
-  "body": "SUV",
-  "drive": "4WD",
-  "engine": "2.0 л · Бензин",
-  "power": "250 л.с.",
-  "gearbox": "АКПП",
-  "year": "2026",
-  "price": null,
-  "priceMax": null,
-  "labels": [
-   "4WD"
-  ],
-  "photos": [
-   "1",
-   "2",
-   "3",
-   "4",
-   "5"
-  ],
-  "name": "Range Rover Evoque L",
-  "tag": "Длинная база"
  },
  {
   "slug": "leapmotor-a10",
@@ -1361,31 +1313,6 @@
   "tag": "Седан с камерами 360°"
  },
  {
-  "slug": "mitsubishi-eclipse-cross",
-  "brand": "Mitsubishi",
-  "fuel": "Бензин",
-  "body": "SUV",
-  "drive": "4WD",
-  "engine": "1.5 л · Бензин",
-  "power": "152 л.с.",
-  "gearbox": "Вариатор",
-  "year": "2026",
-  "price": 3565000,
-  "priceMax": null,
-  "labels": [
-   "4WD"
-  ],
-  "photos": [
-   "1-v6",
-   "2-v6",
-   "3-v6",
-   "4-v6",
-   "5-v6"
-  ],
-  "name": "Mitsubishi Eclipse Cross",
-  "tag": "Новинка под заказ из ОАЭ · доставка под ключ"
- },
- {
   "slug": "peugeot-5008",
   "brand": "Peugeot",
   "fuel": "Бензин",
@@ -1407,31 +1334,6 @@
   ],
   "name": "Peugeot 5008",
   "tag": "Новинка под заказ"
- },
- {
-  "slug": "suzuki-jimny",
-  "brand": "Suzuki",
-  "fuel": "Бензин",
-  "body": "SUV",
-  "drive": "4WD",
-  "engine": "1.5 л · Бензин",
-  "power": "105 л.с.",
-  "gearbox": "Автомат",
-  "year": "2026",
-  "price": 3438000,
-  "priceMax": null,
-  "labels": [
-   "4WD"
-  ],
-  "photos": [
-   "1",
-   "2",
-   "3",
-   "4",
-   "5"
-  ],
-  "name": "Suzuki Jimny 5-дверный",
-  "tag": "Рамный внедорожник · под заказ из ОАЭ"
  },
  {
   "slug": "toyota-wildlander",
