@@ -15,7 +15,15 @@ export const metadata = pageMeta({
 export default function NewCarsMarketsPage() {
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} data-photo>
+        <img
+          className={styles.heroBg}
+          src="/img/new/markets-hero-w1280.webp"
+          srcSet="/img/new/markets-hero-w760.webp 760w, /img/new/markets-hero-w1280.webp 1280w"
+          sizes="100vw"
+          alt=""
+          fetchPriority="high"
+        />
         <div className={`container ${styles.heroIn}`}>
           <nav className={styles.crumbs} aria-label="Хлебные крошки">
             <Link href="/">Главная</Link>
