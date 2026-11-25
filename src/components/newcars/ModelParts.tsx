@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carImg, carSrcSet, leadSource, rub, type Market, type NewCarModel } from "@/lib/newCars";
+import { carImg, carSrcSet, leadSource, priceFrom, type Market, type NewCarModel } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
 export function Gallery({ market, car, title }: { market: Market; car: NewCarModel; title: string }) {
@@ -88,7 +88,7 @@ export function Trims({ market, car, title }: { market: Market; car: NewCarModel
             >
               {tr.badge && <small>{tr.badge}</small>}
               <b>{tr.name}</b>
-              <span>{rub(tr.price)}</span>
+              <span>{priceFrom(market, tr.price)}</span>
             </button>
           ))}
         </div>
@@ -100,7 +100,7 @@ export function Trims({ market, car, title }: { market: Market; car: NewCarModel
             {t.sub && <p>{t.sub}</p>}
           </div>
           <div className={styles.trimPrice}>
-            <b>{rub(t.price)}</b>
+            <b>{priceFrom(market, t.price)}</b>
             <span>под ключ</span>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function Trims({ market, car, title }: { market: Market; car: NewCarModel
           <LeadButton
             source={leadSource(market, `${title} · ${t.name}`)}
             title={`Заказать ${title}`}
-            subtitle={`Комплектация ${t.name} — ${rub(t.price)} под ключ. Менеджер подтвердит цену и сроки.`}
+            subtitle={`Комплектация ${t.name} — ${priceFrom(market, t.price)} под ключ. Менеджер подтвердит цену и сроки.`}
             className="btn btn--gold"
           >
             Заказать эту комплектацию

@@ -111,6 +111,13 @@ export const carSrcSet = (m: Market, slug: string, name: string) =>
 
 export const rub = (n: number | null | undefined) => (n ? n.toLocaleString("ru-RU").replace(/[\s,]/g, " ") + " ₽" : "по запросу");
 
+// В каталоге Китая цены ориентировочные — везде «от». ОАЭ выводит цену как есть.
+export const priceFrom = (m: Market, n: number | null | undefined) => (n && m.id === "china" ? `от ${rub(n)}` : rub(n));
+
+// Значение «Под ключ» в ленте характеристик: «2.23–2.44 млн ₽» → «от 2.23 млн ₽» (только для Китая)
+export const ribbonValue = (m: Market, label: string, value: string) =>
+  m.id === "china" && label === "Под ключ" && !value.startsWith("от ") ? `от ${value.split("–")[0].replace(/\s*млн.*$/, "")} млн ₽` : value;
+
 export const fullName = (c: { name: string; year: string }) => (c.year ? `${c.name} ${c.year}` : c.name);
 
 export const plural = (n: number, one: string, few: string, many: string) => {

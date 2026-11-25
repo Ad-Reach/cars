@@ -15,7 +15,7 @@ export type HeroStat = { icon: IconName; value: string; label: string; accent?: 
 export const heroStats: HeroStat[] = [
   { icon: "clock", value: "8+ лет", label: "на рынке импорта" },
   { icon: "car", value: "3 400+", label: "авто привезли", accent: true },
-  { icon: "pin", value: "2", label: "филиала в РФ" },
+  { icon: "pin", value: "3", label: "филиала в РФ" },
   { icon: "shield", value: "Гарантия", label: "на ДВС и КПП" },
 ];
 
@@ -156,8 +156,8 @@ export const geography: CountryInfo[] = [
     ],
     mapFocus: { focus: [50, 55], zoom: 1 },
     routes: [
-      { kind: "truck", title: "Суйфэньхэ → Владивосток → Москва, Астрахань, Краснодар", note: "автовозом, 15-30 дней" },
-      { kind: "truck", title: "Хоргос → Москва, Астрахань, Краснодар", note: "автовозом, 30-35 дней" },
+      { kind: "truck", title: "Суйфэньхэ → Владивосток → Москва, Астрахань, Краснодар, Тольятти", note: "автовозом, 15-30 дней" },
+      { kind: "truck", title: "Хоргос → Москва, Астрахань, Краснодар, Тольятти", note: "автовозом, 30-35 дней" },
     ],
   },
   {
@@ -175,8 +175,8 @@ export const geography: CountryInfo[] = [
     // TODO: в макете маршруты скопированы с Китая
     mapFocus: { focus: [50, 55], zoom: 1 },
     routes: [
-      { kind: "ship", title: "Пусан → Владивосток → Москва, Астрахань, Краснодар", note: "море, 14-20 дней" },
-      { kind: "truck", title: "Инчхон → Бишкек → Москва, Астрахань, Краснодар", note: "через Киргизию, 30-40 дней" },
+      { kind: "ship", title: "Пусан → Владивосток → Москва, Астрахань, Краснодар, Тольятти", note: "море, 14-20 дней" },
+      { kind: "truck", title: "Инчхон → Бишкек → Москва, Астрахань, Краснодар, Тольятти", note: "через Киргизию, 30-40 дней" },
     ],
   },
   {
@@ -194,7 +194,7 @@ export const geography: CountryInfo[] = [
     routes: [
       { kind: "ship", title: "Тояма и Майдзуру → Владивосток", note: "море, 30-40 дней" },
       { kind: "ship", title: "Иокогама и Нагоя → Владивосток", note: "море, 35-45 дней" },
-      { kind: "truck", title: "Владивосток → Москва, Астрахань, Краснодар", note: "автовозом по России" },
+      { kind: "truck", title: "Владивосток → Москва, Астрахань, Краснодар, Тольятти", note: "автовозом по России" },
     ],
   },
 ];

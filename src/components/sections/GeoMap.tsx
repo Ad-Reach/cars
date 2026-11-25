@@ -9,6 +9,7 @@ const fromVladivostok = [
   { via: ["vladivostok", "moscow"], bend: 0.16 },
   { via: ["vladivostok", "astrakhan"], bend: 0.12 },
   { via: ["vladivostok", "krasnodar"], bend: 0.09 },
+  { via: ["vladivostok", "tolyatti"], bend: 0.15 },
 ] satisfies { via: PointId[]; bend: number }[];
 
 const fanOut = (from: PointId) =>
@@ -16,6 +17,7 @@ const fanOut = (from: PointId) =>
     { via: [from, "moscow"], bend: -0.18 },
     { via: [from, "astrakhan"], bend: 0.14 },
     { via: [from, "krasnodar"], bend: -0.12 },
+    { via: [from, "tolyatti"], bend: 0.1 },
   ] satisfies { via: PointId[]; bend: number }[];
 
 const routes: Record<CountryId, { via: PointId[]; bend: number }[]> = {
@@ -68,6 +70,7 @@ const destinations: Label[] = [
 const offices: Label[] = [
   { text: "Краснодар", at: "krasnodar", dx: -9, dy: 5, anchor: "end" },
   { text: "Астрахань", at: "astrakhan", dx: 9, dy: 5 },
+  { text: "Тольятти", at: "tolyatti", dx: 9, dy: 5 },
 ];
 
 function curve(via: PointId[], bend: number) {
