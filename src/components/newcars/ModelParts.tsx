@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { LeadButton } from "@/components/lead/LeadModal";
-import { carImg, carSrcSet, leadSource, priceFrom, type Market, type NewCarModel } from "@/lib/newCars";
+import { carHref, carImg, carSrcSet, leadSource, priceFrom, type Market, type NewCarModel } from "@/lib/newCars";
 import styles from "./NewCars.module.css";
 
 export function Gallery({ market, car, title }: { market: Market; car: NewCarModel; title: string }) {
@@ -125,6 +125,7 @@ export function Trims({ market, car, title }: { market: Market; car: NewCarModel
           {car.trimsNote && <p>{car.trimsNote}</p>}
           <LeadButton
             source={leadSource(market, `${title} · ${t.name}`)}
+            vehicle={{ name: `${title} · ${t.name}`, url: carHref(market, car.slug), brand: car.brand, model: car.model }}
             title={`Заказать ${title}`}
             subtitle={`Комплектация ${t.name} — ${priceFrom(market, t.price)} под ключ. Менеджер подтвердит цену и сроки.`}
             className="btn btn--gold"

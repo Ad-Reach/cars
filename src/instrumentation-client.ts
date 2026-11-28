@@ -1,4 +1,5 @@
 // Яндекс.Метрика. Файл выполняется в браузере до гидрации (конвенция Next instrumentation-client).
+import { rememberUtm } from "@/lib/lead";
 import { YM_ID, reachGoal } from "@/lib/metrika";
 
 const YM_SRC = `https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}`;
@@ -39,6 +40,9 @@ try {
 } catch {
   // Метрика не должна ломать сайт.
 }
+
+// UTM первого захода — для заявок (src/lib/lead.ts)
+rememberUtm();
 
 // Клики по контактам — одним делегированным обработчиком, чтобы не трогать каждую ссылку.
 document.addEventListener(

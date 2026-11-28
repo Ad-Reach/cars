@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { reachGoal } from "@/lib/metrika";
 
 // Маска +7 (999) 999-99-99
@@ -29,19 +29,53 @@ export const CONTACT_METHODS = ["Позвонить", "Telegram", "MAX", "WhatsA
 
 type Status = "idle" | "sending" | "done" | "error";
 
+/** Машина, по которой оставлена заявка (карточки каталога новых авто) — уходит в CRM. */
+export type LeadVehicle = { name: string; url?: string; brand?: string; model?: string };
 
-export function useLeadSubmit(source: string) {
+// UTM-метки первого захода: запоминаются на вкладку (src/instrumentation-client.ts), уходят с каждой заявкой
+const UTM_KEY = "rangauto_utm";
+const UTM_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "yclid", "gclid"];
+
+export function rememberUtm() {
+  try {
+    const q = new URLSearchParams(location.search);
+    const utm = Object.fromEntries(UTM_PARAMS.map((k) => [k, q.get(k) ?? ""]).filter(([, v]) => v));
+    if (Object.keys(utm).length) sessionStorage.setItem(UTM_KEY, JSON.stringify(utm));
+  } catch {}
+}
+
+function readUtm(): Record<string, string> {
+  try {
+    return JSON.parse(sessionStorage.getItem(UTM_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+const newSubmissionId = () =>
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+
+export function useLeadSubmit(source: string, vehicle?: LeadVehicle) {
   const [status, setStatus] = useState<Status>("idle");
+  // Один submission_id на одну заявку: повтор после ошибки с теми же данными — та же заявка,
+  // сервер не создаст второй сделки и не продублирует сообщения
+  const attempt = useRef<{ key: string; id: string } | null>(null);
 
   async function submit(fields: Record<string, string>) {
     setStatus("sending");
+    const key = JSON.stringify([source, fields, vehicle ?? null]);
+    if (attempt.current?.key !== key) attempt.current = { key, id: newSubmissionId() };
+    const submission_id = attempt.current.id;
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source, ...fields }),
+        body: JSON.stringify({ source, ...fields, submission_id, page_url: location.href, utm: readUtm(), vehicle }),
       });
       setStatus(res.ok ? "done" : "error");
+      if (res.ok) attempt.current = null;
       reachGoal(res.ok ? "lead_submit" : "lead_error", { source });
     } catch {
       setStatus("error");
