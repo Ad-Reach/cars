@@ -110,7 +110,7 @@ function CarCard({ car }: { car: Car }) {
             Расшифровка цены <Info size={13} />
           </a>
         ) : (
-          <LeadButton source="price-decode" title={`Расшифровка цены: ${car.title}`} className={styles.decode}>
+          <LeadButton source="price-decode" vehicle={{ name: car.title }} title={`Расшифровка цены: ${car.title}`} className={styles.decode}>
             Расшифровка цены <Info size={13} />
           </LeadButton>
         )}

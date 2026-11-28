@@ -243,6 +243,7 @@ export function NewCarCard({ market, car }: { market: Market; car: NewCarSummary
           </a>
           <LeadButton
             source={leadSource(market, title)}
+            vehicle={{ name: title, url: carHref(market, car.slug), brand: car.brand }}
             title={`Консультация по ${title}`}
             className="btn btn--outline"
           >

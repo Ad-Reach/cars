@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { CONTACT_METHODS, formatPhone, isPhoneComplete, useLeadSubmit } from "@/lib/lead";
+import { CONTACT_METHODS, formatPhone, isPhoneComplete, useLeadSubmit, type LeadVehicle } from "@/lib/lead";
 import { reachGoal } from "@/lib/metrika";
 import styles from "./LeadModal.module.css";
 
@@ -13,6 +13,8 @@ type LeadOptions = {
   submitLabel?: string;
   // Откуда пришла заявка — попадёт в CRM/админку
   source: string;
+  // Машина, по которой заявка (карточки каталога) — марка, модель и ссылка уходят в CRM
+  vehicle?: LeadVehicle;
 };
 
 const DEFAULTS = {
@@ -45,7 +47,7 @@ export function LeadModalProvider({ children }: { children: ReactNode }) {
 
 function LeadDialog({ opts, onClose }: { opts: LeadOptions; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const { status, submit } = useLeadSubmit(opts.source);
+  const { status, submit } = useLeadSubmit(opts.source, opts.vehicle);
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
 

@@ -9,6 +9,7 @@ import styles from "./NewCars.module.css";
 
 export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }) {
   const title = fullName(car);
+  const vehicle = { name: title, url: carHref(market, car.slug), brand: car.brand, model: car.model };
   const cover = car.gallery[0]?.img;
   const cars = carsOf(market);
   const similar = car.similar.map((s) => cars.find((c) => c.slug === s)).filter((c) => c !== undefined);
@@ -88,7 +89,7 @@ export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }
           </p>
           {car.lead && <p className={styles.coverLead}>{car.lead}</p>}
           <div className={styles.coverCta}>
-            <LeadButton source={leadSource(market, title)} title={`Заявка на ${title}`} className="btn btn--gold">
+            <LeadButton source={leadSource(market, title)} vehicle={vehicle} title={`Заявка на ${title}`} className="btn btn--gold">
               Оставить заявку
             </LeadButton>
             <a href="#prices" className="btn btn--ghost-light">
@@ -228,7 +229,7 @@ export function NewCarPage({ market, car }: { market: Market; car: NewCarModel }
               Рассчитаем цену под ключ в вашем городе, подберём комплектацию и цвет. Перезвоним в течение 15 минут.
             </p>
           </div>
-          <LeadButton source={leadSource(market, `${title} · низ страницы`)} title={`Заявка на ${title}`} className="btn btn--gold">
+          <LeadButton source={leadSource(market, `${title} · низ страницы`)} vehicle={vehicle} title={`Заявка на ${title}`} className="btn btn--gold">
             Получить расчёт
           </LeadButton>
         </div>
