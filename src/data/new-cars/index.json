@@ -1290,16 +1290,16 @@
   "tag": "Электрокроссовер под заказ"
  },
  {
-  "slug": "mg-5",
-  "brand": "MG",
+  "slug": "nissan-teana",
+  "brand": "Nissan",
   "fuel": "Бензин",
   "body": "Седан",
   "drive": "2WD",
-  "engine": "1.5 л · Бензин",
-  "power": "129 л.с.",
+  "engine": "2.0 л · Бензин",
+  "power": "156 л.с.",
   "gearbox": "Вариатор",
   "year": "2026",
-  "price": 1822000,
+  "price": null,
   "priceMax": null,
   "labels": [],
   "photos": [
@@ -1309,8 +1309,8 @@
    "4",
    "5"
   ],
-  "name": "MG 5",
-  "tag": "Седан с камерами 360°"
+  "name": "Nissan Teana",
+  "tag": "Новое поколение · седан бизнес-класса"
  },
  {
   "slug": "peugeot-5008",

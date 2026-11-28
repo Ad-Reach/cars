@@ -116,7 +116,7 @@ export const priceFrom = (m: Market, n: number | null | undefined) => (n && m.id
 
 // Значение «Под ключ» в ленте характеристик: «2.23–2.44 млн ₽» → «от 2.23 млн ₽» (только для Китая)
 export const ribbonValue = (m: Market, label: string, value: string) =>
-  m.id === "china" && label === "Под ключ" && !value.startsWith("от ") ? `от ${value.split("–")[0].replace(/\s*млн.*$/, "")} млн ₽` : value;
+  m.id === "china" && label === "Под ключ" && /^\d/.test(value) ? `от ${value.split("–")[0].replace(/\s*млн.*$/, "")} млн ₽` : value;
 
 export const fullName = (c: { name: string; year: string }) => (c.year ? `${c.name} ${c.year}` : c.name);
 
